@@ -18,10 +18,10 @@ var adminRoutes=require('./routes/api/adminapi');
 require('console.table');
 
 
-if (result.error) {
-	console.log(result.error);
-  //throw result.error
-}
+// if (result.error) {
+// 	console.log(result.error);
+//   //throw result.error
+// }
 
 
 //var busboyBodyParser = require('busboy-body-parser');
