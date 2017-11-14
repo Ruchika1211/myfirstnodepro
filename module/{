@@ -1,0 +1,54 @@
+{
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d901"),
+            "totalAmount" : "37.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d980"),
+            "totalAmount" : "47.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d981"),
+            "totalAmount" : "57.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d982"),
+            "totalAmount" : "67.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d983"),
+            "totalAmount" : "77.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d984"),
+            "totalAmount" : "87.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success"
+        }

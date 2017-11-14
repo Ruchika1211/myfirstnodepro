@@ -1,0 +1,363 @@
+ { id: 'evt_1BJJEaJRzsJNUt3v4Zw2tIyk',
+1|www      |   object: 'event',
+1|www      |   account: 'acct_1BDUH2JRzsJNUt3v',
+1|www      |   api_version: '2017-08-15',
+1|www      |   created: 1509531248,
+1|www      |   data: 
+1|www      |    { object: 
+1|www      |       { id: 'acct_1BDUH2JRzsJNUt3v',
+1|www      |         object: 'account',
+1|www      |         business_logo: null,
+1|www      |         business_name: 'pratik555-867-5309',
+1|www      |         business_url: null,
+1|www      |         charges_enabled: true,
+1|www      |         country: 'GB',
+1|www      |         default_currency: 'gbp',
+1|www      |         details_submitted: false,
+1|www      |         display_name: null,
+1|www      |         email: 'pratik@infiny.in',
+1|www      |         payouts_enabled: false,
+1|www      |         statement_descriptor: '',
+1|www      |         support_email: null,
+1|www      |         support_phone: null,
+1|www      |         timezone: 'Etc/UTC',
+1|www      |         type: 'custom',
+1|www      |         debit_negative_balances: false,
+1|www      |         decline_charge_on: [Object],
+1|www      |         external_accounts: [Object],
+1|www      |         legal_entity: [Object],
+1|www      |         metadata: {},
+1|www      |         payout_schedule: [Object],
+1|www      |         payout_statement_descriptor: null,
+1|www      |         product_description: null,
+1|www      |         tos_acceptance: [Object],
+1|www      |         verification: [Object] },
+1|www      |      previous_attributes: { business_name: null } },
+1|www      |   livemode: false,
+1|www      |   pending_webhooks: 1,
+1|www      |   request: { id: 'req_8Kzzsbb6oLU9ds', idempotency_key: null },
+1|www      |   type: 'account.updated' }
+
+// exports.checkIfavailablebalance = (req, res) => {
+//    Stores.find({}, (err, stores) => {
+//       if (err) {
+//          console.log("err while retrieving" + err);
+//       }
+//       if (!stores) {
+//          console.log("no stores retrieve err while retrieving");
+//       }
+
+//       var done = false;
+//       for (var i in stores) {
+//          console.log("count of i start and it is" + i);
+//          var storeData = stores[i];
+//          var transactions = storeData.incomesourceDetail;
+//          var totalAmounttoTransfer = 0;
+//          var isAllStoreDone = true;
+//          var dataOfTrans = [];
+//          console.log('transactions');
+//          console.log(transactions.length);
+//          transactions.forEach(function(tranData, j) {
+//             // for(j in  transactions)
+//             // {  
+//             console.log("count of j start and it is" + j);
+
+//             //var tranData=transactions[j];
+//             console.log(tranData.balancetransId);
+//             var donetran = false;
+//             stripe.balance.retrieveTransaction(
+//                tranData.balancetransId,
+//                function(err, balanceTransaction) {
+//                   console.log('balanceTransaction');
+//                   // console.log(balanceTransaction);
+//                   if (err) {
+//                      console.log("err while retrieving" + err);
+
+//                   } else(!balanceTransaction) {
+//                      console.log("no transc retrieve err while retrieving");
+//                   }
+
+//                   if (balanceTransaction.status == "available") {
+//                      //console.log(totalAmounttoTransfer);
+//                      console.log(tranData.afterDeducAmount);
+//                      console.log('tranData.afterDeducAmount');
+//                      totalAmounttoTransfer = totalAmounttoTransfer + parseInt(tranData.afterDeducAmount);
+//                      console.log(totalAmounttoTransfer);
+//                      console.log("totalAmounttoTransfer>>>>>}}}}>>>>>>>>>");
+//                      console.log(j);
+//                      //console.log (stores[i].incomesourceDetail[j].balancetransId);
+
+//                      stores[i].incomesourceDetail.splice(j, 1);
+//                      stores[i].markModified("incomesourceDetail");
+//                      var dataSave = false;
+//                      stores[i].save((err, storeSaved) => {
+//                         if (err) {
+//                            tranData.notes = "failed";
+//                            tranData.errDetail = err.message;
+//                         } else {
+//                            tranData.notes = "Success";
+//                         }
+
+//                         console.log(tranData);
+//                         console.log("after  splicing");
+//                         dataOfTrans.push(tranData);
+//                         dataSave = true;
+
+//                      });
+//                      require('deasync').loopWhile(function() {
+//                         return !dataSave;
+//                      });
+//                      donetran = true;
+//                   } else {
+//                      donetran = true;
+//                   } // asynchronously called
+
+//                })
+//             require('deasync').loopWhile(function() {
+//                return !donetran;
+//             });
+//             console.log("count of j ends and it is" + j);
+//          })
+
+//          console.log(totalAmounttoTransfer);
+//          console.table(dataOfTrans);
+//          var actualtransData = [];
+//          for (var k in dataOfTrans) {
+//             var perTransactioStatus = dataOfTrans[k];
+//             if (perTransactioStatus.notes == "Success") {
+//                console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
+//                actualtransData.push(perTransactioStatus);
+//                console.log(totalAmounttoTransfer);
+//                console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//             } else {
+//                totalAmounttoTransfer = totalAmounttoTransfer - parseInt(perTransactioStatus.afterDeducAmount);
+//                stores[i].incomesourceDetail.push(perTransactioStatus);
+//                console.log(totalAmounttoTransfer);
+//                console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//             }
+//          }
+
+//          console.log(totalAmounttoTransfer + "actual one");
+//          console.log(actualtransData.length);
+//          console.log('actualtransData.length');
+//          if (actualtransData.length > 0) {
+//             //console.table(actualtransData);
+//             // var temptransData=actualtransData[]
+//             var amountTotransfer = parseInt(totalAmounttoTransfer) * 100;
+//             stripe.transfers.create({
+//                amount: amountTotransfer,
+//                currency: "gbp",
+//                destination: storeData.bankAccountId,
+//                transfer_group: storeData.storeId
+//             }, function(err, transfer) {
+//                var notes;
+//                if (err) {
+//                   notes = err.message;
+//                }
+
+//                if (!transfer) {
+//                   notes = "transferFailed";
+//                } else {
+//                   notes = "transferSuccess";
+//                }
+
+//                var pay = new Payment({
+//                   destPayment: transfer.destination_payment,
+//                   dest: transfer.destination,
+//                   destAmount: transfer.amount,
+//                   desttrancId: transfer.balance_transaction,
+//                   desttransferId: transfer.id,
+//                   shopDetail: storeData._id,
+//                   detailOfTransfer: actualtransData,
+//                   notes: notes,
+
+//                })
+
+//                pay.save(function(err) {
+//                   if (err) {
+//                      console.log("no err created");
+//                   }
+
+//                   console.log("transfer success");
+//                   done = true;
+
+//                })
+
+//             });
+//          }
+
+//          require('deasync').loopWhile(function() {
+//             return !done;
+//          });
+//          console.log("count of i ends and it is");
+//       }
+
+//    });
+// }
+
+
+
+// exports.checkIfavailablebalance = (req, res) => {
+//    Stores.find({}, (err, stores) => {
+//       if (err) {
+//          console.log("err while retrieving" + err);
+//       }
+//       if (!stores) {
+//          console.log("no stores retrieve err while retrieving");
+//       }
+
+//       async.forEachOf(stores, function(storeData, i, cb) {
+
+//          console.log("count of i start and it is" + i);
+
+//          var transactions = storeData.incomesourceDetail;
+//          var totalAmounttoTransfer = 0;
+//          var isAllStoreDone = true;
+//          var dataOfTrans = [];
+//          console.log('transactions');
+
+//          // console.log(transactions);
+//          async.forEachOf(transactions, function(tranData, j, callback) {
+
+//             console.log("count of j ends and it is" + j);
+//             console.log(tranData.balancetransId);
+//             var done = false;
+//             stripe.balance.retrieveTransaction(
+//                tranData.balancetransId,
+//                function(err,balanceTransaction) {
+//                   console.log('balanceTransaction');
+//                   // console.log(balanceTransaction);
+//                   if (err) {
+//                      console.log("err while retrieving" + err);
+//                  }else if(!balanceTransaction){
+//                      console.log("no transc retrieve err while retrieving");
+//                   }
+//                   else
+//                   {
+//                     console.log("jdhu");
+//                   }
+
+
+//                   if (balanceTransaction.status == "available") {
+//                      console.log(totalAmounttoTransfer);
+//                      console.log(tranData.afterDeducAmount);
+//                      console.log('tranData.afterDeducAmount');
+//                      totalAmounttoTransfer = totalAmounttoTransfer + parseInt(tranData.afterDeducAmount);
+//                      console.log(totalAmounttoTransfer);
+//                      console.log("totalAmounttoTransfer>>>}}}}}}}}}>>>>>>>>>");
+//                      console.log(j);
+//                      // console.log (stores[i].incomesourceDetail[j].balancetransId);
+
+//                      stores[i].incomesourceDetail.splice(j, 1);
+//                      stores[i].markModified("incomesourceDetail");
+//                      stores[i].save((err, storeSaved) => {
+//                         if (err) {
+//                            tranData.notes = "failed";
+//                            tranData.errDetail = err.message;
+//                         } else {
+//                            tranData.notes = "Success";
+//                         }
+
+//                         console.log(tranData);
+//                         console.log("after  splicing");
+//                         dataOfTrans.push(tranData);
+//                         done = true;
+//                         callback();
+
+//                      });
+
+//                   }
+//                   else
+//                   {
+//                     // done = true;
+//                     callback();
+//                   }
+
+
+//                })
+
+//          }, function(err, callback) {
+
+//             var actualtransData = [];
+//             async.forEachOf(dataOfTrans, function(perTransactioStatus, k, callback) {
+
+//                console.log(totalAmounttoTransfer);
+//                console.table(dataOfTrans);
+
+//                var perTransactioStatus = dataOfTrans[k];
+//                if (perTransactioStatus.notes == "Success") {
+//                   console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
+//                   actualtransData.push(perTransactioStatus);
+//                   console.log(totalAmounttoTransfer);
+//                   console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//                } else {
+//                   totalAmounttoTransfer = totalAmounttoTransfer - parseInt(perTransactioStatus.afterDeducAmount);
+//                   storeData.incomesourceDetail.push(perTransactioStatus);
+//                   console.log(totalAmounttoTransfer);
+//                   console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//                }
+//                callback()
+
+//             }, function(err, callback) {
+
+//                console.log(totalAmounttoTransfer + "actual one");
+//                console.log(actualtransData.length);
+//                console.log('actualtransData.length');
+//                if (actualtransData.length > 0) {
+//                   //console.table(actualtransData);
+//                   // var temptransData=actualtransData[]
+//                   var amountTotransfer = parseInt(totalAmounttoTransfer) * 100;
+//                   stripe.transfers.create({
+//                      amount: amountTotransfer,
+//                      currency: "gbp",
+//                      destination: storeData.bankAccountId,
+//                      transfer_group: storeData.storeId
+//                   }, function(err, transfer) {
+//                      var notes;
+//                      if (err) {
+//                         notes = err.message;
+//                      }
+
+//                      if (!transfer) {
+//                         notes = "transferFailed";
+//                      } else {
+//                         notes = "transferSuccess";
+//                      }
+
+//                      var pay = new Payment({
+//                         destPayment: transfer.destination_payment,
+//                         dest: transfer.destination,
+//                         destAmount: transfer.amount,
+//                         desttrancId: transfer.balance_transaction,
+//                         desttransferId: transfer.id,
+//                         shopDetail: storeData._id,
+//                         detailOfTransfer: actualtransData,
+//                         notes: notes,
+
+//                      })
+
+//                      pay.save(function(err) {
+//                         if (err) {
+//                            console.log("no err created");
+//                         }
+
+//                         console.log("transfer success");
+//                         isAllStoreDone = false;
+//                         cb();
+
+//                      })
+
+//                   });
+//                }
+
+//             })
+
+//          })
+
+//       }, function(err, callback) {
+
+//          console.log("i end");
+
+//       })
+//    })
+// }

@@ -1,0 +1,55 @@
+How to use:
+
+1) Navigate into the folder (in the command line/ terminal)
+2) Run "npm install" to install all required dependencies
+3) Run "npm run build" to run the development build script => Keep this process running! It recompiles your files upon changes.
+4) Run "npm start" in a new command line/ terminal window => Keep this process running as well, it's your NodeJS server. 
+
+
+{
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d989"),
+            "totalAmount" : "37.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success",
+            "notes" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d989"),
+            "totalAmount" : "37.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success",
+            "notes" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d989"),
+            "totalAmount" : "37.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success",
+            "notes" : "Success"
+        }, 
+        {
+            "userDetails" : ObjectId("59e0bb91552dab6c0977d989"),
+            "totalAmount" : "37.60",
+            "afterDeducAmount" : "35.5769230769231",
+            "transId" : "ch_1BHBGVJesTtsDlLoOMmOVVWR",
+            "balancetransId" : "txn_1BHBGVJesTtsDlLogcc92wG3",
+            "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
+            "remarks" : "Success",
+            "notes" : "Success"
+        }
+
+        mongoexport -d pickup -c stores -o /var/www/html/dev2.infiny.in/stores.json.
+
+        db.createUser({ user: "dev", pwd: "infiny123!@#", roles: [{ role: "userAdminAnyDatabase", db: "admin" }] })
+db.auth("dev", "infiny123!@#")
+
+db.createUser({ user: "dev", pwd: "infiny123!@#", roles: [{ role: "dbOwner", db: "adminMain" }] })
