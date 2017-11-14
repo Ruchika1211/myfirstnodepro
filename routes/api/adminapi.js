@@ -18,4 +18,10 @@ router.post('/addshopowner', function (req, res) {
      Adminadded.addshopowner(req,res);
 });
 
+
+router.post('/editshopowner', function (req, res) {
+
+     Adminadded.editshopowner(req,res);
+});
+
 module.exports = router;
