@@ -290,7 +290,7 @@ exports.cafelisting = (req, res) => {
                .find({})
                .limit(limitData)
                .skip(skipingData)
-               .populate('shopName', 'status imageurl cafe_name bankDetails position')
+               .populate('shopName', 'status imageurl cafe_name bankDetails position isblocked')
                .exec(function(err, cafes) {
                   // {skip:skipingData,limit:limitData}, (err, cafes) => {
                   var storeDatawithQuan = [];
@@ -320,7 +320,7 @@ exports.cafelisting = (req, res) => {
                      //console.log(Long);
                      var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
                      //console.log(TotalDistance);
-                     if (TotalDistance && cafes[i].shopName.bankDetails.length > 0) {
+                     if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && isblocked == 0) {
                         nearbyCafe.push(cafes[i]);
                      }
 
@@ -529,6 +529,14 @@ exports.coffeeShopLogin = (req, res) => {
             error: "true"
          });
       }
+
+      if (coffeeShop.isDelete == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
+         });
+      }
+
       console.log('req.body.storePass');
       console.log(req.body.storePass);
       console.log(bcrypt.compareSync(req.body.storePass, coffeeShop.storePass));

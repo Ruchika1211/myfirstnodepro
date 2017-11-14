@@ -705,7 +705,7 @@ exports.getRewards = (req, res) => {
    var rewardData = [];
    reward
       .find({})
-      .populate('shopDetail', 'status imageurl cafe_name status position bankDetails')
+      .populate('shopDetail', 'status imageurl cafe_name status position bankDetails isblocked')
       .exec(function(err, rewards) {
          // console.log(rewards);
          console.log(rewards.length);
@@ -740,7 +740,7 @@ exports.getRewards = (req, res) => {
         
                  var TotalDistance = distance(Lat, Long,"134.05839","73.00754");
                  //console.log(TotalDistance);
-                 if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0) {
+                 if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0&) {
                     nearbyCafe.push(rewards[i]);
                  }
          }

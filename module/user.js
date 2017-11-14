@@ -185,6 +185,15 @@ exports.signin = (req, res) => {
                 detail: "invalid Login"
             });
         }
+
+        if (user.isblocked == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
         if (!bcrypt.compareSync(req.body.password, user.password)) {
             console.log("err");
             console.log("user");
