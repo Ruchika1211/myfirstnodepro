@@ -208,7 +208,7 @@ exports.cafelisting = (req, res) => {
          });
 
       }
-      var lastseenofuser = data.lastseen;
+      var lastseenofuser =data.lastseen;
       notification.count({
          "createdAt": {
             $gte: lastseenofuser
@@ -320,7 +320,7 @@ exports.cafelisting = (req, res) => {
                      //console.log(Long);
                      var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
                      //console.log(TotalDistance);
-                     if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && isblocked == 0) {
+                     if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
                         nearbyCafe.push(cafes[i]);
                      }
 
@@ -786,8 +786,8 @@ exports.coffeeShopForgotPassword = (req, res) => {
 
          var mailOptions = {
             // to: coffeeShop.storeId,
-            to: 'ruchika.s@infiny.in',
-            from: 'ruchika.s@infiny.in',
+            to:coffeeShop.storeId,
+            from: helper.adminMailFrom(),
             subject: 'Pickcup Password Reset',
             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                'Your token to reset your password is:\n\n' +
@@ -1298,7 +1298,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                          { 
                             var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from:helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Thank you for submitting your form your Verfication is under processed.' 
                                           
@@ -1316,7 +1316,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
 
                            var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
                                             'Your account verification has been failed due to some security features.Please contact admin@pickcup.in for further details' 
@@ -1335,7 +1335,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
 
                               var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
                                             'Your account verification has been failed due to some security features.Please contact admin@pickcup.in for further details' 
@@ -1357,7 +1357,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                          {
 
                               var mailOptions = {
-                                      to: coffeeShop.storeId,
+                                      to:helper.adminMailFrom(),
                                       from: 'ruchika.s@infiny.in',
                                       subject: 'Pickcup Account details',
                                       text: 'Verification Succesful \n\n'+
@@ -1849,8 +1849,8 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
             payadmincharge = false;
             var userdata = {
                userDetails: userdetail,
-               totalAmount: totalPrice,
-               afterDeducAmount: costPrice,
+               totalAmount: parseFloat(totalPrice),
+               afterDeducAmount:  parseFloat(costPrice),
                 adminPrice:adminPrice,
                datetransfer: helper.findCurrentDateinutc(),
                transId: transId,
@@ -1864,8 +1864,8 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
             payadmincharge = false;
             var userdata = {
                userDetails: userdetail,
-               totalAmount: totalPrice,
-               afterDeducAmount: costPrice,
+               totalAmount: parseFloat(totalPrice),
+               afterDeducAmount:  parseFloat(costPrice),
                adminPrice:adminPrice,
                transId: transId,
                balancetransId: balancetransId,
@@ -1878,8 +1878,8 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
             payadmincharge = true;
             var userdata = {
                userDetails: userdetail,
-               totalAmount: totalPrice,
-               afterDeducAmount: costPrice,
+               totalAmount: parseFloat(totalPrice),
+               afterDeducAmount:  parseFloat(costPrice),
                 adminPrice:adminPrice,
                transId: transId,
                balancetransId: balancetransId,
@@ -1896,64 +1896,6 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
 
             }
 
-            // if (payadmincharge) {
-            //    Admin.find({}, (err, admindata) => {
-
-            //       if (admindata) {
-            //          var previoustrans = store.totalamounttotransfer;
-            //          store.totalamounttotransfer = previoustrans;
-
-            //          var addata = {
-            //             userDetails: userdetail,
-            //             totalAmount: totalPrice,
-            //             AmountPaidtoowner: costPrice,
-            //             adminCom: adminPrice,
-            //             datetransfer: new Date(),
-            //             transId: transId,
-            //             balancetransId: balancetransId,
-            //             remarks: "failed due to err:" + err.message
-            //          }
-            //       }
-            //       if (!admindata) {
-            //          var previoustrans = store.totalamounttotransfer;
-            //          store.totalamounttotransfer = previoustrans + costPrice;
-            //          payadmincharge = false;
-            //          var addata = {
-            //             userDetails: userdetail,
-            //             totalAmount: totalPrice,
-            //             AmountPaidtoowner: costPrice,
-            //             adminCom: adminPrice,
-            //             transId: transId,
-            //             balancetransId: balancetransId,
-            //             datetransfer: new Date(),
-            //             remarks: "failed due to err:No such admindata found"
-            //          }
-            //       } else {
-            //          var previoustrans = store.totalamounttotransfer;
-            //          store.totalamounttotransfer = previoustrans + costPrice;
-            //          payadmincharge = true;
-            //          var addata = {
-            //             userDetails: userdetail,
-            //             totalAmount: totalPrice,
-            //             AmountPaidtoowner: costPrice,
-            //             adminCom: adminPrice,
-            //             transId: transId,
-            //             balancetransId: balancetransId,
-            //             datetransfer: new Date(),
-            //             remarks: "Success"
-            //          }
-            //       }
-
-            //       admindata.incomesourceDetail.push(addata);
-            //       admindata.save(function(err) {
-            //          {
-            //             console.log("err");
-            //          }
-            //          console.log("updated succesfully");
-            //       })
-
-            //    })
-            // }
 
          });
 

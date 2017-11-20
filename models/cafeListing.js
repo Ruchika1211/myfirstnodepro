@@ -85,7 +85,7 @@ var schema = new Schema({
 schema.pre('save', function (next) {
 
   var splitStr = this.cafe_name.toLowerCase().split(' ');
-  console.log(splitStr);
+  //console.log(splitStr);
   var mydata;
  for (var i = 0; i < splitStr.length; i++) {
    
@@ -97,16 +97,16 @@ schema.pre('save', function (next) {
    //    var mydata = splitStr.join(' '); 
    // console.log(mydata);
           mydata = splitStr.join(' '); 
-       console.log(mydata);
+       //console.log(mydata);
      }   
  
   
  
  this.cafe_name=mydata;
 
- console.log(this.cafe_name);
+ //console.log(this.cafe_name);
 
-console.log('this.cafe_name');
+//console.log('this.cafe_name');
   // capitalize
 //this.cafe_name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
   next();

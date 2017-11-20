@@ -7,7 +7,7 @@ var connect = require('connect');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var dotenv=require('dotenv');
-console.log(process.env);
+//console.log(process.env);
 const result = dotenv.config();
 mongoose.set('debug', true);
 
@@ -23,11 +23,11 @@ require('console.table');
 //   //throw result.error
 // }
 
-
+var path="mongodb://"+process.env.DB_USER+':'+process.env.DB_PASS+'@ds111496.mlab.com:11496/pickup';
 //var busboyBodyParser = require('busboy-body-parser');
 // var messageRoutes = require('./routes/messages');
 // var userRoutes = require('./routes/user');
-
+// mongoose.connect(path);
 mongoose.connect('localhost:27017/pickup');
 var app = express();
 // view engine setup

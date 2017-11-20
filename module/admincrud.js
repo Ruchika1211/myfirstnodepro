@@ -26,7 +26,8 @@ exports.addshopowner = (req, res) => {
 		isDelete:0,
 		status:'closed',
 		cafe_name:req.body.cafe_name,
-		imageurl:"noImage"
+		imageurl:"noImage",
+        
 	})
 
 
@@ -52,11 +53,11 @@ exports.addshopowner = (req, res) => {
             };
 
             helper.sendemail(mailOptions,(data)=>{
-                 if (data ="error") {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: "true",
-                        detail: err
+                 if (data =="error") {
+                    return res.status(200).json({
+                        title: 'User saved but mail sending failed',
+                        error: "false",
+                       
                     });
                 }
 

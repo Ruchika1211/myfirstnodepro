@@ -55,6 +55,7 @@ exports.signup = (req, res) => {
             dob: req.body.dob,
             deviceToken: [req.body.deviceToken],
             imageUrl: "noImage",
+            lastseen : new Date (),
             address: {
                 postalCode: req.body.postalcode,
                 address: req.body.address,
@@ -311,7 +312,7 @@ exports.forgotPassword = (req, res) => {
 
             var mailOptions = {
                 to: user.email,
-                from: 'ruchika.s@infiny.in',
+                from: helper.adminMailFrom(),
                 subject: 'Pickcup Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                     'Your token to reset your password is:\n\n' +

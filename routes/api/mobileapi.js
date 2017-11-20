@@ -112,7 +112,7 @@ transferOnTwentySix.start();
 
 router.get('/test', function (req, res) {
 
-  Stripe.checkIfavailablebalance();
+  Stripe.checkIfavailablebalance(req,res);
 //  fs.stat('uploads/stores/59afb7f2f2c2c60f5f30ba9b.png', function(err, stat) {
 //     if(err == null) {
 //         console.log('File exists');

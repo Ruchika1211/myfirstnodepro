@@ -51,10 +51,18 @@ var fcm = new FCM(serverKey);
           return totalCharges
          };
 
+        // var   adminMailFrom=function(){
+        //   return 'ruchika.s@infiny.in'
+        //  }
+
 module.exports = {
 
          url:function(){
          	return 'http://dev2.infiny.in:3000'
+         },
+
+          adminMailFrom:function(){
+          return 'ruchika.s@infiny.in'
          },
 
 
@@ -350,9 +358,14 @@ module.exports = {
      smtpTransport.sendMail(mailOptions, function(err) {
                 if (err) {
                     cb("error");
+                    console.log(err);
+                }
+                else
+                {
+                  cb("mailSend");
                 }
 
-                 cb("mailSend");
+                 
             });
 
   },

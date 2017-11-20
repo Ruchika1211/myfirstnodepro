@@ -71,7 +71,7 @@ exports.ListNotification = (req, res) => {
                     });
                 }
 
-                users.lastseen = helper.findCurrentDateinutc();
+                users.lastseen = new Date ();
 
 
 

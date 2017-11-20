@@ -13,6 +13,7 @@ var FCM = require('fcm-push');
 //var serverKey ='AIzaSyDIfbPUnzIOFDyJA0omLTuF8VCKe-SqNZY';
 var stripe = require('stripe')(process.env.stripeKey);
 var serverKey = process.env.serverKey;
+
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport({
     service: "gmail",
@@ -1105,8 +1106,7 @@ exports.createOrder = (req, res) => {
           })
     } else if (orderType == 1) {
         console.log("orderType");
-       //var token = req.body.userToken;
-       //var decoded = jwt.decode(token, "pickup");
+
        var shopDetail = req.body.shopDetail;
        var timeForPickcup = req.body.timeForPickcup;
        var note = req.body.note;
@@ -1175,6 +1175,7 @@ exports.createOrder = (req, res) => {
        ordered.save((err, orderd) => {
 
           if (err) {
+        
              console.log("orser saveissue");
              console.log(err);
              return res.status(500).json({
@@ -2575,7 +2576,11 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
             .catch(function(err) {
                console.log("Something has gone wrong1!");
                console.error(err);
-                      var msg = msgForNoti
+               console.log(serverKey);
+                   console.log(CurrentUserDetail.deviceToken);
+              
+               console.log('serverKey/////////////////////');
+                      var msg = msgForNoti;
 
              
                var notifi = new notification({

@@ -52,3 +52,305 @@
             "datetransfer" : "Thu Oct 26 2017 18:49:19 GMT+0530 (IST)",
             "remarks" : "Success"
         }
+
+
+        exports.checkIfavailablebalance = (req, res) => {
+   Stores.find({}, (err, stores) => {
+      if (err) {
+         console.log("err while retrieving" + err);
+      }
+      if (!stores) {
+         console.log("no stores retrieve err while retrieving");
+      }
+      async.forEachOf(stores, (store, i, store_callback) => {
+
+                var filePay=`
+                ${'///////////'}
+                 Store Name: ${store.cafe_name};`
+               
+                fs.appendFileSync(store.id + '.txt', filePay);
+                                       
+          
+
+          
+              if(store.bankAccountId)
+                 {
+                  if(store.accountStatus == 'verified')
+                  {       
+                            var filePay=`Status:::verified and have accountID`;
+                             fs.appendFileSync(store.id + '.txt', filePay);
+                    
+                           var storeData = store;
+                           var transactions = storeData.incomesourceDetail;
+                           var totalAmounttoTransfer = 0;
+                           var isAllStoreDone = true;
+                           var dataOfTrans = [];
+                           var trLen=transactions.length;
+                           var dataofIncome=store.incomesourceDetail;
+                           var actualArraydata;
+                           var allavailabletran=[];
+                           async.forEachOf(transactions, (transaction, j, tr_callback) => {
+                           
+                                var filePay=`TotalTransaclength:::${trLen}
+                                TranscloopNo:::::${j}
+                                TranscNo:::::${transaction.balancetransId}`;
+                                fs.appendFileSync(store.id + '.txt', filePay);
+                            
+                                var tranData=transaction;
+                    
+                                  var donetran = false;
+                                  stripe.balance.retrieveTransaction(
+                                       tranData.balancetransId,
+                                       function(err, balanceTransaction) {
+                                       console.log(tranData.balancetransId);
+
+                                                   
+                                          if (err) {
+                                              console.log(j);
+                                                   console.log(">>>>>>>>>j>>>>>>>>>>>");
+                                              var filePay=`TransaStatus:::This trans failed due to.
+                                              reason:::::${err}`;
+                                              fs.appendFileSync(store.id + '.txt', filePay);
+                                          
+                                             console.log("err while retrieving" + err);
+                                             actualArraydata=dataofIncome;
+                                               tr_callback();
+
+                                          } else if (!balanceTransaction) {
+                                             var filePay=`TransaStatus:::This trans failed due to no data`
+                                              
+                                              fs.appendFileSync(store.id + '.txt', filePay);
+                                           // tr_callback();
+                                             console.log("no transc retrieve err while retrieving");
+                                              actualArraydata=dataofIncome;
+                                               tr_callback();
+                                          } else {
+
+                                                if (balanceTransaction.status == "available") {
+                                                     var filePay=`TransaStatus:::Success and available.`;
+                                                    
+                                                    fs.appendFileSync(store.id + '.txt', filePay);
+                                                   console.log(tranData.afterDeducAmount);
+                                                   console.log('tranData.afterDeducAmount');
+                                                   totalAmounttoTransfer = totalAmounttoTransfer + parseFloat(tranData.afterDeducAmount);
+                                                   // console.log(totalAmounttoTransfer);
+                                                   // console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+                                                   console.log(j);
+                                                   console.log(">>>>>>>>>j>>>>>>>>>>>");
+
+                                                      console.table(dataofIncome);
+                                                   var indexofData=dataofIncome.indexOf(transaction);
+                                                    console.log(indexofData);
+                                                   
+                                                    if(indexofData == -1){
+                                                      console.log("fo");
+                                                    }
+                                                    else
+                                                    {
+                                                         allavailabletran.push(transaction);
+                                                        var actualArraydata=dataofIncome.splice(indexofData, 1);
+                                                        console.table(actualArraydata);
+                                                         
+                                                    }
+                  
+
+                                                } else {
+                                                   var filePay=`TransaStatus:::Success and not  available.`;
+                                                    
+                                                    fs.appendFileSync(store.id + '.txt', filePay);
+                                                  tr_callback();
+                                                }
+                                          }
+
+                                         
+
+                                      }
+                                  );
+                               
+                            console.log("count of j end and it is" + j);
+
+                           }, err => {
+
+
+                                      console.log(actualArraydata.length);
+                                      console.log('actualArraydata.length');
+                                      store.incomesourceDetail=actualArraydata;
+                                      store.save((err, storeSaved) => {
+                                          if (err) {
+                                            console.log('i m failed'+j);
+                                            
+                                          }
+                                          else
+                                          {
+                                                var filePay=`
+                                                   All transaction end Proceeding towards transfer`;
+                                                                      
+                                                 fs.appendFileSync(store.id + '.txt', filePay);
+                                                 //console.log("i m in loop tansactif");
+                                         
+                                              
+                                                  if (allavailabletran.length > 0) {
+                                                    var amountTotransfer = parseInt(totalAmounttoTransfer) * 100;
+                                                     stripe.transfers.create({
+                                                        amount: amountTotransfer,
+                                                        currency: "gbp",
+                                                        destination: storeData.bankAccountId,
+                                                        transfer_group: storeData.storeId
+                                                     }, function(err, transfer) {
+                                                        var notes;
+                                                        if (err) {
+
+                                                             console.log(`i m in error of transfer for shop ${store.cafe_name}`);
+                                                             console.log(err);
+                                                          
+
+                                                              var filePaye=`
+                                                          
+                                                             Tranfer for  cafe Owner ${store.cafe_name}
+                                                             Amount == ${amountTotransfer}
+                                                             StoreId=${store._id}
+                                                             err:${err}
+                                                           
+                                                              this was created at ${todaysDate}
+
+                                                             
+                                                              `
+                                                             fs.appendFileSync(store.id + '.txt', filePaye);
+                                                         
+                                                          
+                                                          store.incomesourceDetail=store.incomesourceDetail.concat(transactions);
+                                                            store.markModified("incomesourceDetail");
+
+                                                              store.save((err, storeSavedfailedone) => {
+                                                                  var mailOptions = {
+                                                                                  to: helper.adminurl(),
+                                                                                  from: 'ruchika.s@infiny.in',
+                                                                                  subject: 'Pickcup -Regarding payouts',
+                                                                                  text: 'Payouts transfer failed for shop '+ storeSavedfailedone.cafe_name +'Due to following reason\n\n' +
+                                                                                      err + '.'
+                                                                              };
+                                                                   helper.sendemail(mailOptions,(data)=>{
+                                                                     notes = err;
+                                                                   })
+                                                                  
+                                                              });
+                                                        }
+                                                        else if (!transfer) {
+                                                               var filePaye=`
+                                                            
+                                                             Tranfer for  cafe Owner ${store.cafe_name}
+                                                             Amount == ${amountTotransfer}
+                                                             StoreId=${store._id}
+                                                            
+                                                              notransfer=yes
+                                                              this was created at ${todaysDate}
+
+                                                            
+                                                              `
+                                                             fs.appendFileSync(store.id + '.txt', filePaye);
+                                                         
+                                                             console.log(`i m in not of transfer for shop ${store.cafe_name}`);
+                                                           
+                                                            store.incomesourceDetail=store.incomesourceDetail.concat(transactions);
+                                                            store.markModified("incomesourceDetail");
+
+                                                              store.save((err, storeSavedfailedone) => {
+                                                                    var mailOptions = {
+                                                                                  to: helper.adminurl(),
+                                                                                  from: 'ruchika.s@infiny.in',
+                                                                                  subject: 'Pickcup - Regarding payouts',
+                                                                                  text: 'Payouts transfer failed for shop '+ storeSavedfailedone.cafe_name +'Due to following reason\n\n' +
+                                                                                      err.message + '.' 
+                                                                              };
+                                                                   helper.sendemail(mailOptions,(data)=>{
+                                                                    notes = "transferFailed";
+                                                                   })
+                                                                  
+                                                              });
+                                                        } else {
+                                                          console.log(`i m in success of transfer for shop ${store.cafe_name}`);
+                                                           notes = "transferSuccess";
+                                                            var err="no error";
+                                                             var todaysDate=helper.findCurrentDateinutc();
+                                                             var filePaye=`
+                                                           e
+                                                             Tranfer for  cafe Owner ${store.cafe_name}
+                                                             Amount == ${amountTotransfer}
+                                                             StoreId=${store._id}
+                                                            
+                                                              notransfer=${transfer.destination}
+                                                              this was created at ${todaysDate}
+
+                                                             
+                                                              `
+                                                             fs.appendFileSync(store.id + '.txt', filePaye);
+                                                         
+                                                          var pay = new Payment({
+                                                             destPayment: transfer.destination_payment,
+                                                             dest: transfer.destination,
+                                                             destAmount: transfer.amount,
+                                                             desttrancId: transfer.balance_transaction,
+                                                             desttransferId: transfer.id,
+                                                             shopDetail: storeData._id,
+                                                             detailOfTransfer: actualtransData,
+                                                             notes: notes,
+                                                             paymentDate:todaysDate
+
+                                                          })
+
+                                                          pay.save(function(err) {
+                                                             if (err) {
+                                                                console.log("no err created");
+                                                             }
+
+                                                             console.log("transfer success");
+                                                             //done = true;
+                                                             store_callback();
+
+                                                          })
+                                                        }
+                                                          
+
+                                                     });
+                                                 }
+
+                                          }
+
+                                           
+                                          
+                                       });
+                            
+                                
+                                // configs is now a map of JSON data
+                           });
+                  }
+                  else
+                  {   
+                       var filePay=`Status:::not verified and have accountID`;
+                       fs.appendFileSync(store.id + '.txt', filePay);
+                      console.log("do nothing account else");
+                      store_callback();
+                  }
+                }
+                else
+                {
+                  var filePay=`Status:::no accountID`;
+                  fs.appendFileSync(store.id + '.txt', filePay);
+                  console.log("do nothing>>>>>>>>>>>>>>.no account");
+                     store_callback();
+                }
+
+       
+      }, err => {
+         console.log("i m in loop end");
+          if (err) console.error(err.message);
+         // var filePay=`${'///////////'}`
+         // fs.appendFileSync(store.id + '.txt', filePay);
+          
+          // configs is now a map of JSON data
+      });
+   });
+}
+
+
+
