@@ -22,7 +22,8 @@ var schema = new Schema({
        },
       imageurl: {
       type: String,
-      required: true
+      required: false,
+      default:"noImage"
      },
       isLoggedIn: {
       type: Boolean,
@@ -71,9 +72,14 @@ var schema = new Schema({
    accountdetails_code:String,
    accountdueby:String,
    accountdisabledReason:String,
-      resetPasswordToken: String,
-      resetPasswordExpires: Date,
-      isblocked:Number,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  isblocked:{
+       type: Number,
+       required: true,
+         default:0
+       },
+
       isDelete:Number
 
 },

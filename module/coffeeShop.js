@@ -262,6 +262,253 @@ exports.coffeeShopAddCategory = (req, res) => {
 
 }
 
+exports.coffeeShopEditCategory = (req, res) => {
+
+    var token = req.body.userToken;
+    var decoded = jwt.decode(token, "pickup");
+    console.log(decoded);
+    console.log("decoded");
+    var oldCat = upperCaseFirstLetter(req.body.oldCat);
+    var newCat = upperCaseFirstLetter(req.body.newCat);
+
+   // console.log(newCategory);
+    if (!oldCat) {
+        return res.status(200).json({
+            title: 'No category found',
+            error: "true"
+
+        });
+    }
+    if (!newCat) {
+        return res.status(200).json({
+            title: 'No category found',
+            error: "true"
+
+        });
+    }
+
+    StoreDetail.findOne({
+        "shopName": decoded.data.id
+    }).exec(function(err, coffeeShop) {
+
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+            });
+        }
+
+           if (!coffeeShop) {
+            return res.status(200).json({
+                title: 'No such shop found',
+                error: "true"
+            });
+        }
+
+
+        var totalCat=coffeeShop.category;
+        var search=oldCat in totalCat;
+        if(!search)
+        {
+            return res.status(200).json({
+                title: 'No such category found',
+                error: "true"
+            }); 
+        }
+
+        var keysObject = Object.keys(coffeeShop.category);
+        var categoryAlreadyExist = keysObject.includes(newCat);
+        if (categoryAlreadyExist) {
+            return res.status(200).json({
+                title: 'This edited category already exist',
+                error: "true"
+
+            });
+        }
+         var oldCatData=coffeeShop['category'][oldCat];
+         if(oldCatData.length > 0)
+         {
+           coffeeShop['category'][newCat] = oldCatData;
+         }
+         else
+         {
+           coffeeShop['category'][newCat] = [];
+         }
+
+        delete coffeeShop['category'][oldCat];
+        
+        coffeeShop.markModified('category');
+        coffeeShop.save((err, saved) => {
+
+            
+              if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred while adding data to existing menu',
+                        error: "true",
+                        detail: err
+                    });
+                }
+
+                var keysObject = Object.keys(saved.category);
+                var totalSize = keysObject.length;
+                if (totalSize <= 0) {
+                    return res.status(200).json({
+                        title: 'No category found',
+                        error: "true"
+
+                    });
+                }
+                var itemData = [];
+                IterateObject(saved.category, function(value, name) {
+
+                    var catData = {
+                        itemCategory: name,
+                        itemData: value,
+
+                    }
+                    itemData.push(catData);
+                })
+                res.status(200).json({
+                    title: 'New category added to the existing item',
+                    error: "false",
+                    _id: saved._id,
+                    shopName: saved.shopName,
+                    data: itemData
+
+                });
+
+
+           // return res.status(200).json({
+           //      title: 'Updated succesfully',
+           //      error: "false"
+
+           //  });
+
+
+
+        })
+
+
+
+
+       
+
+
+    });
+
+
+
+}
+
+exports.coffeeShopDeleteCategory = (req, res) => {
+
+
+
+    var token = req.body.userToken;
+    var decoded = jwt.decode(token, "pickup");
+    //console.log(decoded);
+    //console.log("decoded");
+    var oldCat = upperCaseFirstLetter(req.body.oldCat);
+    //var newCat = upperCaseFirstLetter(req.body.newCat);
+
+   // console.log(newCategory);
+    if (!oldCat) {
+        return res.status(200).json({
+            title: 'No category found',
+            error: "true"
+
+        });
+    }
+    console.log(oldCat);
+    StoreDetail.findOne({
+        "shopName": decoded.data.id
+    }).exec(function(err, coffeeShop) {
+
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+            });
+        }
+
+           if (!coffeeShop) {
+            return res.status(200).json({
+                title: 'No such shop found',
+                error: "true"
+            });
+        }
+
+
+        var totalCat=coffeeShop.category;
+        var search=oldCat in totalCat;
+            console.log(search);
+            console.log('search');
+        if(!search)
+        {
+            return res.status(200).json({
+                title: 'No such category found',
+                error: "true"
+            }); 
+        }
+
+        
+
+        
+        delete coffeeShop['category'][oldCat];
+        
+        coffeeShop.markModified('category');
+        coffeeShop.save((err, saved) => {
+
+             if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred while adding data to existing menu',
+                        error: "true",
+                        detail: err
+                    });
+                }
+
+                var keysObject = Object.keys(saved.category);
+                var totalSize = keysObject.length;
+                if (totalSize <= 0) {
+                    return res.status(200).json({
+                        title: 'No category found',
+                        error: "true"
+
+                    });
+                }
+                var itemData = [];
+                IterateObject(saved.category, function(value, name) {
+
+                    var catData = {
+                        itemCategory: name,
+                        itemData: value,
+
+                    }
+                    itemData.push(catData);
+                })
+                res.status(200).json({
+                    title: 'New category added to the existing item',
+                    error: "false",
+                    _id: saved._id,
+                    shopName: saved.shopName,
+                    data: itemData
+
+                });
+
+
+
+
+        })
+
+
+    });
+
+
+}
+
+
 exports.coffeeShopaddMenu = (req, res) => {
 
     var token = req.body.userToken;
@@ -650,12 +897,10 @@ var checkIfPresent = function(value, list) {
 var checkIfnotExpire = function(value) {
         if(value)
         {
-             console.log(value);
-               console.log(" value if");
+             
                if(value.shopDetail)
                {
-                     console.log(value.shopDetail);
-                     console.log(" value if else");
+                     
                      var value_check=value.shopDetail._id; 
                        var enddateData = new Date(value.enddate);
                         enddateData.setHours(0, 0, 0, 0);
@@ -738,7 +983,8 @@ exports.getRewards = (req, res) => {
                  //console.log(Long);
              
         
-                 var TotalDistance = distance(Lat, Long,"134.05839","73.00754");
+         var TotalDistance = distance(Lat, Long, req.body.lat,req.body.lng);
+                 // var TotalDistance = distance(Lat, Long,"134.05839","73.00754");
                  //console.log(TotalDistance);
                  if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0 &&  rewards[i].shopDetail.isblocked == 0) {
                     nearbyCafe.push(rewards[i]);
@@ -761,7 +1007,7 @@ exports.getRewards = (req, res) => {
                   console.log("i count" + i);
                   console.log("rewards.length" + rewards.length);
 
-                  var tempReward = rewards[i];
+                  var tempReward = nearbyCafe[i];
                   console.log(tempReward);
                   console.log('tempReward');
 
@@ -1437,7 +1683,9 @@ exports.coffeeShopVerifyOtp = (req, res) => {
                             });
                         }
 
-                        var msg = "Your order at "+CurrentStoreDetail.cafe_name + " placed succesfully.";
+                        var msg="Thank you for your order at "+CurrentStoreDetail.cafe_name ;
+
+                        // var msg = "Your order at "+CurrentStoreDetail.cafe_name + " is now completed.";
                            var mseg = "Your order has been placed succesfully.";
                         //var msg="Your order  "+savedOrder.orderId +" is ready and your otp is" +savedOrder.otp;
                         // helper.sendNotification(CurrentUserDetail.deviceToken,"orderReady",msg,function(cb)
@@ -1464,7 +1712,7 @@ exports.coffeeShopVerifyOtp = (req, res) => {
                                 helper.sendNotification(CurrentUserDetail.deviceToken, "orderSuccess", msg, (cb) => {
 
                                     res.status(200).json({
-                                        message: 'Otp verified order moved to completed',
+                                        message: 'Otp verified order moved to collected',
                                         error: "false"
                                     });
 

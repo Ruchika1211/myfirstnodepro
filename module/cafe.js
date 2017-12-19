@@ -199,6 +199,9 @@ exports.cafelisting = (req, res) => {
    if (requestData > 1) {
       var skipingData = skip_D * initialData;
    }
+
+   console.log(req.body);
+   console.log("req.body")
    helper.findUser(decoded.user._id, (data) => {
       if (data == "err" || data == "no user Found") {
          return res.status(500).json({
@@ -316,18 +319,20 @@ exports.cafelisting = (req, res) => {
                   for (i in cafes) {
                      var Lat = cafes[i].shopName.position.latitude;
                      var Long = cafes[i].shopName.position.longitude;
-                     // console.log(Lat);
-                     //console.log(Long);
+                     console.log(Lat);
+                     console.log(Long);
+                      console.log(req.body.lat);
+                       console.log(req.body.lng);
                      var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
-                     //console.log(TotalDistance);
+                     console.log(TotalDistance);
                      if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
                         nearbyCafe.push(cafes[i]);
                      }
 
                   }
 
-                  // console.log(nearbyCafe);
-                  //   console.log('nearbyCafe');
+                  console.log(nearbyCafe);
+                    console.log('nearbyCafe');
 
                   reward
                      .find({})
@@ -426,7 +431,8 @@ exports.menulisting = (req, res) => {
 
    StoreDetail.findOne({
       "shopName": toFind
-   }).populate('shopName').exec(function(err, cafes) {
+   }).populate('shopName','status imageurl cafe_name bankDetails position isblocked')
+   .exec(function(err, cafes) {
       if (err) {
          return res.status(500).json({
             title: 'An error occurred',
@@ -530,7 +536,14 @@ exports.coffeeShopLogin = (req, res) => {
          });
       }
 
-      if (coffeeShop.isDelete == 1) {
+       if (parseInt(coffeeShop.isDelete) == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
+         });
+      }
+
+      if (parseInt(coffeeShop.isblocked) == 1) {
          return res.status(200).json({
             title: 'You are blocked.Please contact admin',
             error: "true"
@@ -700,16 +713,30 @@ exports.coffeeShopEditProfile = (req, res) => {
          });
       }
 
+      if (parseInt(user.isDelete) == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
+         });
+      }
+
+      if (parseInt(user.isblocked) == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
+         });
+      }
+
       user.cafe_name = req.body.cafe_name;
       user.storeId = req.body.storeId;
         
          if(imageUpload == "true")
         {
-            user.imageurl = helper.url() + '/stores/' + decoded.data.id;
+            user.imageurl = req.body.imageUrl;
         }
         else
         {
-                user.imageUrl = 'noImage';
+           user.imageUrl = 'noImage';
         }
 
             if(password)
@@ -771,6 +798,20 @@ exports.coffeeShopForgotPassword = (req, res) => {
             title: 'user not found',
             error: "true",
             detail: err
+         });
+      }
+
+       if (parseInt(coffeeShop.isDelete) == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
+         });
+      }
+
+      if (parseInt(coffeeShop.isblocked) == 1) {
+         return res.status(200).json({
+            title: 'You are blocked.Please contact admin',
+            error: "true"
          });
       }
       coffeeShop.resetPasswordToken = token;

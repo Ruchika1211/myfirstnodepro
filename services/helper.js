@@ -61,6 +61,25 @@ module.exports = {
          	return 'http://dev2.infiny.in:3000'
          },
 
+         //  url:function(){
+         //  return 'http://localhost:3000'
+         // },
+
+
+         europeanCountry:function(value){
+          var data=["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB"
+          , "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"];
+          var includedData= data.includes(value);
+          console.log(value);
+          console.log(includedData);
+          if(includedData)
+          {
+            return true;
+          }
+
+          return false;
+         },
+
           adminMailFrom:function(){
           return 'ruchika.s@infiny.in'
          },
@@ -79,8 +98,9 @@ module.exports = {
 
          stripeCharges:function(){
          	var totalCharges={};
-         	totalCharges.percentCharge=2.9
-         	totalCharges.additional=0.2
+         	totalCharges.percentCharge=2.9;
+            totalCharges.percentChargeIfEuropean=1.4;
+         	totalCharges.additional=0.2;
          	return totalCharges
          },
          

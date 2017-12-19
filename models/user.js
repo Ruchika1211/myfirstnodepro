@@ -7,29 +7,35 @@ var schema = new Schema({
       type: String,
      required: true
        },
+
     lastname: {
       type: String,
       required: true
     },
+
     adminSetStatus:  {
        type: Number,
        required: false,
          default:0
        },
+
     password: {
       type: String,
        required: false
      },
+
     email: {
       type: String,
       required: true,
        unique: true
      },
+
     contact: {
        type: String,
        required: false,
        default:""
        },
+
     dob: {
        type: String,
        required: false,
@@ -39,15 +45,19 @@ var schema = new Schema({
           type: String,
           required: false,
           },
+
      imageUrl: {
           type: String,
           required: false,
+          default:"noImage"
           },
+   
      deviceToken:{
         type: Array,
         "default": [],
          required: false,
     },
+
     address: {
           city:{
             type: String,
@@ -65,15 +75,18 @@ var schema = new Schema({
               default:""
           }
         },
+
      isLoggedIn: {
       type: Boolean,
       required: true,
       default:true
       },
+
     stripeId:{
         type: String,
         required: false,
     },
+
     cardDetails:[{
       cardId:{
         type: String,
@@ -89,6 +102,10 @@ var schema = new Schema({
       },
       expiryMonth:{
         type:String,
+        required: false,
+      },
+      isEuropean:{
+        type: Boolean,
         required: false,
       },
       expiryYear:{
@@ -112,7 +129,12 @@ var schema = new Schema({
     }],
     resetPasswordToken: String,
      lastseen: Date,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    isBlocked: {
+       type: Number,
+       required: true,
+         default:0
+       }
 },
   {
     timestamps: true

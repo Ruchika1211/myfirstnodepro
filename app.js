@@ -23,7 +23,7 @@ require('console.table');
 //   //throw result.error
 // }
 
-var path="mongodb://"+process.env.DB_USER+':'+process.env.DB_PASS+'@ds111496.mlab.com:11496/pickup';
+//var path="mongodb://"+process.env.DB_USER+':'+process.env.DB_PASS+'@ds111496.mlab.com:11496/pickup';
 //var busboyBodyParser = require('busboy-body-parser');
 // var messageRoutes = require('./routes/messages');
 // var userRoutes = require('./routes/user');
@@ -42,6 +42,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.use(bodyParser.json({limit: '50mb'}));
+
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

@@ -103,7 +103,7 @@ exports.signup = (req, res) => {
 exports.logoutUser = (req, res) => {
 
     var token = req.body.userToken;
-    console.log(token);
+    console.log(req.body);
     var decoded = jwt.decode(token, "pickup");
     console.log(decoded);
     console.log("decoded");
@@ -134,6 +134,7 @@ exports.logoutUser = (req, res) => {
 
         
         var arrayofToken = user.deviceToken;
+        console.log(arrayofToken);
         var index = arrayofToken.indexOf(req.body.deviceToken);
         if (index > -1) {
             user.deviceToken.splice(index, 1);
@@ -187,7 +188,11 @@ exports.signin = (req, res) => {
             });
         }
 
-        if (user.isblocked == 1) {
+        // console.log(user.isBlocked);
+
+        // console.log('user.isblocked');
+
+        if (parseInt(user.isBlocked) == 1) {
             return res.status(200).json({
                 title: 'You are blocked.Please contact admin',
                 error: "true",
@@ -212,8 +217,7 @@ exports.signin = (req, res) => {
         }
 
         var device_id = req.body.deviceToken;
-        console.log(user.deviceToken);
-        console.log(device_id);
+       
 
         var valueexist = helper.checkIfduplicates(user.deviceToken, device_id);
         console.log(valueexist);
@@ -270,16 +274,7 @@ exports.forgotPassword = (req, res) => {
         length: 7,
         charset: 'numeric'
     });
-    // crypto.randomBytes(5, (err, buf) => {
-    // if (err) {
-    //   return res.status(500).json({
-    //        title: 'Invalid string generated',
-    //        error: err
-    //    });
-    // }
-    // console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
-    // token = buf.toString('hex');
-    // });
+  
     Users.findOne({
         email: req.body.email
     }, (err, user) => {
@@ -299,6 +294,15 @@ exports.forgotPassword = (req, res) => {
 
             });
         }
+
+
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        } 
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
         user.save(function(err) {
@@ -501,6 +505,15 @@ exports.removeUserProfileImage = (req, res) => {
             });
         }
 
+
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
     
                             user.imageUrl = 'noImage';
                    
@@ -570,26 +583,25 @@ exports.editProfile = (req, res) => {
             });
         }
 
-        // var imgName='user._id' + '.png';
-        //   // var fs = require("fs");
-        // var image = req.body.userImage;
-        //  var dir =  require('path').basename(__dirname) + '/upload/';
-        var imgUrl=helper.url() + '/users/' + decoded.user._id + '.jpg';
-        // path.exists('foo.txt', function(exists) { 
-        //           if (exists) { 
-        //             // do something 
-        //           } 
-        //         });
 
-            // imageExiststy(imgUrl, function(exists) {
-                   // console.log(' exists=' + exists);
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
+       // var imageUrl=req.body.imageUrl;
+        
                     if(imageUpload == "true")
                     {
-                         user.imageUrl = helper.url() + '/users/' + decoded.user._id; 
+                        console.log("i m in im");
+                         user.imageUrl =helper.url()+"/users/"+ decoded.user._id;
                     }
                     else
                     {
-                            user.imageUrl = 'noImage';
+                     user.imageUrl = 'noImage';
                     }
 
                     if(password)
@@ -597,17 +609,17 @@ exports.editProfile = (req, res) => {
                       user.password=bcrypt.hashSync(password, bcrypt.genSaltSync(10)); 
                     }
 
-                        user.firstname = req.body.firstname;
-                        user.lastname = req.body.lastname;
-                        user.email = req.body.email;
-                        user.contact= req.body.contact;
-                        user.dob = req.body.dob;
+                    user.firstname = req.body.firstname;
+                    user.lastname = req.body.lastname;
+                    user.email = req.body.email;
+                    user.contact= req.body.contact;
+                    user.dob = req.body.dob;
 
-                        user.address.postalCode = req.body.postalcode;
-                        user.address.address = req.body.address;
-                        user.address.city = req.body.city;
-                        var today = randomstring.generate(7);
-                      
+                    user.address.postalCode = req.body.postalcode;
+                    user.address.address = req.body.address;
+                    user.address.city = req.body.city;
+                        
+                      console.log(user);
 
                         //user.imageUrl = helper.url() + '/users/' + decoded.user._id;
                         user.save((err, user) => {
@@ -674,6 +686,15 @@ exports.editAddCardDetails = (req, res) => {
             });
         }
 
+
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
         user.cardDetails.card_number = req.body.card_number;
         user.cardDetails.expiryDate = new Date(req.body.expiryDate);
         user.cardDetails.cvv = req.body.cvv;
@@ -727,6 +748,15 @@ exports.updateUserlastseen = (req, res) => {
                 title: 'User not found',
                 error: "true",
               
+            });
+        }
+
+        
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
             });
         }
 

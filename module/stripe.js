@@ -247,6 +247,15 @@ exports.payCreateUserCards = (req, res) => {
          });
       }
 
+
+     if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
       if (user.stripeId) {
          stripe.customers.update(user.stripeId, {
                description: "Customer id is " + user.stripeId
@@ -300,6 +309,7 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.brand = source.brand;
                      cardDetailsData.card_name = source.name;
                      cardDetailsData.isPrimary = false;
+                     cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
                      user.cardDetails.push(cardDetailsData);
                      user.save(function(err) {
@@ -372,6 +382,7 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.brand = source.brand;
                      cardDetailsData.card_name = source.name;
                      cardDetailsData.isPrimary = true;
+                     cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
                      user.cardDetails.push(cardDetailsData);
                      user.save(function(err) {
@@ -427,6 +438,7 @@ exports.payCreateUserCards = (req, res) => {
                cardDetailsData.brand = source.brand;
                cardDetailsData.card_name = source.name;
                cardDetailsData.isPrimary = true;
+               cardDetailsData.isEuropean=helper.europeanCountry(source.country);
                console.log(source.fingerprint);
                      console.log('source.fingerprint');
                cardDetailsData.fingerprint=source.fingerprint;
@@ -495,6 +507,15 @@ exports.cardListing = (req, res) => {
          });
       }
 
+
+      if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
       console.log(user);
       console.log('user');
 
@@ -556,6 +577,15 @@ exports.deletecard = (req, res) => {
             error: "false",
 
          });
+      }
+
+
+      if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
       }
 
       var cardPresent = checkIfduplicates(user.cardDetails, req.body.cardId);
@@ -735,6 +765,15 @@ exports.payMakePrimary = (req, res) => {
 
          });
       }
+
+
+      if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
 
       if (user.stripeId) {
          stripe.customers.update(user.stripeId, {
@@ -1410,7 +1449,7 @@ exports.payCharges = (token, amountpaid, callback) => {
 //    });
 // }
 
-exports.checkIfavailablebalance = ( req, res ) => {
+exports.checkIfavailablebalance = (req,res) => {
   Stores.find( {}, ( err, stores ) => {
     if ( err ) {
       console.log( "err while retrieving" + err );
@@ -1540,10 +1579,19 @@ exports.checkIfavailablebalance = ( req, res ) => {
                  fs.appendFileSync( store.id + '.txt', filePay );
               }
               else {
-                var stripeAvailableAmount = balance.available[ 0 ].amount;
+                var stripeAvailableAmount = balance.available[0].amount;
                 var net_Amount = parseInt( totalAmounttoTransfer );
                 var amountTotransfer = parseInt( totalAmounttoTransfer ) * 100;
-                if ( stripeAvailableAmount >= net_Amount && allavailabletran.length >
+                console.log(stripeAvailableAmount >= net_Amount && allavailabletran.length >
+                  0);
+                console.log(amountTotransfer);
+                 console.log(stripeAvailableAmount);
+                 console.log('amountTotransfer::::::::::::::::::::::::::::::::::::');
+                  var filePayDAta=`amountTotransfer::::${amountTotransfer}
+                  netAmount::::${net_Amount}
+                  stripeAvailableAmount::::${stripeAvailableAmount}`;
+                    fs.appendFileSync( store.id + '.txt', filePayDAta );
+                if (stripeAvailableAmount >= net_Amount && allavailabletran.length >
                   0 ) {
                   stripe.transfers.create({
                     amount: amountTotransfer
@@ -1621,12 +1669,12 @@ exports.checkIfavailablebalance = ( req, res ) => {
                       var filePaye =
                         `
                                                  
-                                                   Tranfer for  cafe Owner ${store.cafe_name}
-                                                   Amount == ${amountTotransfer}
-                                                   StoreId=${store._id}
-                                                  
-                                                    notransfer=${transfer.destination}
-                                                    this was created at ${todaysDate}
+                           Tranfer for  cafe Owner ${store.cafe_name}
+                           Amount == ${amountTotransfer}
+                           StoreId=${store._id}
+                          
+                            notransfer=${transfer.destination}
+                            this was created at ${todaysDate}
 
                                                    
                                                     `
@@ -1674,10 +1722,10 @@ exports.checkIfavailablebalance = ( req, res ) => {
                 }
                  else {
 
-                  if(stripeAvailableAmount >= net_Amount)
+                  if(stripeAvailableAmount <= net_Amount)
                   {
                                     var mailOptions = {
-                                      to: coffeeShop.storeId,
+                                      to: store.storeId,
                                       from: helper.adminMailFrom(),
                                       subject: 'Pickcup Payout Failed',
                                       text: '\n\n'+
@@ -1686,11 +1734,12 @@ exports.checkIfavailablebalance = ( req, res ) => {
                                           
                                   };
                             helper.sendemail(mailOptions,(data)=>{
-                                var msg="Your account verification has been failed.";
-                               helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
-                                  res.send(200);
-                                },coffeeShopData.accountStatus);
+                                var msg="transfer failed.";
+                                        store_callback();
+                               // helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
+                               //    console.log("message send");
+                               //    res.send(200);
+                               //  },coffeeShopData.accountStatus);
                             })
                   }
                   else
@@ -1721,13 +1770,12 @@ exports.checkIfavailablebalance = ( req, res ) => {
     }, err => {
       console.log( "i m in loop end" );
       if ( err ) console.error( err.message );
-      res.status( 200 )
-        .json( {
+      res.status(200).json({
           data: "sucess"
-        } );
+        });
       // var filePay=`${'///////////'}`
       // fs.appendFileSync(store.id + '.txt', filePay);
       // configs is now a map of JSON data
-    } );
+    });
   } );
 }

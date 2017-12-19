@@ -173,3 +173,500 @@
 
                         // configs is now a map of JSON data
                     });
+
+exports.cartListing = (req, res) => {
+
+   var token = req.body.userToken;
+   var decoded = jwt.decode(token, "pickup");
+   var canClaimedReward = "false";
+   var adminTax = helper.adminChargesforUser();
+   var stripeCharge = helper.stripeCharges();
+     var shopDetail = req.body.shopDetail;
+      var dataDetails={};
+         var rewardQuantity=0;
+                      var rewardCompleted=0;
+     if(shopDetail)
+     {
+        helper.findShopownerwith(shopDetail, function(cb) {
+       CurrentStoreDetail = cb;
+      
+       dataDetails.shopDetail=CurrentStoreDetail
+         // console.log(CurrentStoreDetail);
+       console.log('CurrentStoreDetail');
+
+        });
+     }
+   
+   // console.log(stripeCharge);
+   // console.log('stripeCharge');
+   // console.log(adminTax);
+   // console.log('adminTax');
+   tempOrder
+      .findOne({
+         "userDetail": decoded.user._id
+      })
+      .populate('userDetail', 'cardDetails')
+      .populate('shopDetail', 'status imageurl cafe_name status rating')
+      .exec(function(err, user) {
+         if (err) {
+            return res.status(500).json({
+               title: 'An error occurred',
+               error: "true",
+               detail: err
+            });
+         }
+       
+         // console.log(shopDetail);
+         // console.log('shopDetail');
+         // console.log(user);
+         if (shopDetail) {
+            console.log(stripeCharge);
+            console.log('stripeCharge');
+            console.log(adminTax);
+            console.log('adminTax');
+            reward
+               .find({
+                  "shopDetail": shopDetail
+               })
+               .exec(function(err, reward) {
+                  // console.log("reward>>>>>>>>>>>>>>>>>");
+                  // console.log(reward);
+                  if (err || reward.length <= 0) {
+                     canClaimedReward = "false";
+                     if (!user) {
+                       console.log("i m in not user");
+                        return res.status(200).json({
+                           title: 'No order in cart found for this user',
+                           error: "true",
+
+                           canClaimedReward: canClaimedReward,
+                           adminTax: adminTax,
+                           stripeCharge: stripeCharge,
+                           data:dataDetails,
+                           rewardQuantity:rewardQuantity,
+                          rewardCompleted:rewardCompleted
+
+                        });
+                     }
+
+                     res.status(200).json({
+                        title: 'Cart item found',
+                        error: "false",
+                        canClaimedReward: canClaimedReward,
+                        data: user,
+                        adminTax: adminTax,
+                        stripeCharge: stripeCharge,
+                        rewardQuantity:rewardQuantity,
+                        rewardCompleted:rewardCompleted
+
+                     });
+                  } else {
+                     
+                      var userClaimedrewd;
+                   
+                     for(i in reward)
+                     {
+                          var enddateData = new Date(reward[i].enddate);
+                           enddateData.setHours(0, 0, 0, 0);
+                           var startdateData = new Date(reward[i].startdate);
+                           startdateData.setHours(0, 0, 0, 0);
+
+                            var dateDat = new Date();
+                           var timezone=moment.tz.guess();
+                          // console.log(moment.tz.guess());
+                           var dec = moment.tz(dateDat,timezone);
+                           console.log(dec);
+                           console.log('dec');
+                           var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
+
+                           var dateData  = new Date(dateDatat) ;
+                           console.log(dateData);
+                           console.log('dateData');
+
+                           console.log(enddateData);
+                           console.log(startdateData);
+                           console.log(dateData);
+                           if ((enddateData >= dateData) && (startdateData <= dateData)) {
+
+                                rewardQuantity=reward[i].quantity;
+                              usersReward
+                                 .findOne({
+                                    "shopDetail": shopDetail,
+                                    "userDetail": decoded.user._id,
+                                    "rewardId": reward[i]._id
+                                 })
+                                 .exec(function(err, userreward) {
+
+                                    if (err || !userreward) {
+                                       canClaimedReward = "false";
+                                    }
+                                    else if (userreward.claimedReward) {
+                                       canClaimedReward = "true";
+                                       userClaimedrewd=true;
+                                       rewardCompleted=userreward.rewardCompleted;
+                                    } else {
+                                       canClaimedReward = "false";
+                                       rewardCompleted=userreward.rewardCompleted;
+                                    }
+                                    console.log("i m in userreward");
+                                    console.log(userClaimedrewd);
+                                    console.log(canClaimedReward);
+
+
+
+                                 })
+                           }
+                           
+                     }
+
+                     if(userClaimedrewd)
+                     {
+                         console.log("i m in userreward loop");
+                          console.log(canClaimedReward);
+
+                          if (!user) {
+
+                           return res.status(200).json({
+                              title: 'No order in cart found for this user',
+                              error: "true",
+                              canClaimedReward: canClaimedReward,
+                              adminTax: adminTax,
+                              stripeCharge: stripeCharge,
+                              data:dataDetails,
+                             rewardQuantity:rewardQuantity,
+                              rewardCompleted:rewardCompleted
+
+
+                           });
+                        }
+
+                        res.status(200).json({
+                           title: 'Cart item found',
+                           error: "false",
+                           canClaimedReward: canClaimedReward,
+                           data: user,
+                           adminTax: adminTax,
+                           stripeCharge: stripeCharge,
+                           rewardQuantity:rewardQuantity,
+                           rewardCompleted:rewardCompleted
+
+                        });
+                     }
+                     else
+                     {
+                        console.log("loop else>>>>>>>>>>>>");
+
+                         if (!user) {
+
+                                 return res.status(200).json({
+                                    title: 'No order in cart found for this user',
+                                    error: "true",
+                                    canClaimedReward: canClaimedReward,
+                                    adminTax: adminTax,
+                                    stripeCharge: stripeCharge,
+                                    data:dataDetails,
+                                    rewardQuantity:rewardQuantity,
+                                    rewardCompleted:rewardCompleted
+
+
+                                 });
+                              }
+
+                              res.status(200).json({
+                                 title: 'Cart item found',
+                                 error: "false",
+                                 canClaimedReward: canClaimedReward,
+                                 data: user,
+                                 adminTax: adminTax,
+                                 stripeCharge: stripeCharge,
+                                 rewardQuantity:rewardQuantity,
+                                    rewardCompleted:rewardCompleted
+                              });
+
+                     }
+                    
+                  }
+
+               })
+         } else {
+            console.log(stripeCharge);
+            console.log('stripeCharge');
+            console.log(adminTax);
+            console.log('adminTax');
+            console.log("i m in ek");
+            console.log(user);
+            if (!user) {
+
+               return res.status(200).json({
+                  title: 'No order in cart found for this user',
+                  error: "true",
+                  canClaimedReward: canClaimedReward,
+                  adminTax: adminTax,
+                  stripeCharge: stripeCharge,
+                  rewardQuantity:rewardQuantity,
+                  rewardCompleted:rewardCompleted
+
+               });
+            }
+
+            reward
+               .find({
+                  "shopDetail": user.shopDetail
+               })
+               .exec(function(err, reward) {
+                  console.log("reward>>>>>>>>>>>>>>>>>");
+                  console.log(reward);
+                  if (err || reward.length<=0) {
+                     canClaimedReward = "false";
+
+                     if (!user) {
+
+                        return res.status(200).json({
+                           title: 'No order in cart found for this user',
+                           error: "true",
+                           canClaimedReward: canClaimedReward,
+                           adminTax: adminTax,
+                           stripeCharge: stripeCharge,
+                           rewardQuantity:rewardQuantity,
+                           rewardCompleted:rewardCompleted
+
+                        });
+                     }
+
+                     res.status(200).json({
+                        title: 'Cart item found',
+                        error: "false",
+                        canClaimedReward: canClaimedReward,
+                        data: user,
+                        adminTax: adminTax,
+                        stripeCharge: stripeCharge,
+                        rewardQuantity:rewardQuantity,
+                       rewardCompleted:rewardCompleted
+                     });
+                  } else {
+
+                       var userClaimedrewd;
+                   
+                     for(i in reward)
+                     {
+                          var done = false;
+                          var enddateData = new Date(reward[i].enddate);
+                           enddateData.setHours(0, 0, 0, 0);
+                           var startdateData = new Date(reward[i].startdate);
+                           startdateData.setHours(0, 0, 0, 0);
+                           var dateDat = new Date();
+                           var timezone=moment.tz.guess();
+                          // console.log(moment.tz.guess());
+                           var dec = moment.tz(dateDat,timezone);
+                           console.log(dec);
+                           console.log('dec');
+                           var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
+
+                           var dateData  =new Date(dateDatat) ;
+                           console.log(dateData);
+                           console.log('dateData');
+
+                           console.log(enddateData);
+                           console.log(startdateData);
+                           console.log(dateData);
+
+                           console.log(enddateData);
+                           console.log(startdateData);
+                           console.log(dateData);
+                           if ((enddateData >= dateData) && (startdateData <= dateData)) {
+                                rewardQuantity=reward[i].quantity;
+                                  console.log('userreward before');
+                            
+                                 console.log('userreward');
+                              usersReward
+                                 .findOne({
+                                    "shopDetail": user.shopDetail,
+                                    "userDetail": decoded.user._id,
+                                    "rewardId": reward[i]._id
+                                 })
+                                 .exec(function(err, userreward) {
+                                 console.log(userreward);
+                                    if (err || !userreward) {
+                                       canClaimedReward = "false";
+                                    }
+                                    else if (userreward.claimedReward) {
+                                       canClaimedReward = "true";
+                                       userClaimedrewd=true;
+                                       rewardCompleted=userreward.rewardCompleted;
+                                    } else {
+                                       canClaimedReward = "false";
+                                       rewardCompleted=userreward.rewardCompleted;
+                                    }
+                                     done = true;
+
+
+
+                                 })
+
+                           }
+                           else
+                           {
+                               done = true;
+                           }
+                         require('deasync').loopWhile(function(){return !done;});  
+                     }
+
+                     if(userClaimedrewd)
+                     {
+                                if (!user) {
+
+                                 return res.status(200).json({
+                                    title: 'No order in cart found for this user',
+                                    error: "true",
+                                    canClaimedReward: canClaimedReward,
+                                    adminTax: adminTax,
+                                    stripeCharge: stripeCharge,
+                                    data:dataDetails,
+                                   rewardQuantity:rewardQuantity,
+                                    rewardCompleted:rewardCompleted
+
+
+                                 });
+                              }
+
+                              res.status(200).json({
+                                 title: 'Cart item found',
+                                 error: "false",
+                                 canClaimedReward: canClaimedReward,
+                                 data: user,
+                                 adminTax: adminTax,
+                                 stripeCharge: stripeCharge,
+                                 rewardQuantity:rewardQuantity,
+                                 rewardCompleted:rewardCompleted
+
+                              });
+                     }
+                     else
+                     {
+
+                         if (!user) {
+
+                                 return res.status(200).json({
+                                    title: 'No order in cart found for this user',
+                                    error: "true",
+                                    canClaimedReward: canClaimedReward,
+                                    adminTax: adminTax,
+                                    stripeCharge: stripeCharge,
+                                    data:dataDetails,
+                                    rewardQuantity:rewardQuantity,
+                                    rewardCompleted:rewardCompleted
+
+
+                                 });
+                              }
+
+                              res.status(200).json({
+                                 title: 'Cart item found',
+                                 error: "false",
+                                 canClaimedReward: canClaimedReward,
+                                 data: user,
+                                 adminTax: adminTax,
+                                 stripeCharge: stripeCharge,
+                                 rewardQuantity:rewardQuantity,
+                                    rewardCompleted:rewardCompleted
+                              });
+
+                     }
+
+
+                     // var enddateData = new Date(reward.enddate);
+                     // enddateData.setHours(0, 0, 0, 0);
+                     // var startdateData = new Date(reward.startdate);
+                     // startdateData.setHours(0, 0, 0, 0);
+
+                     // var dateData = new Date();
+                     // dateData.setHours(0, 0, 0, 0);
+
+                     // console.log(enddateData);
+                     // console.log(startdateData);
+                     // console.log(dateData);
+                     // if ((enddateData >= dateData) && (startdateData <= dateData)) {
+
+                     //    usersReward
+                     //       .findOne({
+                     //          "shopDetail": user.shopDetail._id,
+                     //          "userDetail": decoded.user._id,
+                     //          "rewardId": reward._id
+                     //       })
+                     //       .exec(function(err, userreward) {
+
+                     //          if (err || !userreward) {
+                     //             canClaimedReward = "false";
+                     //          }
+                     //          if (userreward) {
+                     //             if (userreward.claimedReward) {
+                     //                canClaimedReward = "true";
+                     //             } else {
+                     //                canClaimedReward = "false";
+                     //             }
+                     //          } else {
+                     //             canClaimedReward = "false";
+                     //          }
+
+                     //          if (!user) {
+
+                     //             return res.status(200).json({
+                     //                title: 'No order in cart found for this user',
+                     //                error: "true",
+                     //                canClaimedReward: canClaimedReward,
+                     //                adminTax: adminTax,
+                     //                stripeCharge: stripeCharge
+
+                     //             });
+                     //          }
+
+                     //          res.status(200).json({
+                     //             title: 'Cart item found',
+                     //             error: "false",
+                     //             canClaimedReward: canClaimedReward,
+                     //             data: user,
+                     //             adminTax: adminTax,
+                     //             stripeCharge: stripeCharge
+                     //          });
+
+                     //       })
+                     // } else {
+                     //    canClaimedReward = "false";
+                     //    if (!user) {
+
+                     //       return res.status(200).json({
+                     //          title: 'No order in cart found for this user',
+                     //          error: "true",
+                     //          canClaimedReward: canClaimedReward,
+                     //          adminTax: adminTax,
+                     //          stripeCharge: stripeCharge
+
+                     //       });
+                     //    }
+
+                     //    res.status(200).json({
+                     //       title: 'Cart item found',
+                     //       error: "false",
+                     //       canClaimedReward: canClaimedReward,
+                     //       data: user,
+                     //       adminTax: adminTax,
+                     //       stripeCharge: stripeCharge
+                     //    });
+                     // }
+
+                  }
+
+               })
+
+            // res.status(200).json({
+            //                          title: 'No order in cart found for this user',
+            //                          error: "false",
+            //                          canClaimedReward:false,
+            //                          data: user
+
+            //                      });
+
+         }
+
+      })
+}

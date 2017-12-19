@@ -12,6 +12,10 @@ var fs = require('fs');
 var moment = require('moment-timezone');
 var cronJob = require('cron').CronJob;
 var timeZone=moment.tz.guess();
+var Users = require('../../models/user');
+var Stores = require('../../models/cafeListing');
+var randomstring = require("randomstring");
+var helper = require('../../services/helper.js');
 
 
 
@@ -58,32 +62,35 @@ console.log('job1 status', job.running);
 
 var transferOnSeven = new cronJob({
   //cronTime: '05 * * * * *',
-cronTime: '0 30 10 7 * *',
+cronTime: '00 00 11 7 * *',
   onTick: function() {
-    console.log("ending reward ");
-      Stripe.checkIfavailablebalance();
+    console.log("ending reward of stripe");
+      Stripe.checkIfavailablebalance(req,res);
   // Runs everyday
   // at exactly 12:00:00 AM.
 
   },
   start: false,
-  timeZone:timeZone
+  timeZone:'Asia/Kolkata'
 });
 
+console.log('job3 status', transferOnSeven.running);
+
 transferOnSeven.start();
+console.log('job3 status', transferOnSeven.running);
 
 var transferOnTwentySix = new cronJob({
   //cronTime: '05 * * * * *',
 cronTime: '00 30 10 26 * *',
   onTick: function() {
     console.log("ending reward ");
-       Stripe.checkIfavailablebalance();
+       Stripe.checkIfavailablebalance(req,res);
   // Runs everyday
   // at exactly 12:00:00 AM.
 
   },
   start: false,
-  timeZone: timeZone
+  timeZone: 'Asia/Kolkata'
 });
 
 transferOnTwentySix.start();
@@ -169,53 +176,6 @@ router.post('/coffeeShopResetPassword', function (req, res, next) {
       Cafe.coffeeShopResetPassword(req,res);
 });
 
-
-// router.post('/editProfile', function (req, res, next) {
-     
-//      User.editProfile(req,res);
-// });
-
-
-
-// THis function is used to check if token is present or not if not it will through error
-// router.use(function (req, res, next) {
-
-//   var token=req.body.userToken;
-//   if(!token)
-//   {
-//     return res.status(500).json({
-//                   title: 'User not verified security issue',
-                  
-//               });
-//   }
-
-//     next();
-
-
-// });
-
-
-
-
-
-
-router.post('/editAddCardDetails', function (req, res, next) {
-
-      User.editAddCardDetails(req,res);
-});
-
-router.post('/logoutUser', function (req, res, next) {
-
-      User.logoutUser(req,res);
-});
-
-
-
-
-router.post('/removeUserProfileImage', function (req, res, next) {
-
-      User.removeUserProfileImage(req,res);
-});
 
 
 router.post('/editProfile', function (req, res, next) {
@@ -354,147 +314,621 @@ router.post('/editProfile', function (req, res, next) {
 
 });
 
+// router.post('/editProfile', function(req, res, next) {
+//             var token = req.headers.usertoken;
+//             var imageexist = req.headers.imageexist;
+//              var decoded = jwt.decode(token, "pickup");
+//             console.log(imageexist);
+//             console.log('imageexist>>>>>>>>>>>>>>>');
+//             var tokenRan = randomstring.generate({
+//                 length: 7,
+//                 charset: 'numeric'
+//             });
+//             console.log(decoded);
+//             var Imagename = decoded.user._id + tokenRan + '.jpg';
+//             var tempImagename = decoded.user._id + tokenRan;
 
-router.post('/coffeeShopEditProfile', function (req, res, next) {
- 
-   var token=req.headers.usertoken;
+//             var dir = './uploads/users';
+//             const path = require('path');
+//             const sep = path.sep;
+//             const initDir = path.isAbsolute(dir) ? sep : '';
+//             dir.split(sep).reduce((parentDir, childDir) => {
+//                 const curDir = path.resolve(parentDir, childDir);
+//                 if (!fs.existsSync(curDir)) {
+//                     fs.mkdirSync(curDir);
+//                 }
+//                 return curDir;
+//             }, initDir);
+
+
+//             Users.findOne({
+//                 "_id": decoded.user._id
+//             }, (err, user) => {
+
+//                 if (err) {
+//                     return res.status(500).json({
+//                         title: 'An error occurred',
+//                         error: "true",
+//                         detail: err
+//                     });
+//                 }
+//                 if (!user) {
+//                     return res.status(200).json({
+//                         title: 'User not exist',
+//                         error: "true",
+//                         detail: err
+//                     });
+//                 }
+
+
+//                 if (imageexist == 'true' || imageexist == true) {
+                 
+//                    console.log(process.cwd());
+//                    var urlOfimage=user.imageUrl;
+//                    if(!(urlOfimage == "noImage"))
+//                    {
+//                      var resUrl = urlOfimage.replace(helper.url()+"/users/", "");
+                
+//                     fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '_small.jpg');
+//                     fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '_medium.jpg');
+//                     fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '.jpg');
+//                     console.log(Imagename);
+//                     console.log(tempImagename);
+//                    }
+                   
+//                     var storage = multer.diskStorage({
+//                         destination: function(req, file, callback) {
+//                             callback(null, dir);
+//                         },
+//                         filename: function(req, file, callback) {
+//                             console.log(file);
+//                             callback(null, Imagename);
+//                         }
+//                     });
+
+
+//                     var upload = multer({
+//                         storage: storage
+//                     }).single('files')
+//                     upload(req, res, function(err) {
+//                       console.log('"""""""""""""""""""""""'+err);
+//                         req.body.imageUrl = helper.url() + '/users/' + decoded.user._id + tokenRan;
+//                         if (err) {
+//                             console.log(err);
+//                             console.log('err');
+//                             User.editProfile(req, res);
+//                         } else {
+//                             console.log(imageexist);
+//                             console.log('imageexist');
+//                             console.log('allData');
+//                             if (imageexist == "true") {
+//                                 console.log("if");
+//                                 var thumb = require('node-thumbnail').thumb;
+//                                 User.editProfile(req, res);
+//                                 thumb({
+//                                     prefix: '',
+//                                     suffix: '_small',
+//                                     source: dir + '/' + Imagename,
+//                                     destination: './uploads/users',
+//                                     width: 100,
+//                                     overwrite: true,
+//                                     concurrency: 4,
+//                                     basename: tempImagename
+//                                 }).then(function() {
+//                                     console.log('Success  width: 100');
+//                                     //User.editProfile(req,res);
+//                                 }).catch(function(e) {
+//                                     console.log('Error  width: 100', e.toString());
+//                                 });
+
+//                                 thumb({
+//                                     prefix: '',
+//                                     suffix: '_medium',
+//                                     source: dir + '/' + Imagename,
+//                                     destination: './uploads/users',
+//                                     width: 200,
+//                                     overwrite: true,
+//                                     concurrency: 4,
+//                                     basename: tempImagename
+//                                 }).then(function() {
+//                                     console.log('Success  width: 200');
+
+//                                 }).catch(function(e) {
+//                                     console.log('Error  width: 200', e.toString());
+//                                 });
+
+
+//                             } else {
+//                                 console.log("ifgftf");
+//                                 User.editProfile(req, res);
+//                             }
+
+//                             //console.log(allData);
+
+
+
+//                         }
+
+//                     })
+
+
+
+
+//                 } else {
+//                    // var urlOfimage=user.imageUrl;
+//                    // if(!(urlOfimage == "noImage"))
+//                    // {
+//                    //   var resUrl = urlOfimage.replace(helper.url()+"/users/", "");
+                
+//                    //  fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '_small.jpg');
+//                    //  fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '_medium.jpg');
+//                    //  fs.unlinkSync(process.cwd() +'/uploads/users/'+resUrl+ '.jpg');
+//                    //  console.log(Imagename);
+//                    //  console.log(tempImagename);
+//                    // }
+                   
+//                     User.editProfile(req, res);
+//                 }
+
+//               })
+//  });
+
+
+
+router.post('/coffeeShopEditProfile', function(req, res, next) {
+
+    var token = req.headers.usertoken;
     var decoded = jwt.decode(token, "pickup");
-    var Imagename=decoded.data.id;
-     var imageexist=req.headers.imageexist;
-    var tempdir = './uploads';
-    //var thumb= './uploads/stores/storeThumb';
-     var dattat=fs.existsSync(dir);
-       var dir = './uploads/stores';
-       console.log(decoded);
-          console.log(req.files);
-       console.log('decoded');
-    if (!fs.existsSync(tempdir)){
-        fs.mkdirSync(tempdir,function(err,datta){
-          if(err){
-            console.log("errrrr");
-          }
-          else
-          {
-               if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir,function(err,datta){
-               if(err){
-                console.log("errrrr");
-               }
-               else
-               {
-                console.log("created folder succesfully");
-               }
-             })
-              }
+
+    var imageexist = req.headers.imageexist;
+
+
+    var tokenRan = randomstring.generate({
+        length: 7,
+        charset: 'numeric'
+    });
+    console.log(decoded);
+    var Imagename = decoded.data.id + tokenRan + '.jpg';
+    var tempImagename = decoded.data.id + tokenRan;
+
+    var dir = './uploads/stores';
+    const path = require('path');
+    const sep = path.sep;
+    const initDir = path.isAbsolute(dir) ? sep : '';
+    dir.split(sep).reduce((parentDir, childDir) => {
+        const curDir = path.resolve(parentDir, childDir);
+        if (!fs.existsSync(curDir)) {
+            fs.mkdirSync(curDir);
         }
-        });
-    }
-    else
-    {
-       if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir,function(err,datta){
-                   if(err){
-                    console.log("errrrr");
-                   }
-                   else
-                   {
-                    console.log("created folder succesfully");
-                   }
-                })
-              }
-    }
-    var storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-      callback(null,dir);
-    },
-    filename: function(req, file, callback) {
-      console.log(file);
-      callback(null, Imagename+ '.jpg');
-    }
-  });
-     console.log('if of img');
-    var upload = multer({
-    storage: storage
-    }).single('files')
-    upload(req, res, function(err) {
-      if(err)
-      {
-        console.log(err);
-        console.log('err');
-      }
-      else{
-         console.log(imageexist);
-            console.log('imageexist');
-            console.log('allData');
+        return curDir;
+    }, initDir);
+
+
+    Stores.findOne({
+        "_id": decoded.data.id
+    }, {
+        'bankDetails': 0,
+        'incomesourceDetail': 0,
+        'totalamounttotransfer': 0,
+        'bankAccountId': 0
+    }, (err, user) => {
+
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+            });
+        }
+        if (!user) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
+
+        if (imageexist == 'true' || imageexist == true) {
+
+            console.log(process.cwd());
+            var urlOfimage = user.imageurl;
+            console.log(urlOfimage);
+            if (!(urlOfimage == "noImage")) {
+                var resUrl = urlOfimage.replace(helper.url()+"/stores/", "");
+                     fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_large.jpg');
+                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_small.jpg');
+                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_medium.jpg');
+                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '.jpg');
+                console.log(Imagename);
+                console.log(tempImagename);
+            }
+
+            var storage = multer.diskStorage({
+                destination: function(req, file, callback) {
+                    callback(null, dir);
+                },
+                filename: function(req, file, callback) {
+                    console.log(file);
+                    callback(null, Imagename);
+                }
+            });
+
+
+            var upload = multer({
+                storage: storage
+            }).single('files')
+            upload(req, res, function(err) {
+                console.log('"""""""""""""""""""""""' + err);
+                req.body.imageUrl = helper.url() + '/stores/' + decoded.data.id + tokenRan;
+                if (err) {
+                    console.log(err);
+                    console.log('err');
+                } else {
+                    console.log(imageexist);
+                    console.log('imageexist');
+                    console.log('allData');
+
+
+                    var src = './uploads/stores/' + Imagename;
+                    var thumb = require('node-thumbnail').thumb;
+                    if (imageexist == "true") {
+                        thumb({
+                            prefix: '',
+                            suffix: '_small',
+                            source: src,
+                            destination: dir,
+                            width: 200,
+                            overwrite: true,
+                            concurrency: 4,
+                            basename: tempImagename,
+                            logger: function(message) {
+                                console.log(message);
+                            }
+                        }).then(function() {
+                            console.log('Success  width: 200');
+                        }).catch(function(e) {
+                            console.log('Error  width: 200', e.toString());
+                        });
+
+                        thumb({
+                            prefix: '',
+                            suffix: '_medium',
+                            source: src,
+                            destination: dir,
+                            width: 300,
+                            overwrite: true,
+                            concurrency: 4,
+                            basename: tempImagename,
+                        }).then(function() {
+                            console.log('Success  width: 300');
+
+                        }).catch(function(e) {
+                            console.log('Error  width: 300', e.toString());
+                        });
+                      
+
+
+                        thumb({
+                            prefix: '',
+                            suffix: '_large',
+                            source: src,
+                            destination: dir,
+                            width: 400,
+                            overwrite: true,
+                            concurrency: 4,
+                            basename: tempImagename,
+                        }).then(function() {
+                            console.log('Success  width: 400');
+
+                        }).catch(function(e) {
+                            console.log('Error  width: 400', e.toString());
+                        });
+                          Cafe.coffeeShopEditProfile(req, res);
+
+                    } else {
+                        Cafe.coffeeShopEditProfile(req, res);
+                    }
+
+
+                }
+
+            })
+
+
+
+
+        } else {
+            Cafe.coffeeShopEditProfile(req, res);
+        }
+
+    });
+
+
+
+
+});
+
+
+// router.post('/coffeeShopEditProfile', function (req, res, next) {
+ 
+//    var token=req.headers.usertoken;
+//     var decoded = jwt.decode(token, "pickup");
+//     var Imagename=decoded.data.id;
+//      var imageexist=req.headers.imageexist;
+//     var tempdir = './uploads';
+//     //var thumb= './uploads/stores/storeThumb';
+//      var dattat=fs.existsSync(dir);
+//        var dir = './uploads/stores';
+//        console.log(decoded);
+//           console.log(req.files);
+//        console.log('decoded');
+//     if (!fs.existsSync(tempdir)){
+//         fs.mkdirSync(tempdir,function(err,datta){
+//           if(err){
+//             console.log("errrrr");
+//           }
+//           else
+//           {
+//                if (!fs.existsSync(dir)){
+//                 fs.mkdirSync(dir,function(err,datta){
+//                if(err){
+//                 console.log("errrrr");
+//                }
+//                else
+//                {
+//                 console.log("created folder succesfully");
+//                }
+//              })
+//               }
+//         }
+//         });
+//     }
+//     else
+//     {
+//        if (!fs.existsSync(dir)){
+//                 fs.mkdirSync(dir,function(err,datta){
+//                    if(err){
+//                     console.log("errrrr");
+//                    }
+//                    else
+//                    {
+//                     console.log("created folder succesfully");
+//                    }
+//                 })
+//               }
+//     }
+//     var storage = multer.diskStorage({
+//     destination: function(req, file, callback) {
+//       callback(null,dir);
+//     },
+//     filename: function(req, file, callback) {
+//       console.log(file);
+//       callback(null, Imagename+ '.jpg');
+//     }
+//   });
+//      console.log('if of img');
+//     var upload = multer({
+//     storage: storage
+//     }).single('files')
+//     upload(req, res, function(err) {
+//       if(err)
+//       {
+//         console.log(err);
+//         console.log('err');
+//       }
+//       else{
+//          console.log(imageexist);
+//             console.log('imageexist');
+//             console.log('allData');
 
           
-         var src='./uploads/stores/'+Imagename+ '.jpg';
-         var thumb = require('node-thumbnail').thumb;
-         if(imageexist == "true")
-         {
-          thumb({
-             prefix: '',
-             suffix: '_small',
-             source:src,
-             destination: dir,
-             width: 200,
-              overwrite: true,
-             concurrency: 4,
-             basename:Imagename,
-             logger: function(message) {
-                console.log(message);
-              }
-            }).then(function() {
-                 console.log('Success  width: 200');
-               }).catch(function(e) {
-                  console.log('Error  width: 200', e.toString());
-                });
+//          var src='./uploads/stores/'+Imagename+ '.jpg';
+//          var thumb = require('node-thumbnail').thumb;
+//          if(imageexist == "true")
+//          {
+//           thumb({
+//              prefix: '',
+//              suffix: '_small',
+//              source:src,
+//              destination: dir,
+//              width: 200,
+//               overwrite: true,
+//              concurrency: 4,
+//              basename:Imagename,
+//              logger: function(message) {
+//                 console.log(message);
+//               }
+//             }).then(function() {
+//                  console.log('Success  width: 200');
+//                }).catch(function(e) {
+//                   console.log('Error  width: 200', e.toString());
+//                 });
 
-          thumb({
-               prefix: '',
-               suffix: '_medium',
-               source: src,
-               destination:dir,
-               width: 300,
-                overwrite: true,
-               concurrency: 4,
-               basename:Imagename,
-              }).then(function() {
-                    console.log('Success  width: 300');
+//           thumb({
+//                prefix: '',
+//                suffix: '_medium',
+//                source: src,
+//                destination:dir,
+//                width: 300,
+//                 overwrite: true,
+//                concurrency: 4,
+//                basename:Imagename,
+//               }).then(function() {
+//                     console.log('Success  width: 300');
                   
-                  }).catch(function(e) {
-                    console.log('Error  width: 300', e.toString());
-              });
-            Cafe.coffeeShopEditProfile(req,res);
+//                   }).catch(function(e) {
+//                     console.log('Error  width: 300', e.toString());
+//               });
+//             Cafe.coffeeShopEditProfile(req,res);
 
 
-             thumb({
-                     prefix: '',
-                     suffix: '_large',
-                     source: src,
-                     destination:dir,
-                     width: 400,
-                      overwrite: true,
-                     concurrency: 4,
-                      basename:Imagename,
-                    }).then(function() {
-                          console.log('Success  width: 400');
+//              thumb({
+//                      prefix: '',
+//                      suffix: '_large',
+//                      source: src,
+//                      destination:dir,
+//                      width: 400,
+//                       overwrite: true,
+//                      concurrency: 4,
+//                       basename:Imagename,
+//                     }).then(function() {
+//                           console.log('Success  width: 400');
                          
-                        }).catch(function(e) {
-                          console.log('Error  width: 400', e.toString());
-                        });
+//                         }).catch(function(e) {
+//                           console.log('Error  width: 400', e.toString());
+//                         });
                
-         }
-         else
-         {
-           Cafe.coffeeShopEditProfile(req,res);
-         }
+//          }
+//          else
+//          {
+//            Cafe.coffeeShopEditProfile(req,res);
+//          }
          
         
-      }
+//       }
      
-    })
+//     })
+// });
+
+router.post('/coffeeShopLogout', function (req, res, next) {
+
+     Cafe.coffeeShopLogout(req,res);
 });
+
+
+router.post('/logoutUser', function (req, res, next) {
+
+      User.logoutUser(req,res);
+});
+
+
+// router.post('/editProfile', function (req, res, next) {
+     
+//      User.editProfile(req,res);
+// });
+
+
+
+// THis function is used to check if token is present or not if not it will through error
+router.use(function (req, res, next) {
+
+  var token=req.body.userToken;
+  var decoded = jwt.decode(token, "pickup");
+  console.log(decoded);
+    console.log(token);
+ 
+  if(!token)
+  {
+      console.log("middleware  if ");
+    return res.status(500).json({
+                  title: 'User not verified security issue',
+                  
+              });
+  }
+  else if(decoded.data)
+  {
+          console.log("middleware else if store");
+       Stores.findOne({
+      "_id": decoded.data.id
+   },{'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0}, (err, user) => {
+
+      if (err) {
+         return res.status(500).json({
+            title: 'An error occurred',
+            error: "true",
+            detail: err
+         });
+      }
+      if (!user) {
+        return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+      }
+
+       if (parseInt(user.isblocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+      
+        next()
+
+    })
+  }
+  else if(decoded.user){
+       console.log("middleware else if user");
+       Users.findOne({
+        "_id": decoded.user._id
+    }, (err, user) => {
+
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+            });
+        }
+        if (!user) {
+            return res.status(500).json({
+                title: 'User not found',
+                error: "true",
+              
+            });
+        }
+
+        if (parseInt(user.isBlocked) == 1) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+      
+        next()
+
+      })
+
+
+  }
+  else
+  {
+      console.log("middleware else");
+      
+        next();
+  }
+
+
+
+    //next();
+
+
+});
+
+
+
+
+
+
+router.post('/editAddCardDetails', function (req, res, next) {
+
+      User.editAddCardDetails(req,res);
+});
+
+
+
+
+
+router.post('/removeUserProfileImage', function (req, res, next) {
+
+      User.removeUserProfileImage(req,res);
+});
+
+
 
 router.post('/updateUserlastseen', function (req, res, next) {
 
@@ -513,10 +947,6 @@ router.post('/menulisting', function (req, res, next) {
 });
 
 
-router.post('/coffeeShopLogout', function (req, res, next) {
-
-     Cafe.coffeeShopLogout(req,res);
-});
 
 router.get('/', function (req, res) {
 
@@ -638,6 +1068,18 @@ router.post('/coffeeShopAddCategory', function (req, res, next) {
 
       CoffeeShop.coffeeShopAddCategory(req,res);
 });
+
+router.post('/coffeeShopEditCategory', function (req, res, next) {
+
+      CoffeeShop.coffeeShopEditCategory(req,res);
+});
+
+
+router.post('/coffeeShopDeleteCategory', function (req, res, next) {
+
+      CoffeeShop.coffeeShopDeleteCategory(req,res);
+});
+
 
 router.post('/coffeeShopaddMenu', function (req, res, next) {
 
