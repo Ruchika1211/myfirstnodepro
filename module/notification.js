@@ -10,7 +10,7 @@ var helper = require('../services/helper.js');
 
 
 // exports.createNoti = (req,res)=>{
-//   console.log(req.body);
+//   //console.log(req.body);
 //   var userdata = new notification({
 //      shopDetail:'59afb7f2f2c2c60f5f30ba9b',
 //      userDetail:'59ad41cb43a745205bfa13dc',
@@ -40,10 +40,10 @@ var helper = require('../services/helper.js');
 
 exports.ListNotification = (req, res) => {
     var token = req.body.userToken;
-    console.log(token);
+    //console.log(token);
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
     var initialData = 20;
     var requestData = parseInt(req.body.requestData);
     var skip_D = parseInt(req.body.skipData);

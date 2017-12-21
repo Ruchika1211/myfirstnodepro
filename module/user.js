@@ -25,7 +25,7 @@ var path = require('path');
 
 
 exports.signup = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     //user.device_id.push(device_id);
     Users.findOne({
         email: req.body.email
@@ -103,10 +103,10 @@ exports.signup = (req, res) => {
 exports.logoutUser = (req, res) => {
 
     var token = req.body.userToken;
-    console.log(req.body);
+    //console.log(req.body);
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
     // if (!decoded) {
     //     return res.status(200).json({
     //         title: 'Security issue',
@@ -134,7 +134,7 @@ exports.logoutUser = (req, res) => {
 
         
         var arrayofToken = user.deviceToken;
-        console.log(arrayofToken);
+        //console.log(arrayofToken);
         var index = arrayofToken.indexOf(req.body.deviceToken);
         if (index > -1) {
             user.deviceToken.splice(index, 1);
@@ -168,7 +168,7 @@ exports.logoutUser = (req, res) => {
 
 
 exports.signin = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     Users.findOne({
         email: req.body.email
     }, (err, user) => {
@@ -188,9 +188,9 @@ exports.signin = (req, res) => {
             });
         }
 
-        // console.log(user.isBlocked);
+        // //console.log(user.isBlocked);
 
-        // console.log('user.isblocked');
+        // //console.log('user.isblocked');
 
         if (parseInt(user.isBlocked) == 1) {
             return res.status(200).json({
@@ -201,8 +201,8 @@ exports.signin = (req, res) => {
         }
 
         if (!bcrypt.compareSync(req.body.password, user.password)) {
-            console.log("err");
-            console.log("user");
+            //console.log("err");
+            //console.log("user");
             return res.status(200).json({
                 title: 'Invalid password',
                 error: "true",
@@ -220,9 +220,9 @@ exports.signin = (req, res) => {
        
 
         var valueexist = helper.checkIfduplicates(user.deviceToken, device_id);
-        console.log(valueexist);
+        //console.log(valueexist);
         if (valueexist) {
-            console.log('do nothing');
+            //console.log('do nothing');
 
             var token = jwt.sign({
                 user: data
@@ -353,7 +353,7 @@ exports.forgotPassword = (req, res) => {
 }
 
 exports.verifyresetPasswordToken = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     var token = req.body.token;
     Users.findOne({
         resetPasswordToken: req.body.token,
@@ -420,7 +420,7 @@ exports.verifyresetPasswordToken = (req, res) => {
 }
 
 exports.resetPassword = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     Users.findOne({
         resetPasswordToken: req.body.token,
         resetPasswordExpires: {
@@ -481,11 +481,11 @@ exports.resetPassword = (req, res) => {
 exports.removeUserProfileImage = (req, res) => {
     var token = req.body.userToken;
     //var imageUpload=req.body.imageUpload;
-    console.log(req.body);
-    console.log('req.body>>>>>>>>>>>>.');
+    //console.log(req.body);
+    //console.log('req.body>>>>>>>>>>>>.');
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log('decoded');
+    //console.log(decoded);
+    //console.log('decoded');
    Users.findOne({
         "_id": decoded.user._id
     }, (err, user) => {
@@ -558,11 +558,11 @@ exports.removeUserProfileImage = (req, res) => {
 exports.editProfile = (req, res) => {
     var token = req.body.userToken;
     var imageUpload=req.body.imageUpload;
-    console.log(req.body);
-    console.log('req.body>>>>>>>>>>>>??????.');
+    //console.log(req.body);
+    //console.log('req.body>>>>>>>>>>>>??????.');
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log('decoded');
+    //console.log(decoded);
+    //console.log('decoded');
     var password=req.body.password;
    Users.findOne({
         "_id": decoded.user._id
@@ -596,7 +596,7 @@ exports.editProfile = (req, res) => {
         
                     if(imageUpload == "true")
                     {
-                        console.log("i m in im");
+                        //console.log("i m in im");
                          user.imageUrl =helper.url()+"/users/"+ decoded.user._id;
                     }
                     else
@@ -619,7 +619,7 @@ exports.editProfile = (req, res) => {
                     user.address.address = req.body.address;
                     user.address.city = req.body.city;
                         
-                      console.log(user);
+                      //console.log(user);
 
                         //user.imageUrl = helper.url() + '/users/' + decoded.user._id;
                         user.save((err, user) => {
@@ -664,7 +664,7 @@ exports.editProfile = (req, res) => {
 }
 
 exports.editAddCardDetails = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
     Users.findOne({
@@ -726,11 +726,11 @@ exports.editAddCardDetails = (req, res) => {
 
 exports.updateUserlastseen = (req, res) => {
       var token = req.body.userToken;
-    console.log(req.body);
-    console.log('req.body>>>>>>>>>>>>.');
+    //console.log(req.body);
+    //console.log('req.body>>>>>>>>>>>>.');
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log('decoded');
+    //console.log(decoded);
+    //console.log('decoded');
     //user.device_id.push(device_id);
     Users.findOne({
         "_id": decoded.user._id

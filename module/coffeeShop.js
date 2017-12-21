@@ -100,11 +100,11 @@ exports.coffeeShopAddCategory = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
     var newCategory = upperCaseFirstLetter(req.body.category);
 
-    console.log(newCategory);
+    //console.log(newCategory);
     if (!newCategory) {
         return res.status(200).json({
             title: 'No category found',
@@ -201,7 +201,7 @@ exports.coffeeShopAddCategory = (req, res) => {
             datatoPush['shopName'] = decoded.data.id;
             datatoPush['category'] = new Object();
             datatoPush['category'][newCategory] = [];
-            console.log(datatoPush);
+            //console.log(datatoPush);
             var addCategory = new StoreDetail(datatoPush);
 
             addCategory.save((err, saved) => {
@@ -266,12 +266,12 @@ exports.coffeeShopEditCategory = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
     var oldCat = upperCaseFirstLetter(req.body.oldCat);
     var newCat = upperCaseFirstLetter(req.body.newCat);
 
-   // console.log(newCategory);
+   // //console.log(newCategory);
     if (!oldCat) {
         return res.status(200).json({
             title: 'No category found',
@@ -407,12 +407,12 @@ exports.coffeeShopDeleteCategory = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    //console.log(decoded);
-    //console.log("decoded");
+    ////console.log(decoded);
+    ////console.log("decoded");
     var oldCat = upperCaseFirstLetter(req.body.oldCat);
     //var newCat = upperCaseFirstLetter(req.body.newCat);
 
-   // console.log(newCategory);
+   // //console.log(newCategory);
     if (!oldCat) {
         return res.status(200).json({
             title: 'No category found',
@@ -420,7 +420,7 @@ exports.coffeeShopDeleteCategory = (req, res) => {
 
         });
     }
-    console.log(oldCat);
+    //console.log(oldCat);
     StoreDetail.findOne({
         "shopName": decoded.data.id
     }).exec(function(err, coffeeShop) {
@@ -443,8 +443,8 @@ exports.coffeeShopDeleteCategory = (req, res) => {
 
         var totalCat=coffeeShop.category;
         var search=oldCat in totalCat;
-            console.log(search);
-            console.log('search');
+            //console.log(search);
+            //console.log('search');
         if(!search)
         {
             return res.status(200).json({
@@ -513,12 +513,12 @@ exports.coffeeShopaddMenu = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
 
 
     var itemCat = upperCaseFirstLetter(req.body.itemCat);
-    console.log(itemCat);
+    //console.log(itemCat);
 
     StoreDetail.findOne({
         "shopName": decoded.data.id
@@ -541,8 +541,8 @@ exports.coffeeShopaddMenu = (req, res) => {
 
         var keysObject = Object.keys(shopMenu.category);
         var categoryAlreadyExist = keysObject.includes(itemCat);
-        console.log(categoryAlreadyExist);
-        console.log('categoryAlreadyExist');
+        //console.log(categoryAlreadyExist);
+        //console.log('categoryAlreadyExist');
         if (!categoryAlreadyExist) {
             return res.status(200).json({
                 title: 'No such category found',
@@ -556,21 +556,21 @@ exports.coffeeShopaddMenu = (req, res) => {
             var imExist = false;
 
             IterateObject(shopMenu.category, function(value, name) {
-                //console.log(dataval);
-                //console.log(name);
-                //console.log(value.length);
+                ////console.log(dataval);
+                ////console.log(name);
+                ////console.log(value.length);
 
                 for (i = 0; i < value.length; i++) {
 
-                    //console.log(i);
+                    ////console.log(i);
                     var dataOfEachObj = value[i];
                     var checkedData = dataOfEachObj.itemName.trim();
 
-                    console.log('addedItem');
-                    console.log(checkedData == addedItem);
+                    //console.log('addedItem');
+                    //console.log(checkedData == addedItem);
                     if (checkedData == addedItem) {
                         imExist = true;
-                        console.log("existing");
+                        //console.log("existing");
                         break;
                     }
 
@@ -615,11 +615,11 @@ exports.coffeeShopaddMenu = (req, res) => {
 
 
         //  }
-        // console.log(req.body.itemSmallPrice);
-        // console.log(req.body.itemMediumPrice);
-        // console.log(req.body.itemLargePrice);
-        // console.log(mainPrice);
-        //   console.log('mainPrice');
+        // //console.log(req.body.itemSmallPrice);
+        // //console.log(req.body.itemMediumPrice);
+        // //console.log(req.body.itemLargePrice);
+        // //console.log(mainPrice);
+        //   //console.log('mainPrice');
         var newItem = {
             _id: new ObjectId,
             itemName: upperCaseFirstLetter(req.body.itemName),
@@ -686,8 +686,8 @@ exports.coffeeShopeditMenu = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
 
 
     var itemCat = req.body.itemCat;
@@ -717,9 +717,9 @@ exports.coffeeShopeditMenu = (req, res) => {
             [itemCat]: editObject
         }
     }, (err, shopMenu) => {
-        // console.log(shopMenu);
-        //   console.log(req.body);
-        console.log("shopMenu");
+        // //console.log(shopMenu);
+        //   //console.log(req.body);
+        //console.log("shopMenu");
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -750,8 +750,8 @@ exports.coffeeShopdeleteMenu = (req, res) => {
 
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
-    console.log(decoded);
-    console.log("decoded");
+    //console.log(decoded);
+    //console.log("decoded");
     var itemCat = req.body.itemCat;
     var deleteItemId = req.body.itemId;
     var itemCatId = 'category.' + itemCat + '._id';
@@ -768,9 +768,9 @@ exports.coffeeShopdeleteMenu = (req, res) => {
             }
         }
     }, (err, shopMenu) => {
-        // console.log(shopMenu);
-        //   console.log(req.body);
-        console.log("shopMenu");
+        // //console.log(shopMenu);
+        //   //console.log(req.body);
+        //console.log("shopMenu");
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -849,13 +849,13 @@ exports.coffeeShopgetRewardData = (req, res) => {
 var checkIfPresent = function(value, list) {
 
     for (i = 0; i < list.length; i++) {
-          //console.log(value);
+          ////console.log(value);
         var cor = list[i].shopDetail;
         if(value.shopDetail)
         {
             var value_check=value.shopDetail._id
-           // console.log(cor);
-           //  console.log(value_check);
+           // //console.log(cor);
+           //  //console.log(value_check);
             if (ObjectId(cor).equals(ObjectId(value_check))) {
 
                    var enddateData = new Date(value.enddate);
@@ -865,21 +865,21 @@ var checkIfPresent = function(value, list) {
 
                                     var dateDat = new Date();
                                     var timezone=moment.tz.guess();
-                                    // console.log(moment.tz.guess());
+                                    // //console.log(moment.tz.guess());
                                     var dec = moment.tz(dateDat,timezone);
-                                    console.log(dec);
-                                    console.log('dec');
+                                    //console.log(dec);
+                                    //console.log('dec');
                                     var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                                     var dateData  =new Date(dateDatat) ;
-                                    console.log(dateData);
-                                    console.log('dateData');
+                                    //console.log(dateData);
+                                    //console.log('dateData');
                                     dateData.setHours(0, 0, 0, 0);
 
-                                    console.log(enddateData.getTime());
-                                    console.log(startdateData.getTime());
-                                    console.log(dateData.getTime());
-                                    console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
+                                    //console.log(enddateData.getTime());
+                                    //console.log(startdateData.getTime());
+                                    //console.log(dateData.getTime());
+                                    //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
                           if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
                            {
 
@@ -909,21 +909,21 @@ var checkIfnotExpire = function(value) {
 
                             var dateDat = new Date();
                             var timezone=moment.tz.guess();
-                            // console.log(moment.tz.guess());
+                            // //console.log(moment.tz.guess());
                              var dec = moment.tz(dateDat,timezone);
-                          console.log(dec);
-                          console.log('dec');
+                          //console.log(dec);
+                          //console.log('dec');
                           var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
                                   
                              var dateData  =new Date(dateDatat) ;
-                              console.log(dateData);
-                                 console.log('dateData');
+                              //console.log(dateData);
+                                 //console.log('dateData');
                             dateData.setHours(0, 0, 0, 0);
 
-                            console.log(enddateData.getTime());
-                            console.log(startdateData.getTime());
-                            console.log(dateData.getTime());
-                        console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
+                            //console.log(enddateData.getTime());
+                            //console.log(startdateData.getTime());
+                            //console.log(dateData.getTime());
+                        //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
                         if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
                            {
 
@@ -944,17 +944,17 @@ exports.getRewards = (req, res) => {
 
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
    var itemName = req.body.itemName;
    var rewardData = [];
    reward
       .find({})
       .populate('shopDetail', 'status imageurl cafe_name status position bankDetails isblocked')
       .exec(function(err, rewards) {
-         // console.log(rewards);
-         console.log(rewards.length);
-         console.log('rewards');
+         // //console.log(rewards);
+         //console.log(rewards.length);
+         //console.log('rewards');
 
          if (err) {
             return res.status(500).json({
@@ -975,24 +975,24 @@ exports.getRewards = (req, res) => {
          var nearbyCafe=[];
          for(i in rewards)
          {
-               console.log(rewards[i]);
-               console.log('rewards[i]');
+               //console.log(rewards[i]);
+               //console.log('rewards[i]');
                 var Lat = rewards[i].shopDetail.position.latitude;
                  var Long = rewards[i].shopDetail.position.longitude;
-                 // console.log(Lat);
-                 //console.log(Long);
+                 // //console.log(Lat);
+                 ////console.log(Long);
              
         
          var TotalDistance = distance(Lat, Long, req.body.lat,req.body.lng);
                  // var TotalDistance = distance(Lat, Long,"134.05839","73.00754");
-                 //console.log(TotalDistance);
+                 ////console.log(TotalDistance);
                  if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0 &&  rewards[i].shopDetail.isblocked == 0) {
                     nearbyCafe.push(rewards[i]);
                  }
          }
 
-          console.log(nearbyCafe);
-          console.log('nearbyCafe');
+          //console.log(nearbyCafe);
+          //console.log('nearbyCafe');
              
           
 
@@ -1004,25 +1004,25 @@ exports.getRewards = (req, res) => {
 
                // for(i=0;i<rewards.length;i++) text += person[x];
                for (i in nearbyCafe) {
-                  console.log("i count" + i);
-                  console.log("rewards.length" + rewards.length);
+                  //console.log("i count" + i);
+                  //console.log("rewards.length" + rewards.length);
 
                   var tempReward = nearbyCafe[i];
-                  console.log(tempReward);
-                  console.log('tempReward');
+                  //console.log(tempReward);
+                  //console.log('tempReward');
 
                   var DataPresent = checkIfPresent(tempReward, userrewards);
                   var notExpire = checkIfnotExpire(tempReward);
-                  console.log(DataPresent);
-                  console.log('DataPresent');
+                  //console.log(DataPresent);
+                  //console.log('DataPresent');
                   var tempRewardData = {};
                   if (DataPresent) {
                      for (j = 0; j < userrewards.length; j++) {
-                        console.log("userrewards.length" + userrewards.length);
-                        console.log("j count" + j);
+                        //console.log("userrewards.length" + userrewards.length);
+                        //console.log("j count" + j);
                         var tempUserReward = userrewards[j];
-                        console.log(tempReward.shopDetail._id);
-                        console.log(tempUserReward.shopDetail);
+                        //console.log(tempReward.shopDetail._id);
+                        //console.log(tempUserReward.shopDetail);
                         if (ObjectId(tempReward.shopDetail._id).equals(ObjectId(tempUserReward.shopDetail)) && ObjectId(tempReward._id).equals(ObjectId(tempUserReward.rewardId))) {
                            // if (ObjectId(tempReward.shopDetail._id).equals(ObjectId(tempUserReward.shopDetail))) { 
                            tempRewardData.startdate = tempReward.startdate;
@@ -1038,7 +1038,7 @@ exports.getRewards = (req, res) => {
                            tempRewardData.rewardCompleted = tempUserReward.rewardCompleted;
                            rewardData.push(tempRewardData);
                         } else {
-                           console.log("do nothing");
+                           //console.log("do nothing");
                         }
                         // else if (ObjectId(tempReward.shopDetail._id).equals(ObjectId(tempUserReward.shopDetail))) { 
                         //      tempRewardData.startdate = tempReward.startdate;
@@ -1054,13 +1054,13 @@ exports.getRewards = (req, res) => {
                         //      tempRewardData.rewardCompleted = 0;
                         //      rewardData.push(tempRewardData);
                         //  } else {
-                        //      console.log("do nothing");
+                        //      //console.log("do nothing");
                         //  }
                      }
                   } else {
 
-                     console.log(notExpire);
-                     console.log('notExpire');
+                     //console.log(notExpire);
+                     //console.log('notExpire');
                      if (notExpire) {
                         tempRewardData.startdate = tempReward.startdate;
                         tempRewardData.enddate = tempReward.enddate;
@@ -1074,7 +1074,7 @@ exports.getRewards = (req, res) => {
                         tempRewardData.cafe_id = tempReward.shopDetail._id;
                         rewardData.push(tempRewardData);
                      } else {
-                        console.log(" expired");
+                        //console.log(" expired");
                      }
 
                   }
@@ -1140,7 +1140,7 @@ exports.coffeeShopsetrewardLogic = (req, res) => {
     var rewardName = req.body.rewardName;
     var dec = moment.tz(req.body.startdate, req.body.timezone);
     var dec1 = moment.tz(req.body.enddate, req.body.timezone);
-    console.log(dec);
+    //console.log(dec);
     var start = dec.utc().format('YYYY-MM-DD HH:mm:ss');
     var end = dec1.utc().format('YYYY-MM-DD HH:mm:ss');
     var compareDate = start.toString();
@@ -1159,7 +1159,7 @@ exports.coffeeShopsetrewardLogic = (req, res) => {
             "shopDetail": decoded.data.id,
         })
         .exec(function(err, rewardata) {
-            console.log(rewardata);
+            //console.log(rewardata);
             if (err) {
                 return res.status(500).json({
                     title: 'An error occurred',
@@ -1178,10 +1178,10 @@ exports.coffeeShopsetrewardLogic = (req, res) => {
                  var compareDateC=c.getTime();
                  var startDateC=s.getTime();
                  var endDateC=e.getTime();
-                console.log(compareDateC);
-                console.log(startDateC);
-                console.log(endDateC);
-                console.log('new Date(reward.enddate)');
+                //console.log(compareDateC);
+                //console.log(startDateC);
+                //console.log(endDateC);
+                //console.log('new Date(reward.enddate)');
                 if ((compareDateC >= startDateC) && (compareDateC <= endDateC)) {
 
                     return res.status(200).json({
@@ -1233,8 +1233,10 @@ exports.coffeeShopdeleteReward = (req, res) => {
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
     var rewardId = req.body.rewardId;
+    //console.log(req.body);
    usersReward
    .find({rewardId:rewardId})
+   .populate('rewardId')
    .exec(function(err, rewardata) {
 
       if (err) {
@@ -1244,18 +1246,52 @@ exports.coffeeShopdeleteReward = (req, res) => {
                     detail: err
                 });
             }
-      if(rewardata)
+        //console.log(rewardata);
+      if(rewardata.length>0)
       {
-         return res.status(200).json({
+          
+
+               var temp_Data = rewardata[0].rewardId;
+               //console.log(temp_Data);
+               var enddateData = new Date(temp_Data.enddate);
+               enddateData.setHours(0, 0, 0, 0);
+               var startdateData = new Date(temp_Data.startdate);
+               startdateData.setHours(0, 0, 0, 0);
+
+               var dateDat = new Date();
+               var timezone=moment.tz.guess();
+               // //console.log(moment.tz.guess());
+               var dec = moment.tz(dateDat,timezone);
+               //console.log(dec);
+               //console.log('dec');
+               var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
+
+               var dateData  =new Date(dateDatat) ;
+               //console.log(dateData);
+               //console.log('dateData');
+               //console.log('enddateData');
+               //console.log(enddateData);
+               //console.log(startdateData);
+               //console.log(dateData);
+               //console.log((enddateData >= dateData) && (startdateData <= dateData));
+               //console.log('(enddateData >= dateData) && (startdateData <= dateData)');
+               if ((enddateData >= dateData) && (startdateData <= dateData)) {
+                   
+                    return res.status(200).json({
                     title: 'This reward is already in use.',
                     error: "true",
                     
                 });
+               
+               }
+
+         
       }
 
       reward.findByIdAndRemove(rewardId)
         .exec(function(err, rewardata) {
-            console.log(rewardata);
+            //console.log(rewardata);
+
             if (err) {
                 return res.status(500).json({
                     title: 'An error occurred',
@@ -1530,8 +1566,8 @@ exports.coffeeShopMoveOrderToReadyState = (req, res) => {
             }
             helper.findUser(order.userDetail, function(cb) {
                 CurrentUserDetail = cb;
-                console.log(CurrentUserDetail);
-                console.log('CurrentUserDetail');
+                //console.log(CurrentUserDetail);
+                //console.log('CurrentUserDetail');
                 order.orderStatus = 'ready';
                 order.save((err, savedOrder) => {
 
@@ -1544,7 +1580,7 @@ exports.coffeeShopMoveOrderToReadyState = (req, res) => {
                     }
                     if (CurrentUserDetail == 'err') {
 
-                        console.log("as no store found cannot send the notification to the user");
+                        //console.log("as no store found cannot send the notification to the user");
                         res.status(200).json({
                             message: 'Order moved to ready state',
                             error: "false"
@@ -1553,7 +1589,7 @@ exports.coffeeShopMoveOrderToReadyState = (req, res) => {
 
                     } else if (CurrentUserDetail == 'no user Found') {
 
-                        console.log("as no store found cannot send the notification to the user");
+                        //console.log("as no store found cannot send the notification to the user");
                         res.status(200).json({
                             message: 'Order moved to ready state',
                             error: "false"
@@ -1616,7 +1652,7 @@ exports.coffeeShopVerifyOtp = (req, res) => {
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
     var otp = req.body.otp;
-     console.log(decoded);
+     //console.log(decoded);
     order
         .findOne({
             "shopDetail": decoded.data.id,
@@ -1648,12 +1684,12 @@ exports.coffeeShopVerifyOtp = (req, res) => {
 
 
                 CurrentStoreDetail = cb;
-                console.log(CurrentStoreDetail);
-                console.log('CurrentStoreDetail');
+                //console.log(CurrentStoreDetail);
+                //console.log('CurrentStoreDetail');
                 helper.findUser(order.userDetail, function(cb) {
                     CurrentUserDetail = cb;
-                    console.log(CurrentUserDetail);
-                    console.log('CurrentUserDetail');
+                    //console.log(CurrentUserDetail);
+                    //console.log('CurrentUserDetail');
                     var savedOtp = order.otp;
                     var checkStatus = order.orderStatus;
 

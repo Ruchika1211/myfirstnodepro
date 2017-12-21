@@ -536,10 +536,20 @@ router.post('/coffeeShopEditProfile', function(req, res, next) {
             console.log(urlOfimage);
             if (!(urlOfimage == "noImage")) {
                 var resUrl = urlOfimage.replace(helper.url()+"/stores/", "");
-                     fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_large.jpg');
-                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_small.jpg');
-                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_medium.jpg');
-                fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '.jpg');
+
+                fs.exists(process.cwd() + '/uploads/stores/' + resUrl + '.jpg', function(exists) {
+                    console.log("file exists ? " + exists);
+                    if(exists)
+                    {
+                      console.log("i m here ");
+                       fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_large.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_small.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_medium.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '.jpg');
+                    }
+               
+                });
+              
                 console.log(Imagename);
                 console.log(tempImagename);
             }

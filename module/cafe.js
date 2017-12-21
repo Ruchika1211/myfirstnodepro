@@ -106,15 +106,15 @@ var distance = (cafeLat, cafeLong, userLat, userLong) => {
 
 //                                         });
 //                                     }
-//                                     // console.log(cafes);
-//                                     // console.log('cafes');
+//                                     // //console.log(cafes);
+//                                     // //console.log('cafes');
 //                                     for (i in cafes) {
 //                                         var Lat = cafes[i].position.latitude;
 //                                         var Long = cafes[i].position.longitude;
-//                                         // console.log(Lat);
-//                                         //console.log(Long);
+//                                         // //console.log(Lat);
+//                                         ////console.log(Long);
 //                                         var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
-//                                         //console.log(TotalDistance);
+//                                         ////console.log(TotalDistance);
 //                                         if (TotalDistance) {
 //                                             nearbyCafe.push(cafes[i]);
 //                                         }
@@ -143,8 +143,8 @@ var checkIfPresent = function(value, list) {
     for (i = 0; i < list.length; i++) {
 
         var cor = list[i].shopDetail;
-        console.log(cor);
-        console.log(value);
+        //console.log(cor);
+        //console.log(value);
       
       
                 if (ObjectId(cor).equals(ObjectId(value))) {
@@ -156,21 +156,21 @@ var checkIfPresent = function(value, list) {
 
                                 var dateDat = new Date();
                                 var timezone=moment.tz.guess();
-                                // console.log(moment.tz.guess());
+                                // //console.log(moment.tz.guess());
                                 var dec = moment.tz(dateDat,timezone);
-                                console.log(dec);
-                                console.log('dec');
+                                //console.log(dec);
+                                //console.log('dec');
                                 var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                                 var dateData  =new Date(dateDatat) ;
-                                console.log(dateData);
-                                console.log('dateData');
+                                //console.log(dateData);
+                                //console.log('dateData');
                                 dateData.setHours(0, 0, 0, 0);
 
-                                console.log(enddateData.getTime());
-                                console.log(startdateData.getTime());
-                                console.log(dateData.getTime());
-                                console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
+                                //console.log(enddateData.getTime());
+                                //console.log(startdateData.getTime());
+                                //console.log(dateData.getTime());
+                                //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
                       if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
                        {
                          data.index=i;
@@ -200,8 +200,8 @@ exports.cafelisting = (req, res) => {
       var skipingData = skip_D * initialData;
    }
 
-   console.log(req.body);
-   console.log("req.body")
+   //console.log(req.body);
+   //console.log("req.body")
    helper.findUser(decoded.user._id, (data) => {
       if (data == "err" || data == "no user Found") {
          return res.status(500).json({
@@ -229,19 +229,19 @@ exports.cafelisting = (req, res) => {
       .find({"userDetail": decoded.user._id,"claimedReward": true})
       .populate('rewardId')
       .exec(function(err, rerwarddata){
-             console.log(rerwarddata);
-              console.log('countreward');
+             //console.log(rerwarddata);
+              //console.log('countreward');
               var dataReward=rerwarddata;
-              console.log(dataReward.length);
-               console.log('dataReward.length');
+              //console.log(dataReward.length);
+               //console.log('dataReward.length');
             if(err)
             {
               claimedReward = 0;
             }
             else if(dataReward.length>0)
             {
-                   console.log(dataReward.length);
-               console.log('else if');
+                   //console.log(dataReward.length);
+               //console.log('else if');
                   var countreward=0;
                    for(i in dataReward)
                    {
@@ -249,15 +249,15 @@ exports.cafelisting = (req, res) => {
                      { 
                       var dateDat = new Date();
                       var timezone=moment.tz.guess();
-                      // console.log(moment.tz.guess());
+                      // //console.log(moment.tz.guess());
                       var dec = moment.tz(dateDat,timezone);
-                      console.log(dec);
-                      console.log('dec');
+                      //console.log(dec);
+                      //console.log('dec');
                       var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                       var compareWithDate  =new Date(dateDatat) ;
-                      console.log(compareWithDate);
-                      console.log('compareWithDate');
+                      //console.log(compareWithDate);
+                      //console.log('compareWithDate');
                       compareWithDate.setHours(0, 0, 0, 0);
                       // var end = new Date();
 
@@ -266,8 +266,8 @@ exports.cafelisting = (req, res) => {
 
                       var comparetoDate = new Date(rerwarddata[i].rewardId.enddate);
                       comparetoDate.setHours(0, 0, 0, 0);
-                      console.log(comparetoDate);
-                        console.log(compareWithDate);
+                      //console.log(comparetoDate);
+                        //console.log(compareWithDate);
                       if(compareWithDate <= comparetoDate)
                       {
                         countreward=countreward+1;
@@ -283,7 +283,7 @@ exports.cafelisting = (req, res) => {
             }
             else
             {
-              console.log('else ');
+              //console.log('else ');
               claimedReward = 0;
             }
          
@@ -314,25 +314,25 @@ exports.cafelisting = (req, res) => {
 
                      });
                   }
-                  // console.log(cafes);
-                  // console.log('cafes');
+                  // //console.log(cafes);
+                  // //console.log('cafes');
                   for (i in cafes) {
                      var Lat = cafes[i].shopName.position.latitude;
                      var Long = cafes[i].shopName.position.longitude;
-                     console.log(Lat);
-                     console.log(Long);
-                      console.log(req.body.lat);
-                       console.log(req.body.lng);
+                     //console.log(Lat);
+                     //console.log(Long);
+                      //console.log(req.body.lat);
+                       //console.log(req.body.lng);
                      var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
-                     console.log(TotalDistance);
+                     //console.log(TotalDistance);
                      if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
                         nearbyCafe.push(cafes[i]);
                      }
 
                   }
 
-                  console.log(nearbyCafe);
-                    console.log('nearbyCafe');
+                  //console.log(nearbyCafe);
+                    //console.log('nearbyCafe');
 
                   reward
                      .find({})
@@ -346,12 +346,12 @@ exports.cafelisting = (req, res) => {
                               for (i in nearbyCafe) {
 
                                  var cafeDetail = nearbyCafe[i];
-                                 console.log(cafeDetail.shopName._id);
-                                 console.log('cafeDetail.shopName._id');
+                                 //console.log(cafeDetail.shopName._id);
+                                 //console.log('cafeDetail.shopName._id');
                                  var DataPresent = checkIfPresent(cafeDetail.shopName._id, rewards);
                                  var tempstoreDatawithQuan = {};
-                                 console.log(DataPresent);
-                                 console.log('DataPresent');
+                                 //console.log(DataPresent);
+                                 //console.log('DataPresent');
                                  if (DataPresent.present) {
                                     tempstoreDatawithQuan._id = cafeDetail.shopName._id;
                                     tempstoreDatawithQuan.cafe_name = cafeDetail.shopName.cafe_name;
@@ -370,30 +370,30 @@ exports.cafelisting = (req, res) => {
                                  }
 
                               }
-                                  // console.log(storeDatawithQuan);
-                                  // console.log('storeDatawithQuan');
+                                  // //console.log(storeDatawithQuan);
+                                  // //console.log('storeDatawithQuan');
                               for (j in storeDatawithQuan) {
                                  //var DataPresent = checkIfPresent(cafeDetail.shopDetail._id,rewards); 
                                  var tempDataofquan = storeDatawithQuan[j];
                                  if (tempDataofquan.rewardId) {
-                                    console.log("i m in if");
+                                    //console.log("i m in if");
                                     for (i in userrewards) {
 
                                        var tempUserReward = userrewards[i];
-                                        console.log((ObjectId(tempDataofquan._id).equals(ObjectId(tempUserReward.shopDetail))));
-                                        console.log((ObjectId(tempDataofquan.rewardId).equals(ObjectId(tempUserReward.rewardId))));
-                                         console.log(((ObjectId(tempDataofquan._id).equals(ObjectId(tempUserReward.shopDetail))) && (ObjectId(tempDataofquan.rewardId).equals(ObjectId(tempUserReward.rewardId)))));
-                                         console.log('userrewards');
+                                        //console.log((ObjectId(tempDataofquan._id).equals(ObjectId(tempUserReward.shopDetail))));
+                                        //console.log((ObjectId(tempDataofquan.rewardId).equals(ObjectId(tempUserReward.rewardId))));
+                                         //console.log(((ObjectId(tempDataofquan._id).equals(ObjectId(tempUserReward.shopDetail))) && (ObjectId(tempDataofquan.rewardId).equals(ObjectId(tempUserReward.rewardId)))));
+                                         //console.log('userrewards');
                                        if (((ObjectId(tempDataofquan._id).equals(ObjectId(tempUserReward.shopDetail))) && (ObjectId(tempDataofquan.rewardId).equals(ObjectId(tempUserReward.rewardId))))) {
-                                           console.log(tempUserReward.rewardCompleted);
-                                            console.log('tempUserReward.rewardCompleted');
+                                           //console.log(tempUserReward.rewardCompleted);
+                                            //console.log('tempUserReward.rewardCompleted');
                                           storeDatawithQuan[j].rewardCompleted = tempUserReward.rewardCompleted;
                                        }
                                        
                                     }
 
                                  } else {
-                                    console.log("i m in if else");
+                                    //console.log("i m in if else");
                                     storeDatawithQuan[j].rewardCompleted = 0;
                                  }
 
@@ -448,7 +448,7 @@ exports.menulisting = (req, res) => {
          });
       }
       var keysObject = Object.keys(cafes.category);
-      //console.log(cafes.category);
+      ////console.log(cafes.category);
       var totalSize = keysObject.length;
       if (totalSize <= 0) {
          return res.status(200).json({
@@ -498,8 +498,8 @@ exports.menulisting = (req, res) => {
             var dataOfOrder = order.Ordered[i];
             totalPrice = totalPrice + parseFloat(dataOfOrder.itemQuantity) * parseFloat(dataOfOrder.itemPrice)
          }
-         console.log(totalPrice);
-         console.log('totalPrice');
+         //console.log(totalPrice);
+         //console.log('totalPrice');
          res.status(200).json({
             title: 'Listing of cafe ',
             error: "false",
@@ -517,11 +517,11 @@ exports.menulisting = (req, res) => {
 }
 
 exports.coffeeShopLogin = (req, res) => {
-   console.log(req.body);
+   //console.log(req.body);
    Stores.findOne({
       'storeId': req.body.storeId
    },{'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0}, (err, coffeeShop) => {
-      console.log(coffeeShop);
+      //console.log(coffeeShop);
       if (err) {
          return res.status(500).json({
             title: 'An error occurred',
@@ -550,9 +550,9 @@ exports.coffeeShopLogin = (req, res) => {
          });
       }
 
-      console.log('req.body.storePass');
-      console.log(req.body.storePass);
-      console.log(bcrypt.compareSync(req.body.storePass, coffeeShop.storePass));
+      //console.log('req.body.storePass');
+      //console.log(req.body.storePass);
+      //console.log(bcrypt.compareSync(req.body.storePass, coffeeShop.storePass));
       if (!bcrypt.compareSync(req.body.storePass, coffeeShop.storePass)) {
          return res.status(200).json({
             title: 'Invalid password',
@@ -568,7 +568,7 @@ exports.coffeeShopLogin = (req, res) => {
       var device_id = req.body.deviceToken;
       var valueexist = helper.checkIfduplicates(coffeeShop.deviceToken, device_id);
       if (valueexist) {
-         console.log('do nothing');
+         //console.log('do nothing');
 
          var token = jwt.sign({
             data: data
@@ -620,10 +620,10 @@ exports.coffeeShopLogin = (req, res) => {
 exports.coffeeShopLogout = (req, res) => {
 
    var token = req.body.userToken;
-   console.log(token);
+   //console.log(token);
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log("decoded");
+   //console.log(decoded);
+   //console.log("decoded");
    // if (!decoded) {
    //    return res.status(200).json({
    //       title: 'Security issue',
@@ -651,12 +651,12 @@ exports.coffeeShopLogout = (req, res) => {
       }
 
       var arrayofToken = coffeeShop.deviceToken;
-      console.log(arrayofToken);
-      console.log('arrayofToken');
-      console.log(req.body)
+      //console.log(arrayofToken);
+      //console.log('arrayofToken');
+      //console.log(req.body)
       var index = arrayofToken.indexOf(req.body.deviceToken);
       if (index > -1) {
-        console.log('found');
+        //console.log('found');
          coffeeShop.deviceToken.splice(index, 1);
       }
       coffeeShop.isLoggedIn = false;
@@ -684,11 +684,11 @@ exports.coffeeShopLogout = (req, res) => {
 exports.coffeeShopEditProfile = (req, res) => {
 
    var token = req.body.userToken;
-   console.log(req.body);
-   console.log('req.body>>>>>>>>>>>>.');
+   //console.log(req.body);
+   //console.log('req.body>>>>>>>>>>>>.');
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
    var password=req.body.password;
     var imageUpload=req.body.imageUpload;
 
@@ -732,7 +732,12 @@ exports.coffeeShopEditProfile = (req, res) => {
         
          if(imageUpload == "true")
         {
+           if(req.body.imageUrl)
+           {
             user.imageurl = req.body.imageUrl;
+           }
+          
+            
         }
         else
         {
@@ -857,7 +862,7 @@ exports.coffeeShopForgotPassword = (req, res) => {
 }
 
 exports.coffeeShopResetPassword = (req, res) => {
-   console.log(req.body);
+   //console.log(req.body);
    Stores.findOne({
       resetPasswordToken: req.body.token,
       resetPasswordExpires: {
@@ -903,10 +908,10 @@ exports.coffeeShopResetPassword = (req, res) => {
 
 exports.coffeeShopSetStatus = (req, res) => {
    var token = req.body.userToken;
-   console.log(token);
+   //console.log(token);
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log("decoded");
+   //console.log(decoded);
+   //console.log("decoded");
    Stores.findOne({
       _id: decoded.data.id
    }, (err, coffeeShop) => {
@@ -946,10 +951,10 @@ exports.coffeeShopSetStatus = (req, res) => {
 }
 // exports.editBankdetails = (req, res) => {
 //    var token = req.headers.usertoken;
-//    console.log(token);
+//    //console.log(token);
 //    var decoded = jwt.decode(token, "pickup");
-//    console.log(decoded);
-//    console.log("decoded");
+//    //console.log(decoded);
+//    //console.log("decoded");
 
 //     // var add= results[0].formatted_address ;
 //     //                 var  value=add.split(",");
@@ -1031,8 +1036,8 @@ exports.coffeeShopSetStatus = (req, res) => {
 
 //          })
 //       } else {
-//          console.log(req.body.file);
-//          console.log('file');
+//          //console.log(req.body.file);
+//          //console.log('file');
 //          var documentPath = './uploads/stripedoc/' + coffeeShop._id + ".png";
 //          var fp = fs.readFileSync(documentPath);
 //          stripe.fileUploads.create({
@@ -1054,15 +1059,15 @@ exports.coffeeShopSetStatus = (req, res) => {
 
 //             var ipadress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
 //             ipadress.replace(/^.*:/, '');
-//             console.log('ipadress');
-//             console.log(ipadress);
+//             //console.log('ipadress');
+//             //console.log(ipadress);
 //             //var documentPath='./uploads/stores/'+coffeeShop._id+".png";
-//             console.log('fileUpload');
-//             console.log(documentPath);
-//             console.log(coffeeShop.position.addressline);
-//             console.log(coffeeShop.position.city);
-//             console.log(coffeeShop.position.postal_code);
-//             console.log(coffeeShop);
+//             //console.log('fileUpload');
+//             //console.log(documentPath);
+//             //console.log(coffeeShop.position.addressline);
+//             //console.log(coffeeShop.position.city);
+//             //console.log(coffeeShop.position.postal_code);
+//             //console.log(coffeeShop);
 //             stripe.accounts.create({
 //                type: 'custom',
 //                country: 'GB',
@@ -1116,8 +1121,8 @@ exports.coffeeShopSetStatus = (req, res) => {
 //                      error: "true"
 //                   });
 //                }
-//                console.log(account);
-//                console.log('account');
+//                //console.log(account);
+//                //console.log('account');
 //                // coffeeShop.bankAccountId =account.id
 //                stripe.accounts.createExternalAccount(
 //                   account.id, {
@@ -1139,8 +1144,8 @@ exports.coffeeShopSetStatus = (req, res) => {
 //                         });
 //                      }
 
-//                      console.log(bank_account);
-//                      console.log('bank_account');
+//                      //console.log(bank_account);
+//                      //console.log('bank_account');
 
 //                      coffeeShop.bankAccountId = bank_account.account;
 //                      coffeeShop.bankDetails = {
@@ -1181,10 +1186,10 @@ exports.coffeeShopSetStatus = (req, res) => {
 // }
 exports.editBankdetails = (req, res) => {
    var token = req.headers.usertoken;
-   console.log(token);
+   //console.log(token);
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log("decoded");
+   //console.log(decoded);
+   //console.log("decoded");
 
    
                 
@@ -1207,8 +1212,8 @@ exports.editBankdetails = (req, res) => {
       }
 
        
-         console.log(req.body.file);
-         console.log('file');
+         //console.log(req.body.file);
+         //console.log('file');
          var documentPath = './uploads/stripedoc/' + coffeeShop._id + ".jpg";
          var fp = fs.readFileSync(documentPath);
          stripe.fileUploads.create({
@@ -1227,8 +1232,8 @@ exports.editBankdetails = (req, res) => {
                   detail: err
                });
             } 
-            console.log(fileUpload);
-            console.log('fileUpload');
+            //console.log(fileUpload);
+            //console.log('fileUpload');
 
             res.status(200).json({
                   title: 'document uploaded succesfully',
@@ -1245,18 +1250,18 @@ exports.editBankdetails = (req, res) => {
 }
 exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
 
-    console.log("i m in webhook ??????????????????////////////////");
+    //console.log("i m in webhook ??????????????????////////////////");
   Stores.findOne({
       bankAccountId: req.body.account
    },{'incomesourceDetail':0 ,'totalamounttotransfer':0}, (err, coffeeShop) => {
 
      if(err)
      {
-      console.log("err webhook" + err)
+      //console.log("err webhook" + err)
      }
      if(!coffeeShop)
      {
-      console.log("err webhook no shop found" )
+      //console.log("err webhook no shop found" )
      }
 
       
@@ -1272,8 +1277,8 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
     
 
 
-                     console.log(req.body.data.object);
-                     console.log('bank_account');
+                     //console.log(req.body.data.object);
+                     //console.log('bank_account');
 
                      if(req.body.data.object.verification.disabled_reason){
                        coffeeShop.accountdisabledReason=req.body.data.object.verification.disabled_reason;
@@ -1331,7 +1336,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
       var dataMessg=req.body.data.object.legal_entity.verification.status;
       coffeeShop.save(function(err,coffeeShopData) {
           if (err) {
-             console.log("err webhook" + err)
+             //console.log("err webhook" + err)
           }
 
 
@@ -1347,7 +1352,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Thank you for submitting your bank details. Your account verification is under process.";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                   res.send(200);
                                 },coffeeShopData.accountStatus);
                             })
@@ -1366,7 +1371,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account verification has been failed.";
                               helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  //console.log("message send");
                                   res.send(200);
                                 },coffeeShopData.accountStatus);
                             })
@@ -1385,14 +1390,14 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account verification has been failed.";
                                helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                   res.send(200);
                                 },coffeeShopData.accountStatus);
                             })
 
                          }
                          else if(dataMessg == 'validated'){
-                          console.log("hbxhxgh");
+                          // //console.log("hbxhxgh");
                          }
                          else
                          {
@@ -1408,14 +1413,14 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account has been succesfully verified";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                   res.send(200);
                                 },coffeeShopData.accountStatus);
                               })
 
                          }
          
-         console.log("success webhook")
+         // //console.log("success webhook")
         
        });
 
@@ -1426,14 +1431,14 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
 
 
 exports.coffeeShopaddBankdetails = (req, res) => {
-  console.log("i m in api ??????????????????////////////////");
+  ////console.log("i m in api ??????????????????////////////////");
    var token = req.body.userToken;
-   console.log(token);
+   // //console.log(token);
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log("decoded");
-    console.log(req.body);
-   console.log("req.body>>>>>>>>");
+   // //console.log(decoded);
+   // //console.log("decoded");
+   //  //console.log(req.body);
+   // //console.log("req.body>>>>>>>>");
    var addressdata=req.body.address;
     var add= addressdata;
     var  value=add.split(",");
@@ -1445,9 +1450,9 @@ exports.coffeeShopaddBankdetails = (req, res) => {
     var postCode=state.split(" ");
     postCode = postCode.filter(Boolean);
     var stateLen=postCode.length;
-    console.log(postCode);
-    console.log(postCode.length);
-    console.log('postCode');
+    // //console.log(postCode);
+    // //console.log(postCode.length);
+    // //console.log('postCode');
     if(postCode.length > 2)
     { 
        var stat=postCode[0];
@@ -1457,26 +1462,26 @@ exports.coffeeShopaddBankdetails = (req, res) => {
          temp= temp + '' +postCode[i];
        }
        temp.trim();
-       console.log(temp);
-       console.log('temp');
+       // //console.log(temp);
+       // //console.log('temp');
        var postal_code=temp;
 
     }
     else
     {
-        console.log("i m in else");
+        // //console.log("i m in else");
         var postal_code=postCode[stateLen-1];
          var stat=postCode[stateLen-2];
     }
   
     var city=value[count-3];
 
-    console.log(country);
-    console.log(stat);
-    console.log(city);
-    console.log(postal_code);
-    console.log(value);
-    console.log("address");
+    // //console.log(country);
+    // //console.log(stat);
+    // //console.log(city);
+    // //console.log(postal_code);
+    // //console.log(value);
+    // //console.log("address");
   country=country.trim();
                 
    Stores.findOne({
@@ -1497,8 +1502,8 @@ exports.coffeeShopaddBankdetails = (req, res) => {
          });
       }
       
-       // console.log(req.body.file);
-       // console.log('file');
+       // //console.log(req.body.file);
+       // //console.log('file');
        var documentPath = './uploads/stripedoc/' + coffeeShop._id + ".jpg";
        var fp = fs.readFileSync(documentPath);
        stripe.fileUploads.create({
@@ -1520,9 +1525,9 @@ exports.coffeeShopaddBankdetails = (req, res) => {
 
            var ipadress = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
             ipadress.replace(/^.*:/, '');
-            console.log('ipadress');
-            console.log(ipadress);
-            console.log(fileUpload.id)
+            // //console.log('ipadress');
+            // //console.log(ipadress);
+            // //console.log(fileUpload.id)
          
             stripe.accounts.create({
                type: 'custom',
@@ -1577,8 +1582,8 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                      error: "true"
                   });
                }
-               console.log(account);
-               console.log('account');
+               // //console.log(account);
+               // //console.log('account');
                // coffeeShop.bankAccountId =account.id
                stripe.accounts.createExternalAccount(
                   account.id, {
@@ -1600,8 +1605,8 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                         });
                      }
 
-                     console.log(bank_account);
-                     console.log('bank_account');
+                     // //console.log(bank_account);
+                     // //console.log('bank_account');
 
                      if(account.verification.disabled_reason){
                        coffeeShop.accountdisabledReason=account.verification.disabled_reason;
@@ -1686,7 +1691,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                          { 
                             var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from:helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Thank you for submitting your bank details.\n\n Your account verification is under process.' 
                                           
@@ -1694,7 +1699,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Thank you for submitting your bank details. Your account verification is under process.";
                                helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                 },bank_account.status);
                             })
                           
@@ -1712,7 +1717,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account verification has been failed.";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                 },bank_account.status);
                             })
 
@@ -1730,20 +1735,20 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account verification has been failed.";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                 },bank_account.status);
                             })
 
                          }
                          else if(bank_account.status == 'validated'){
-                          console.log("hbxhxgh");
+                          // //console.log("hbxhxgh");
                          }
                          else
                          {
 
                               var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification Succesful \n\n'+
                                             'Your account has been succesfully verified/' 
@@ -1752,7 +1757,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                             helper.sendemail(mailOptions,(data)=>{
                                 var msg="Your account has been succesfully verified.";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                                  console.log("message send");
+                                  // //console.log("message send");
                                 },bank_account.status);
                             })
 
@@ -1796,10 +1801,10 @@ exports.coffeeShopaddBankdetails = (req, res) => {
 
 exports.deleteBankaccount = (req, res) => {
    var token = req.body.userToken;
-   console.log(token);
+   // //console.log(token);
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log("decoded");
+   // //console.log(decoded);
+   // //console.log("decoded");
    Stores.findOne({
       _id: decoded.data.id
    }, (err, coffeeShop) => {
@@ -1819,7 +1824,7 @@ exports.deleteBankaccount = (req, res) => {
       }
 
       if (coffeeShop.bankAccountId) {
-         console.log(coffeeShop.bankAccountId);
+         // //console.log(coffeeShop.bankAccountId);
          var deletedata = coffeeShop.bankAccountId.trim();
          stripe.customers.deleteSource(
             deletedata,
@@ -1871,13 +1876,13 @@ exports.deleteBankaccount = (req, res) => {
 }
 
 exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, balancetransId,costP) => {
-  console.log("ypdate>>>>>>>>>>>>>>>>")
-   console.log(totalPrice);
-   console.log('totalPrice');
+  // //console.log("ypdate>>>>>>>>>>>>>>>>")
+  //  //console.log(totalPrice);
+  //  //console.log('totalPrice');
    var costPrice = costP;
    var adminPrice =helper.amountTotransfertoAdmin(totalPrice);
-   console.log(costPrice);
-   console.log('costPrice');
+   // //console.log(costPrice);
+   // //console.log('costPrice');
    var payadmincharge = false;
    Stores
       .findOne({
@@ -1932,8 +1937,8 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
          store.incomesourceDetail.push(userdata);
          store.save(function(err) {
             if (err) {
-               console.log(" err");
-               console.log( err);
+               //console.log(" err");
+               //console.log( err);
 
             }
 

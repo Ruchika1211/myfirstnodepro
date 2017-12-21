@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
-import { MessageService } from "./messages/message.service";
+
 
 @Component({
     selector: 'my-app',
-
-    templateUrl: './app.component.html',
-    providers: [MessageService]
+    template: '<h1>jhgjhgjhgj<h1>',
+    providers: []
 })
 export class AppComponent {}

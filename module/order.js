@@ -35,10 +35,10 @@ var Storesmodu = require('./cafe');
 
 
 exports.rewardcron = () => {
-   console.log("hghfrg");
+   //console.log("hghfrg");
    // var token=req.body.userToken;
    // var decoded = jwt.decode(token, "pickup");
-   //   console.log(decoded);
+   //   //console.log(decoded);
    reward
       .find({})
       .populate('shopDetail', 'deviceToken  cafe_name ')
@@ -52,17 +52,17 @@ exports.rewardcron = () => {
          }
 
          if (!rewards) {
-            console.log("no rewards");
+            //console.log("no rewards");
          }
          if (rewards.length <= 0) {
-            console.log("no rewards")
+            //console.log("no rewards")
          }
          else{
             var shopDetailData = [];
          for (var i = 0; i < rewards.length; i++) {
-            //console.log(rewards[i]);
-            // console.log(rewards.length);
-            // console.log("i is" + i);
+            ////console.log(rewards[i]);
+            // //console.log(rewards.length);
+            // //console.log("i is" + i);
             //var dec = moment.tz(new Date(), "America/Los_Angeles");
             var end = helper.findCurrentDateinutc();
 
@@ -71,15 +71,15 @@ exports.rewardcron = () => {
 
             var comparetoDate = new Date(rewards[i].enddate);
             comparetoDate.setHours(0, 0, 0, 0);
-            console.log(compareWithDate.getTime());
-            console.log(comparetoDate.getTime());
-             console.log(rewards[i]);
+            //console.log(compareWithDate.getTime());
+            //console.log(comparetoDate.getTime());
+             //console.log(rewards[i]);
             if (compareWithDate.getTime() <= comparetoDate.getTime()) {
                var timeDiff = Math.abs(compareWithDate.getTime() - comparetoDate.getTime());
 
                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-               console.log(diffDays);
+               //console.log(diffDays);
 
                if (diffDays <= 2) {
                   shopDetailData.push(rewards[i].shopDetail._id);
@@ -87,7 +87,7 @@ exports.rewardcron = () => {
                }
 
             } else {
-               console.log('negativeshopDetailData');
+               //console.log('negativeshopDetailData');
             }
 
          };
@@ -107,8 +107,8 @@ exports.rewardcron = () => {
 
                   if (userrewards.length > 0) {
                      for (i in userrewards) {
-                        //     console.log("loop of" + i);
-                        // console.log(userrewards[i]);
+                        //     //console.log("loop of" + i);
+                        // //console.log(userrewards[i]);
                         var msge = "Hurry up! Reward with shop " + userrewards[i].shopDetail.cafe_name + " is expiring soon.";
                         var notifi = new notification({
                            shopDetail: userrewards[i].shopDetail._id,
@@ -119,30 +119,30 @@ exports.rewardcron = () => {
                         notifi.save((err, savedNoti) => {
 
                            if (err) {
-                              console.log("error saving msg");
+                              //console.log("error saving msg");
                            }
 
-                           //console.log(savedNoti);
+                           ////console.log(savedNoti);
                            helper.sendNotification(userrewards[i].userDetail.deviceToken, "OfferValidity", msge, (cb) => {
 
-                              console.log("notification send");
+                              //console.log("notification send");
 
                            })
                            // sendNotificationdata.push(savedNoti.userDetail);
-                           //  console.log("of notificatn");
+                           //  //console.log("of notificatn");
 
                         })
                      }
                   }
 
-                  //  console.log(sendNotificationdata);
-                  // console.log('sendNotification>>>>>>>>>>>>>>>');
+                  //  //console.log(sendNotificationdata);
+                  // //console.log('sendNotification>>>>>>>>>>>>>>>');
                   // var msg = "Hurry up! Reward with shops is expiring soon.";
                   // if(sendNotificationdata.length > 0)
                   // {
                   //      helper.sendNotification(sendNotificationdata, "OfferValidity", msg, (cb) => {
 
-                  //                            console.log("notification send");
+                  //                            //console.log("notification send");
 
                   //                        })
                   // }
@@ -152,8 +152,8 @@ exports.rewardcron = () => {
          }
          }
          
-         // console.log('shopDetailData');
-         // console.log(shopDetailData);
+         // //console.log('shopDetailData');
+         // //console.log(shopDetailData);
        
 
       })
@@ -163,8 +163,8 @@ exports.userEndingRewardscron = () => {
 
    // var token=req.body.userToken;
    // var decoded = jwt.decode(token, "pickup");
-   //   console.log(decoded);
-   console.log("hghfrg>>>>>>>>>>>>>>>>>>");
+   //   //console.log(decoded);
+   //console.log("hghfrg>>>>>>>>>>>>>>>>>>");
    reward
       .find({})
       .populate('shopDetail', 'deviceToken  cafe_name ')
@@ -178,16 +178,16 @@ exports.userEndingRewardscron = () => {
          }
 
          if (!rewards) {
-            console.log("no rewards");
+            //console.log("no rewards");
          }
          if (rewards.length <= 0) {
-            console.log("no rewards")
+            //console.log("no rewards")
          }
          var shopDetailData = [];
          for (var i = 0; i < rewards.length; i++) {
-            //console.log(rewards[i]);
-            console.log(rewards.length);
-            console.log("i is" + i);
+            ////console.log(rewards[i]);
+            //console.log(rewards.length);
+            //console.log("i is" + i);
             //var dec = moment.tz(new Date(), "America/Los_Angeles");
             var end = helper.findCurrentDateinutc();
 
@@ -196,20 +196,20 @@ exports.userEndingRewardscron = () => {
 
             var comparetoDate = new Date(rewards[i].enddate);
             comparetoDate.setHours(0, 0, 0, 0);
-            console.log(compareWithDate.getTime());
-            console.log(comparetoDate.getTime());
+            //console.log(compareWithDate.getTime());
+            //console.log(comparetoDate.getTime());
             var msg = "Your reward has been expired or expiring soon.Please add a new reward.";
             var timeDiff = Math.abs(compareWithDate.getTime() - comparetoDate.getTime());
 
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-            console.log(diffDays);
+            //console.log(diffDays);
 
             if (diffDays = 1) {
 
                helper.sendNotification(rewards[i].shopDetail.deviceToken, "rewardValidity", msg, (cb) => {
 
-                  console.log("notification send");
+                  //console.log("notification send");
 
                })
 
@@ -219,35 +219,35 @@ exports.userEndingRewardscron = () => {
 
             //     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-            //     console.log(diffDays);
+            //     //console.log(diffDays);
 
             //     if (diffDays <= 1) {
 
             //         helper.sendNotification(rewards[i].shopDetail.deviceToken, "rewardValidity", msg, (cb) => {
 
-            //             console.log("notification send");
+            //             //console.log("notification send");
 
             //         })
 
             //     }
-            //     console.log(shopDetailData);
+            //     //console.log(shopDetailData);
             // } else {
-            //     console.log('negativeshopDetailData');
+            //     //console.log('negativeshopDetailData');
             //     var timeDiff = Math.abs(compareWithDate.getTime() - comparetoDate.getTime());
 
             //     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-            //     console.log(diffDays);
+            //     //console.log(diffDays);
 
             //     if (diffDays <= 1) {
             //         helper.sendNotification(rewards[i].shopDetail.deviceToken, "OfferValidity", msg, (cb) => {
 
-            //             console.log("notification send");
+            //             //console.log("notification send");
 
             //         })
 
             //     }
-            //     console.log(shopDetailData);
+            //     //console.log(shopDetailData);
             // }
 
          };
@@ -260,8 +260,8 @@ var checkIitemSizePresent = function(value, list) {
    for (i = 0; i < list.length; i++) {
 
       var cor = list[i].itemSize;
-      console.log(cor);
-      console.log(value);
+      //console.log(cor);
+      //console.log(value);
       if (cor == value) {
          return true;
       }
@@ -275,8 +275,8 @@ var checkIfPresent = function(value, list) {
    for (i = 0; i < list.length; i++) {
 
       var cor = list[i].itemId;
-      console.log(cor);
-      console.log(value);
+      //console.log(cor);
+      //console.log(value);
       if (cor == value) {
          return true;
       }
@@ -292,16 +292,16 @@ var checkIfPresent = function(value, list) {
 //          "shopDetail": shopDetail
 //       })
 //       .exec(function(err, reward) {
-//          console.log("reward>>>>>>>>>>>>>>>>>");
-//          console.log(reward);
+//          //console.log("reward>>>>>>>>>>>>>>>>>");
+//          //console.log(reward);
 //          if (err) {
-//             console.log("error finding rewrad");
+//             //console.log("error finding rewrad");
 //          }
 
 //          if (!reward) {
-//             console.log("no reward");
+//             //console.log("no reward");
 //          } else {
-//             //console.log(CorrectOrder.length);
+//             ////console.log(CorrectOrder.length);
 //                 var totalReward=0;
 //                var reward_data;
 //                for (j = 0; j < CorrectOrder.length; j++) {
@@ -319,12 +319,12 @@ var checkIfPresent = function(value, list) {
 
 //                            var dateData = new Date();
 //                            dateData.setHours(0, 0, 0, 0);
-//                            console.log('enddateData');
-//                            console.log(enddateData);
-//                            console.log(startdateData);
-//                            console.log(dateData);
-//                            console.log((enddateData >= dateData) && (startdateData <= dateData));
-//                            console.log('(enddateData >= dateData) && (startdateData <= dateData)');
+//                            //console.log('enddateData');
+//                            //console.log(enddateData);
+//                            //console.log(startdateData);
+//                            //console.log(dateData);
+//                            //console.log((enddateData >= dateData) && (startdateData <= dateData));
+//                            //console.log('(enddateData >= dateData) && (startdateData <= dateData)');
 //                            if((enddateData >= dateData) && (startdateData <= dateData))
 //                            {
 //                                totalReward=totalReward +1
@@ -348,10 +348,10 @@ var checkIfPresent = function(value, list) {
 //                      "rewardId": reward_data._id
 //                   })
 //                   .exec(function(err, usersRewarddata) {
-//                      console.log("usersRewarddata>>>>>>>>>>>>>>>>>");
-//                      console.log(usersRewarddata);
+//                      //console.log("usersRewarddata>>>>>>>>>>>>>>>>>");
+//                      //console.log(usersRewarddata);
 //                      if (err) {
-//                         console.log("error finding rewrad");
+//                         //console.log("error finding rewrad");
 //                      }
 //                      // if (!usersRewarddata && ((enddateData >= dateData) && (startdateData <= dateData)))
 //                    if (!usersRewarddata) {
@@ -364,9 +364,9 @@ var checkIfPresent = function(value, list) {
 //                                           usersRe.save((err, usewrre) => {
 
 //                                              if (err) {
-//                                                 console.log("error creating users rewrad");
+//                                                 //console.log("error creating users rewrad");
 //                                              }
-//                                              console.log("users reward created successfully");
+//                                              //console.log("users reward created successfully");
 //                                           })
 //                                        } 
 //                                        else if (usersRewarddata) {
@@ -379,7 +379,7 @@ var checkIfPresent = function(value, list) {
 //                                              }
 //                                           } else if (totalUserRewards == parseInt(reward_data.quantity)) {
 //                                              if (totalUserRewards.claimedReward) {
-//                                                 console.log("do nothing")
+//                                                 //console.log("do nothing")
 //                                              } else {
 //                                                 usersRewarddata.claimedReward = true;
 //                                              }
@@ -390,13 +390,13 @@ var checkIfPresent = function(value, list) {
 //                                           usersRewarddata.save((err, dataSave) => {
 
 //                                              if (err) {
-//                                                 console.log("error creating users rewrad");
+//                                                 //console.log("error creating users rewrad");
 //                                              }
-//                                              console.log("users reward created successfully again");
+//                                              //console.log("users reward created successfully again");
 //                                           })
 
 //                                        } else {
-//                                           console.log("no rewards ")
+//                                           //console.log("no rewards ")
 //                                        }
 
 
@@ -421,14 +421,14 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
       })
       .exec(function(err, reward)
        {
-         console.log("reward>>>>>>>>>>>>>>>>>");
-         console.log(reward);
+         //console.log("reward>>>>>>>>>>>>>>>>>");
+         //console.log(reward);
          if (err) {
-            console.log("error finding rewrad");
+            //console.log("error finding rewrad");
          }
 
          if (!reward) {
-            console.log("no reward");
+            //console.log("no reward");
          } else {
             var reward_data;
             var tempuserdataFinding = false;
@@ -443,28 +443,28 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
 
                var dateDat = new Date();
                var timezone=moment.tz.guess();
-               // console.log(moment.tz.guess());
+               // //console.log(moment.tz.guess());
                var dec = moment.tz(dateDat,timezone);
-               console.log(dec);
-               console.log('dec');
+               //console.log(dec);
+               //console.log('dec');
                var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                var dateData  =new Date(dateDatat) ;
-               console.log(dateData);
-               console.log('dateData');
-               console.log('enddateData');
-               console.log(enddateData);
-               console.log(startdateData);
-               console.log(dateData);
-               console.log((enddateData >= dateData) && (startdateData <= dateData));
-               console.log('(enddateData >= dateData) && (startdateData <= dateData)');
+               //console.log(dateData);
+               //console.log('dateData');
+               //console.log('enddateData');
+               //console.log(enddateData);
+               //console.log(startdateData);
+               //console.log(dateData);
+               //console.log((enddateData >= dateData) && (startdateData <= dateData));
+               //console.log('(enddateData >= dateData) && (startdateData <= dateData)');
                if ((enddateData >= dateData) && (startdateData <= dateData)) {
                   var totalReward = 0;
                   for (j in CorrectOrder) {
                      var isEligible = CorrectOrder[j].eligibleForRewards.trim();
-                     console.log(isEligible);
+                     //console.log(isEligible);
                      if (isEligible == "true") {
-                        console.log("im here")
+                        //console.log("im here")
                         totalReward = 1;
                         tempuserdataFinding = true;
 
@@ -481,7 +481,7 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
 
          if (tempuserdataFinding) 
          {
-            console.log("i m in temp user reward data^^^^^^^^^^^^^^");
+            //console.log("i m in temp user reward data^^^^^^^^^^^^^^");
             usersReward
                .findOne({
                   "shopDetail": shopDetail,
@@ -489,10 +489,10 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                   "rewardId": reward_data._id
                })
                .exec(function(err, usersRewarddata) {
-                  console.log("usersRewarddata>>>>>>>>>>>>>>>>>");
-                  console.log(usersRewarddata);
+                  //console.log("usersRewarddata>>>>>>>>>>>>>>>>>");
+                  //console.log(usersRewarddata);
                   if (err) {
-                     console.log("error finding rewrad");
+                     //console.log("error finding rewrad");
                   }
                   // if (!usersRewarddata && ((enddateData >= dateData) && (startdateData <= dateData)))
                   if (!usersRewarddata) {
@@ -507,9 +507,9 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                      usersRe.save((err, usewrre) => {
 
                         if (err) {
-                           console.log("error creating users rewrad");
+                           //console.log("error creating users rewrad");
                         }
-                        console.log("users reward created successfully");
+                        //console.log("users reward created successfully");
                      })
                   } else if (usersRewarddata) {
                      var totalUserRewards = usersRewarddata.rewardCompleted;
@@ -521,7 +521,7 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                         }
                      } else if (totalUserRewards == parseInt(reward_data.quantity)) {
                         if (totalUserRewards.claimedReward) {
-                           console.log("do nothing")
+                           //console.log("do nothing")
                         } else {
                            usersRewarddata.claimedReward = true;
                         }
@@ -532,13 +532,13 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                      usersRewarddata.save((err, dataSave) => {
 
                         if (err) {
-                           console.log("error creating users rewrad");
+                           //console.log("error creating users rewrad");
                         }
-                        console.log("users reward created successfully again");
+                        //console.log("users reward created successfully again");
                      })
 
                   } else {
-                     console.log("no rewards ")
+                     //console.log("no rewards ")
                   }
 
                });
@@ -565,10 +565,10 @@ exports.claimedReward = (req, res) => {
          "shopDetail": shopDetail
       })
       .exec(function(err, reward) {
-         console.log("reward>>>>>>>>>>>>>>>>>");
-         console.log(reward);
+         //console.log("reward>>>>>>>>>>>>>>>>>");
+         //console.log(reward);
          if (err) {
-            console.log("error finding rewrad");
+            //console.log("error finding rewrad");
             return res.status(500).json({
                title: 'An error occurred',
                error: "true",
@@ -577,7 +577,7 @@ exports.claimedReward = (req, res) => {
          }
 
          if (!reward) {
-            console.log("error finding rewrad");
+            //console.log("error finding rewrad");
             return res.status(200).json({
                title: 'no reward for such shop',
                error: "false",
@@ -593,9 +593,9 @@ exports.claimedReward = (req, res) => {
             var dateData = new Date();
             dateData.setHours(0, 0, 0, 0);
 
-            console.log(enddateData);
-            console.log(startdateData);
-            console.log(dateData);
+            //console.log(enddateData);
+            //console.log(startdateData);
+            //console.log(dateData);
             if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
                usersReward
@@ -628,8 +628,8 @@ exports.claimedReward = (req, res) => {
 
                         helper.findUser(decoded.user._id, function(cb) {
                            CurrentUserDetail = cb;
-                           console.log(CurrentUserDetail);
-                           console.log('CurrentUserDetail');
+                           //console.log(CurrentUserDetail);
+                           //console.log('CurrentUserDetail');
                         });
 
                         var otpOfOrder = randomstring.generate({
@@ -640,12 +640,12 @@ exports.claimedReward = (req, res) => {
                            length: 9,
                            charset: 'hex'
                         });
-                        console.log(timeForPickcup);
+                        //console.log(timeForPickcup);
                         var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-                        console.log(dec);
+                        //console.log(dec);
                         var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-                        console.log(timePickup);
-                        console.log('timePickup');
+                        //console.log(timePickup);
+                        //console.log('timePickup');
                         //moment(1369266934311).tz('America/Phoenix').format('YYYY-MM-DD HH:mm')
                         var totalPrice = req.body.totalPrice;
                         var ordered = new Orders({
@@ -663,8 +663,8 @@ exports.claimedReward = (req, res) => {
                         ordered.save((err, orderd) => {
 
                            if (err) {
-                              console.log("orser saveissue");
-                              console.log(err);
+                              //console.log("orser saveissue");
+                              //console.log(err);
                               return res.status(500).json({
                                  title: 'An error occurred',
                                  error: "true",
@@ -674,8 +674,8 @@ exports.claimedReward = (req, res) => {
 
                            if (CurrentStoreDetail == 'err' || CurrentStoreDetail == 'no store Found') {
 
-                              console.log("as no store found cannot send the notification to the user");
-                              console.log("as no store found cannot send the notification to the user");
+                              //console.log("as no store found cannot send the notification to the user");
+                              //console.log("as no store found cannot send the notification to the user");
                               res.status(200).json({
                                  message: 'Order saved Your otp is',
                                  otp: otpOfOrder,
@@ -687,10 +687,10 @@ exports.claimedReward = (req, res) => {
 
                            } else {
 
-                              console.log(orderd);
-                              console.log(CurrentUserDetail);
-                              console.log(CurrentStoreDetail.deviceToken);
-                              console.log('CurrentUserDetail?????????????');
+                              //console.log(orderd);
+                              //console.log(CurrentUserDetail);
+                              //console.log(CurrentStoreDetail.deviceToken);
+                              //console.log('CurrentUserDetail?????????????');
                               var message = {
                                  registration_ids: CurrentStoreDetail.deviceToken,
                                  priority: "high",
@@ -765,7 +765,7 @@ exports.claimedReward = (req, res) => {
 
                                  })
                                  .catch(function(err) {
-                                    console.log("Something has gone wrong1!");
+                                    //console.log("Something has gone wrong1!");
                                     console.error(err);
                                     res.status(200).json({
                                        message: 'Order saved Your otp is',
@@ -808,7 +808,7 @@ exports.claimedReward = (req, res) => {
 
 exports.createOrder = (req, res) => {
 
-    console.log('new Date(timePickup) createOrder');
+    //console.log('new Date(timePickup) createOrder');
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
     var CurrentUserDetail;
@@ -817,15 +817,15 @@ exports.createOrder = (req, res) => {
     var orderType = req.body.orderType;
     helper.findShopowner(shopDetail, function(cb) {
        CurrentStoreDetail = cb;
-         // console.log(CurrentStoreDetail);
-       console.log('CurrentStoreDetail');
+         // //console.log(CurrentStoreDetail);
+       //console.log('CurrentStoreDetail');
 
     });
 
     helper.findUser(decoded.user._id, function(cb) {
        CurrentUserDetail = cb;
-       //console.log(CurrentUserDetail);
-       console.log('CurrentUserDetail');
+       ////console.log(CurrentUserDetail);
+       //console.log('CurrentUserDetail');
     });
 
     if (orderType == 0) 
@@ -841,10 +841,10 @@ exports.createOrder = (req, res) => {
              "shopDetail": shopDetail
           })
           .exec(function(err, reward) {
-             // console.log("reward>>>>>>>>>>>>>>>>>");
-             // console.log(reward);
+             // //console.log("reward>>>>>>>>>>>>>>>>>");
+             // //console.log(reward);
              if (err) {
-                console.log("error finding rewrad");
+                //console.log("error finding rewrad");
                 return res.status(500).json({
                    title: 'An error occurred',
                    error: "true",
@@ -853,7 +853,7 @@ exports.createOrder = (req, res) => {
              }
 
              if (!reward) {
-                console.log("error finding rewrad");
+                //console.log("error finding rewrad");
                 return res.status(200).json({
                    title: 'no reward for such shop',
                    error: "false",
@@ -872,19 +872,19 @@ exports.createOrder = (req, res) => {
 
                        var dateDat = new Date();
                         var timezone=moment.tz.guess();
-                        // console.log(moment.tz.guess());
+                        // //console.log(moment.tz.guess());
                         var dec = moment.tz(dateDat,timezone);
-                        console.log(dec);
-                        console.log('dec');
+                        //console.log(dec);
+                        //console.log('dec');
                         var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                         var dateData  =new Date(dateDatat) ;
-                        console.log(dateData);
-                        console.log('dateData');
+                        //console.log(dateData);
+                        //console.log('dateData');
 
-                      console.log(enddateData);
-                      console.log(startdateData);
-                      console.log(dateData);
+                      //console.log(enddateData);
+                      //console.log(startdateData);
+                      //console.log(dateData);
                     if ((enddateData >= dateData) && (startdateData <= dateData)) 
                     {
                         rewardOrder=true;
@@ -918,8 +918,8 @@ exports.createOrder = (req, res) => {
 
                                   // helper.findUser(decoded.user._id, function(cb) {
                                   //     CurrentUserDetail = cb;
-                                  //     console.log(CurrentUserDetail);
-                                  //     console.log('CurrentUserDetail');
+                                  //     //console.log(CurrentUserDetail);
+                                  //     //console.log('CurrentUserDetail');
                                   // });
 
                                   var otpOfOrder = randomstring.generate({
@@ -930,12 +930,12 @@ exports.createOrder = (req, res) => {
                                      length: 9,
                                      charset: 'hex'
                                   });
-                                  console.log(timeForPickcup);
+                                  //console.log(timeForPickcup);
                                   var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-                                  console.log(dec);
+                                  //console.log(dec);
                                   var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-                                  console.log(timePickup);
-                                  console.log('timePickup');
+                                  //console.log(timePickup);
+                                  //console.log('timePickup');
                                   if(timePickup == "Invalid date")
                                   {
                                       return res.status(200).json({
@@ -962,8 +962,8 @@ exports.createOrder = (req, res) => {
                                   ordered.save((err, orderd) => {
 
                                      if (err) {
-                                        console.log("orser saveissue");
-                                        console.log(err);
+                                        //console.log("orser saveissue");
+                                        //console.log(err);
                                         return res.status(500).json({
                                            title: 'An error occurred',
                                            error: "true",
@@ -973,8 +973,8 @@ exports.createOrder = (req, res) => {
 
                                      if (CurrentStoreDetail == 'err' || CurrentStoreDetail == 'no store Found') {
 
-                                        console.log("as no store found cannot send the notification to the user");
-                                        console.log("as no store found cannot send the notification to the user");
+                                        //console.log("as no store found cannot send the notification to the user");
+                                        //console.log("as no store found cannot send the notification to the user");
                                         res.status(200).json({
                                            message: 'Order saved Your otp is',
                                            otp: otpOfOrder,
@@ -986,10 +986,10 @@ exports.createOrder = (req, res) => {
 
                                      } else {
 
-                                        console.log(orderd);
-                                        console.log(CurrentUserDetail);
-                                        console.log(CurrentStoreDetail.deviceToken);
-                                        console.log('CurrentUserDetail?????????????');
+                                        //console.log(orderd);
+                                        //console.log(CurrentUserDetail);
+                                        //console.log(CurrentStoreDetail.deviceToken);
+                                        //console.log('CurrentUserDetail?????????????');
                                         var message = {
                                            registration_ids: CurrentStoreDetail.deviceToken,
                                            priority: "high",
@@ -1066,7 +1066,7 @@ exports.createOrder = (req, res) => {
 
                                            })
                                            .catch(function(err) {
-                                              console.log("Something has gone wrong1!");
+                                              //console.log("Something has gone wrong1!");
                                               console.error(err);
                                               res.status(200).json({
                                                  message: 'Order saved Your otp is',
@@ -1109,7 +1109,7 @@ exports.createOrder = (req, res) => {
              }
           })
     } else if (orderType == 1) {
-        console.log("orderType");
+        //console.log("orderType");
 
        var shopDetail = req.body.shopDetail;
        var timeForPickcup = req.body.timeForPickcup;
@@ -1117,8 +1117,8 @@ exports.createOrder = (req, res) => {
        var parcelData = req.body.parcel;
        var requestOrder = req.body.order;
        var actualPrice= req.body.actualPrice;
-       console.log(actualPrice);
-        console.log('actualPrice');
+       //console.log(actualPrice);
+        //console.log('actualPrice');
        var CorrectOrder = [];
        for (var i = 0; i < requestOrder.length; i++) {
           var data = requestOrder[i];
@@ -1135,7 +1135,7 @@ exports.createOrder = (req, res) => {
        }
 
        if (CorrectOrder.length <= 0) {
-          console.log("length issue");
+          //console.log("length issue");
           return res.status(500).json({
              title: 'Incorrect data',
              error: "true"
@@ -1144,7 +1144,7 @@ exports.createOrder = (req, res) => {
        }
 
        // order.findOne({ "userDetail": decoded.user._id}).exec(function (err,user){
-       //  console.log(user);
+       //  //console.log(user);
        var otpOfOrder = randomstring.generate({
           length: 4,
           charset: 'numeric'
@@ -1153,12 +1153,12 @@ exports.createOrder = (req, res) => {
           length: 9,
           charset: 'hex'
        });
-       console.log(timeForPickcup);
+       //console.log(timeForPickcup);
        var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-       console.log(dec);
+       //console.log(dec);
        var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-       console.log(timePickup);
-       console.log('timePickup');
+       //console.log(timePickup);
+       //console.log('timePickup');
 
        var totalPrice = req.body.totalPrice;
        var ordered = new Orders({
@@ -1180,8 +1180,8 @@ exports.createOrder = (req, res) => {
 
           if (err) {
         
-             console.log("orser saveissue");
-             console.log(err);
+             //console.log("orser saveissue");
+             //console.log(err);
              return res.status(500).json({
                 title: 'An error occurred',
                 error: "true",
@@ -1340,8 +1340,8 @@ exports.createOrder = (req, res) => {
        var CorrectOrder = [];
        var totalPrice = req.body.totalPrice;
         var actualPrice= req.body.actualPrice;
-        console.log(actualPrice);
-        console.log('actualPrice');
+        //console.log(actualPrice);
+        //console.log('actualPrice');
        for (var i = 0; i < requestOrder.length; i++) {
           var data = requestOrder[i];
           var pushedData = {};
@@ -1357,7 +1357,7 @@ exports.createOrder = (req, res) => {
        }
 
        if (CorrectOrder.length <= 0) {
-          console.log("length issue");
+          //console.log("length issue");
           return res.status(500).json({
              title: 'Incorrect data oreder cannot be placed',
              error: "true"
@@ -1372,10 +1372,10 @@ exports.createOrder = (req, res) => {
              "shopDetail": shopDetail
           })
           .exec(function(err, reward) {
-             console.log("reward>>>>>>>>>>>>>>>>>");
-             console.log(reward);
+             //console.log("reward>>>>>>>>>>>>>>>>>");
+             //console.log(reward);
              if (err) {
-                console.log("error finding rewrad");
+                //console.log("error finding rewrad");
                 return res.status(500).json({
                    title: 'An error occurred',
                    error: "true",
@@ -1384,7 +1384,7 @@ exports.createOrder = (req, res) => {
              }
 
              if (!reward) {
-                console.log("error finding rewrad");
+                //console.log("error finding rewrad");
                 return res.status(200).json({
                    title: 'no reward for such shop order cannot be placed',
                    error: "false",
@@ -1402,19 +1402,19 @@ exports.createOrder = (req, res) => {
 
                        var dateDat = new Date();
                         var timezone=moment.tz.guess();
-                        // console.log(moment.tz.guess());
+                        // //console.log(moment.tz.guess());
                         var dec = moment.tz(dateDat,timezone);
-                        console.log(dec);
-                        console.log('dec');
+                        //console.log(dec);
+                        //console.log('dec');
                         var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                         var dateData  =new Date(dateDatat) ;
-                        console.log(dateData);
-                        console.log('dateData');
+                        //console.log(dateData);
+                        //console.log('dateData');
 
-                       console.log(enddateData);
-                       console.log(startdateData);
-                       console.log(dateData);
+                       //console.log(enddateData);
+                       //console.log(startdateData);
+                       //console.log(dateData);
                        if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
                                    usersReward
@@ -1450,12 +1450,12 @@ exports.createOrder = (req, res) => {
                                                length: 9,
                                                charset: 'hex'
                                             });
-                                            console.log(timeForPickcup);
+                                            //console.log(timeForPickcup);
                                             var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-                                            console.log(dec);
+                                            //console.log(dec);
                                             var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-                                            console.log(timePickup);
-                                            console.log('timePickup');
+                                            //console.log(timePickup);
+                                            //console.log('timePickup');
                                             //moment(1369266934311).tz('America/Phoenix').format('YYYY-MM-DD HH:mm')
                                             //var totalPrice = req.body.totalPrice;
                                             var ordered = new Orders({
@@ -1475,8 +1475,8 @@ exports.createOrder = (req, res) => {
                                            ordered.save((err, orderd) => {
 
                                               if (err) {
-                                                 console.log("orser saveissue");
-                                                 console.log(err);
+                                                 //console.log("orser saveissue");
+                                                 //console.log(err);
                                                  return res.status(500).json({
                                                     title: 'An error occurred',
                                                     error: "true",
@@ -1662,26 +1662,26 @@ exports.createOrder = (req, res) => {
 
 // exports.createOrder = (req, res) => {
 
-//    console.log('new Date(timePickup) createOrder');
+//    //console.log('new Date(timePickup) createOrder');
 //    var token = req.body.userToken;
 //    var decoded = jwt.decode(token, "pickup");
 //    var CurrentUserDetail;
 //    var CurrentStoreDetail;
 //       var shopDetail = req.body.shopDetail;
 //    var orderType = req.body.orderType;
-//    console.log(orderType);
-//    console.log('orderType');
+//    //console.log(orderType);
+//    //console.log('orderType');
 //    helper.findShopowner(shopDetail, function(cb) {
 //       CurrentStoreDetail = cb;
-//         // console.log(CurrentStoreDetail);
-//       console.log('CurrentStoreDetail');
+//         // //console.log(CurrentStoreDetail);
+//       //console.log('CurrentStoreDetail');
 
 //    });
 
 //    helper.findUser(decoded.user._id, function(cb) {
 //       CurrentUserDetail = cb;
-//       //console.log(CurrentUserDetail);
-//       console.log('CurrentUserDetail');
+//       ////console.log(CurrentUserDetail);
+//       //console.log('CurrentUserDetail');
 //    });
 
 //    if (orderType == 0) 
@@ -1698,10 +1698,10 @@ exports.createOrder = (req, res) => {
 //             "shopDetail": shopDetail
 //          })
 //          .exec(function(err, reward) {
-//             // console.log("reward>>>>>>>>>>>>>>>>>");
-//             // console.log(reward);
+//             // //console.log("reward>>>>>>>>>>>>>>>>>");
+//             // //console.log(reward);
 //             if (err) {
-//                console.log("error finding rewrad");
+//                //console.log("error finding rewrad");
 //                return res.status(500).json({
 //                   title: 'An error occurred',
 //                   error: "true",
@@ -1710,7 +1710,7 @@ exports.createOrder = (req, res) => {
 //             }
 
 //             if (!reward) {
-//                console.log("error finding rewrad");
+//                //console.log("error finding rewrad");
 //                return res.status(200).json({
 //                   title: 'no reward for such shop',
 //                   error: "false",
@@ -1726,9 +1726,9 @@ exports.createOrder = (req, res) => {
 //                var dateData = new Date();
 //                dateData.setHours(0, 0, 0, 0);
 
-//                console.log(enddateData);
-//                console.log(startdateData);
-//                console.log(dateData);
+//                //console.log(enddateData);
+//                //console.log(startdateData);
+//                //console.log(dateData);
 //                if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
 //                   usersReward
@@ -1761,8 +1761,8 @@ exports.createOrder = (req, res) => {
 
 //                            // helper.findUser(decoded.user._id, function(cb) {
 //                            //     CurrentUserDetail = cb;
-//                            //     console.log(CurrentUserDetail);
-//                            //     console.log('CurrentUserDetail');
+//                            //     //console.log(CurrentUserDetail);
+//                            //     //console.log('CurrentUserDetail');
 //                            // });
 
 //                            var otpOfOrder = randomstring.generate({
@@ -1773,12 +1773,12 @@ exports.createOrder = (req, res) => {
 //                               length: 9,
 //                               charset: 'hex'
 //                            });
-//                            console.log(timeForPickcup);
+//                            //console.log(timeForPickcup);
 //                            var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-//                            console.log(dec);
+//                            //console.log(dec);
 //                            var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-//                            // console.log(timePickup);
-//                            // console.log('timePickup');
+//                            // //console.log(timePickup);
+//                            // //console.log('timePickup');
 //                            if(timePickup == "Invalid date")
 //                            {
 //                                return res.status(200).json({
@@ -1804,8 +1804,8 @@ exports.createOrder = (req, res) => {
 //                            ordered.save((err, orderd) => {
 
 //                               if (err) {
-//                                  console.log("orser saveissue");
-//                                  console.log(err);
+//                                  //console.log("orser saveissue");
+//                                  //console.log(err);
 //                                  return res.status(500).json({
 //                                     title: 'An error occurred',
 //                                     error: "true",
@@ -1815,8 +1815,8 @@ exports.createOrder = (req, res) => {
 
 //                               if (CurrentStoreDetail == 'err' || CurrentStoreDetail == 'no store Found') {
 
-//                                  console.log("as no store found cannot send the notification to the user");
-//                                  console.log("as no store found cannot send the notification to the user");
+//                                  //console.log("as no store found cannot send the notification to the user");
+//                                  //console.log("as no store found cannot send the notification to the user");
 //                                  res.status(200).json({
 //                                     message: 'Order saved Your otp is',
 //                                     otp: otpOfOrder,
@@ -1827,10 +1827,10 @@ exports.createOrder = (req, res) => {
 
 //                               } else {
 
-//                                  // console.log(orderd);
-//                                  // console.log(CurrentUserDetail);
-//                                  // console.log(CurrentStoreDetail.deviceToken);
-//                                  // console.log('CurrentUserDetail?????????????');
+//                                  // //console.log(orderd);
+//                                  // //console.log(CurrentUserDetail);
+//                                  // //console.log(CurrentStoreDetail.deviceToken);
+//                                  // //console.log('CurrentUserDetail?????????????');
 //                                  var message = {
 //                                     registration_ids: CurrentStoreDetail.deviceToken,
 //                                     priority: "high",
@@ -1905,7 +1905,7 @@ exports.createOrder = (req, res) => {
 
 //                                     })
 //                                     .catch(function(err) {
-//                                        console.log("Something has gone wrong1!");
+//                                        //console.log("Something has gone wrong1!");
 //                                        console.error(err);
 //                                        res.status(200).json({
 //                                           message: 'Order saved Your otp is',
@@ -1944,7 +1944,7 @@ exports.createOrder = (req, res) => {
 //             }
 //          })
 //    } else if (orderType == 1) {
-//        console.log("orderType");
+//        //console.log("orderType");
 //       //var token = req.body.userToken;
 //       //var decoded = jwt.decode(token, "pickup");
 //       var shopDetail = req.body.shopDetail;
@@ -1953,8 +1953,8 @@ exports.createOrder = (req, res) => {
 //       var parcelData = req.body.parcel;
 //       var requestOrder = req.body.order;
 //       var actualPrice= req.body.actualPrice;
-//       console.log(actualPrice);
-//        console.log('actualPrice');
+//       //console.log(actualPrice);
+//        //console.log('actualPrice');
 //       var CorrectOrder = [];
 //       for (var i = 0; i < requestOrder.length; i++) {
 //          var data = requestOrder[i];
@@ -1971,7 +1971,7 @@ exports.createOrder = (req, res) => {
 //       }
 
 //       if (CorrectOrder.length <= 0) {
-//          console.log("length issue");
+//          //console.log("length issue");
 //          return res.status(500).json({
 //             title: 'Incorrect data',
 //             error: "true"
@@ -1980,7 +1980,7 @@ exports.createOrder = (req, res) => {
 //       }
 
 //       // order.findOne({ "userDetail": decoded.user._id}).exec(function (err,user){
-//       //  console.log(user);
+//       //  //console.log(user);
 //       var otpOfOrder = randomstring.generate({
 //          length: 4,
 //          charset: 'numeric'
@@ -1989,12 +1989,12 @@ exports.createOrder = (req, res) => {
 //          length: 9,
 //          charset: 'hex'
 //       });
-//       console.log(timeForPickcup);
+//       //console.log(timeForPickcup);
 //       var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-//       console.log(dec);
+//       //console.log(dec);
 //       var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-//       console.log(timePickup);
-//       console.log('timePickup');
+//       //console.log(timePickup);
+//       //console.log('timePickup');
 
 //       var totalPrice = req.body.totalPrice;
 //       var ordered = new Orders({
@@ -2014,8 +2014,8 @@ exports.createOrder = (req, res) => {
 //       ordered.save((err, orderd) => {
 
 //          if (err) {
-//             console.log("orser saveissue");
-//             console.log(err);
+//             //console.log("orser saveissue");
+//             //console.log(err);
 //             return res.status(500).json({
 //                title: 'An error occurred',
 //                error: "true",
@@ -2174,8 +2174,8 @@ exports.createOrder = (req, res) => {
 //       var CorrectOrder = [];
 //       var totalPrice = req.body.totalPrice;
 //        var actualPrice= req.body.actualPrice;
-//        console.log(actualPrice);
-//        console.log('actualPrice');
+//        //console.log(actualPrice);
+//        //console.log('actualPrice');
 //       for (var i = 0; i < requestOrder.length; i++) {
 //          var data = requestOrder[i];
 //          var pushedData = {};
@@ -2191,7 +2191,7 @@ exports.createOrder = (req, res) => {
 //       }
 
 //       if (CorrectOrder.length <= 0) {
-//          console.log("length issue");
+//          //console.log("length issue");
 //          return res.status(500).json({
 //             title: 'Incorrect data oreder cannot be placed',
 //             error: "true"
@@ -2206,10 +2206,10 @@ exports.createOrder = (req, res) => {
 //             "shopDetail": shopDetail
 //          })
 //          .exec(function(err, reward) {
-//             console.log("reward>>>>>>>>>>>>>>>>>");
-//             console.log(reward);
+//             //console.log("reward>>>>>>>>>>>>>>>>>");
+//             //console.log(reward);
 //             if (err) {
-//                console.log("error finding rewrad");
+//                //console.log("error finding rewrad");
 //                return res.status(500).json({
 //                   title: 'An error occurred',
 //                   error: "true",
@@ -2218,7 +2218,7 @@ exports.createOrder = (req, res) => {
 //             }
 
 //             if (!reward) {
-//                console.log("error finding rewrad");
+//                //console.log("error finding rewrad");
 //                return res.status(200).json({
 //                   title: 'no reward for such shop order cannot be placed',
 //                   error: "false",
@@ -2234,9 +2234,9 @@ exports.createOrder = (req, res) => {
 //                var dateData = new Date();
 //                dateData.setHours(0, 0, 0, 0);
 
-//                console.log(enddateData);
-//                console.log(startdateData);
-//                console.log(dateData);
+//                //console.log(enddateData);
+//                //console.log(startdateData);
+//                //console.log(dateData);
 //                if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
 //                   usersReward
@@ -2272,12 +2272,12 @@ exports.createOrder = (req, res) => {
 //                               length: 9,
 //                               charset: 'hex'
 //                            });
-//                            console.log(timeForPickcup);
+//                            //console.log(timeForPickcup);
 //                            var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
-//                            console.log(dec);
+//                            //console.log(dec);
 //                            var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-//                            console.log(timePickup);
-//                            console.log('timePickup');
+//                            //console.log(timePickup);
+//                            //console.log('timePickup');
 //                            //moment(1369266934311).tz('America/Phoenix').format('YYYY-MM-DD HH:mm')
 //                            //var totalPrice = req.body.totalPrice;
 //                            var ordered = new Orders({
@@ -2296,8 +2296,8 @@ exports.createOrder = (req, res) => {
 //                           ordered.save((err, orderd) => {
 
 //                              if (err) {
-//                                 console.log("orser saveissue");
-//                                 console.log(err);
+//                                 //console.log("orser saveissue");
+//                                 //console.log(err);
 //                                 return res.status(500).json({
 //                                    title: 'An error occurred',
 //                                    error: "true",
@@ -2497,8 +2497,8 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
 
       if (CurrentStoreDetail == 'err' || CurrentStoreDetail == 'no store Found') {
 
-         //console.log("as no store found cannot send the notification to the user");
-         //console.log("as no store found cannot send the notification to the user");
+         ////console.log("as no store found cannot send the notification to the user");
+         ////console.log("as no store found cannot send the notification to the user");
          res.status(200).json({
             message: 'Order saved Your otp is',
             otp: otpOfOrder,
@@ -2510,10 +2510,10 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
 
       } else {
 
-         // console.log(orderd);
-         // console.log(CurrentUserDetail);
-         // console.log(CurrentStoreDetail.deviceToken);
-        // console.log('CurrentUserDetail?????????????');
+         // //console.log(orderd);
+         // //console.log(CurrentUserDetail);
+         // //console.log(CurrentStoreDetail.deviceToken);
+        // //console.log('CurrentUserDetail?????????????');
          var message = {
             registration_ids: CurrentStoreDetail.deviceToken,
             priority: "high",
@@ -2578,12 +2578,12 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
 
             })
             .catch(function(err) {
-               console.log("Something has gone wrong1!");
+               //console.log("Something has gone wrong1!");
                console.error(err);
-               console.log(serverKey);
-                   console.log(CurrentUserDetail.deviceToken);
+               //console.log(serverKey);
+                   //console.log(CurrentUserDetail.deviceToken);
               
-               console.log('serverKey/////////////////////');
+               //console.log('serverKey/////////////////////');
                       var msg = msgForNoti;
 
              
@@ -2635,7 +2635,7 @@ exports.findpartiOrder = (req, res) => {
 
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
+   //console.log(decoded);
    Orders
       .find({
          "_id": ObjectId(req.body.orderId)
@@ -2665,8 +2665,8 @@ exports.findpartiOrder = (req, res) => {
             });
          }
 
-         console.log(user);
-         console.log("users");
+         //console.log(user);
+         //console.log("users");
          res.status(200).json({
             title: 'User found ',
             error: "false",
@@ -2680,7 +2680,7 @@ exports.orderListing = (req, res) => {
 
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
+   //console.log(decoded);
    var initialData = 10;
    var requestData = parseInt(req.body.requestData);
    var skip_D = parseInt(req.body.skipData);
@@ -2733,16 +2733,16 @@ exports.orderListing = (req, res) => {
 
 exports.addItemToCart = (req, res) => {
    var token = req.body.userToken;
-   console.log(req.body);
-   // console.log(req.body);
+   //console.log(req.body);
+   // //console.log(req.body);
    var decoded = jwt.decode(token, "pickup");
 
    //var itemCat=req.body.itemCat;
    var shopDetail = req.body.shopDetail;
 
    // var requestOrder=req.body.order;
-   // console.log(decoded);
-   // console.log('decoded');
+   // //console.log(decoded);
+   // //console.log('decoded');
    var CorrectOrder = [];
 
    // for (var i = 0; i < requestOrder.length; i++) {
@@ -2770,8 +2770,8 @@ exports.addItemToCart = (req, res) => {
       "userDetail": decoded.user._id
    }).exec(function(err, user) {
 
-      // console.log(user);
-      // console.log(err);
+      // //console.log(user);
+      // //console.log(err);
       if (err) {
 
          return res.status(500).json({
@@ -2821,12 +2821,12 @@ exports.addItemToCart = (req, res) => {
 
          var AlreadyIncart = checkIfPresent(req.body.itemId, user.Ordered);
          var ofSameSize = checkIitemSizePresent(req.body.itemSize, user.Ordered);
-         console.log(ofSameSize);
-         console.log(AlreadyIncart);
-         console.log('AlreadyIncart');
+         //console.log(ofSameSize);
+         //console.log(AlreadyIncart);
+         //console.log('AlreadyIncart');
 
          if (AlreadyIncart && ofSameSize) {
-            console.log('AlreadyIncart >>>>>>>>>>>.if');
+            //console.log('AlreadyIncart >>>>>>>>>>>.if');
             for (i = 0; i < user.Ordered.length; i++) {
 
                var cor = user.Ordered[i].itemId;
@@ -2865,7 +2865,7 @@ exports.addItemToCart = (req, res) => {
 
          } else {
 
-            console.log('AlreadyIncart >>>>>>>>>>>.else');
+            //console.log('AlreadyIncart >>>>>>>>>>>.else');
 
             for (i = 0; i < CorrectOrder.length; i++) {
                user.Ordered.push(CorrectOrder[i]);
@@ -2900,15 +2900,15 @@ exports.addItemToCart = (req, res) => {
 
 exports.addItemToCartwithOkclick = (req, res) => {
    var token = req.body.userToken;
-   console.log(req.body);
+   //console.log(req.body);
    var decoded = jwt.decode(token, "pickup");
 
    //var itemCat=req.body.itemCat;
    var shopDetail = req.body.shopDetail;
 
    // var requestOrder=req.body.order;
-   // console.log(decoded);
-   // console.log('decoded');
+   // //console.log(decoded);
+   // //console.log('decoded');
    var CorrectOrder = [];
 
    // for (var i = 0; i < requestOrder.length; i++) {
@@ -2936,7 +2936,7 @@ exports.addItemToCartwithOkclick = (req, res) => {
    tempOrder.findOneAndRemove({
       "userDetail": decoded.user._id
    }).exec(function(err, user) {
-      console.log(user);
+      //console.log(user);
 
       if (err) {
 
@@ -2998,7 +2998,7 @@ exports.checkIfSameOrderCart = (req, res) => {
          "userDetail": decoded.user._id
       })
       .exec(function(err, user) {
-         console.log(user);
+         //console.log(user);
          if (err) {
             return res.status(500).json({
                title: 'An error occurred',
@@ -3052,7 +3052,7 @@ exports.checkIfSameOrderCart = (req, res) => {
          "userDetail": decoded.user._id
       })
       .exec(function(err, user) {
-         console.log(user);
+         //console.log(user);
          if (err) {
             return res.status(500).json({
                title: 'An error occurred',
@@ -3093,23 +3093,23 @@ exports.checkIfSameOrderCart = (req, res) => {
 //    var dataDetails={};
 //    var rewardQuantity=0;
 //    var rewardCompleted=0;
-//    console.log(req.body);
+//    //console.log(req.body);
 //      if(shopDetail)
 //      {
 //         helper.findShopownerwith(shopDetail, function(cb) {
 //        CurrentStoreDetail = cb;
       
 //        dataDetails.shopDetail=CurrentStoreDetail
-//          // console.log(CurrentStoreDetail);
-//        console.log('CurrentStoreDetail');
+//          // //console.log(CurrentStoreDetail);
+//        //console.log('CurrentStoreDetail');
 
 //         });
 //      }
    
-//    // console.log(stripeCharge);
-//    // console.log('stripeCharge');
-//    // console.log(adminTax);
-//    // console.log('adminTax');
+//    // //console.log(stripeCharge);
+//    // //console.log('stripeCharge');
+//    // //console.log(adminTax);
+//    // //console.log('adminTax');
 //    tempOrder
 //       .findOne({
 //          "userDetail": decoded.user._id
@@ -3153,21 +3153,21 @@ exports.checkIfSameOrderCart = (req, res) => {
 
                
 //                if (shopDetail) {
-//                   console.log(stripeCharge);
-//                   console.log('stripeCharge');
-//                   console.log(adminTax);
-//                   console.log('adminTax');
+//                   //console.log(stripeCharge);
+//                   //console.log('stripeCharge');
+//                   //console.log(adminTax);
+//                   //console.log('adminTax');
 //                   reward
 //                      .find({
 //                         "shopDetail": shopDetail
 //                      })
 //                      .exec(function(err, reward) {
-//                         // console.log("reward>>>>>>>>>>>>>>>>>");
-//                         // console.log(reward);
+//                         // //console.log("reward>>>>>>>>>>>>>>>>>");
+//                         // //console.log(reward);
 //                         if (err || reward.length <= 0) {
 //                            canClaimedReward = "false";
 //                            if (!user) {
-//                              console.log("i m in not user");
+//                              //console.log("i m in not user");
 //                               return res.status(200).json({
 //                                  title: 'No order in cart found for this user',
 //                                  error: "true",
@@ -3204,19 +3204,19 @@ exports.checkIfSameOrderCart = (req, res) => {
 
 //                                         var dateDat = new Date();
 //                                         var timezone = moment.tz.guess();
-//                                         // console.log(moment.tz.guess());
+//                                         // //console.log(moment.tz.guess());
 //                                         var dec = moment.tz(dateDat, timezone);
-//                                         console.log(dec);
-//                                         console.log('dec');
+//                                         //console.log(dec);
+//                                         //console.log('dec');
 //                                         var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
 //                                         var dateData = new Date(dateDatat);
-//                                         console.log(dateData);
-//                                         console.log('dateData');
+//                                         //console.log(dateData);
+//                                         //console.log('dateData');
 
-//                                         console.log(enddateData);
-//                                         console.log(startdateData);
-//                                         console.log(dateData);
+//                                         //console.log(enddateData);
+//                                         //console.log(startdateData);
+//                                         //console.log(dateData);
 //                                         if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
 //                                             rewardQuantity = rew.quantity;
@@ -3241,9 +3241,9 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                                                         rewardCompleted = userreward.rewardCompleted;
 
 //                                                     }
-//                                                     console.log("i m in userreward");
-//                                                     console.log(userClaimedrewd);
-//                                                     console.log(canClaimedReward);
+//                                                     //console.log("i m in userreward");
+//                                                     //console.log(userClaimedrewd);
+//                                                     //console.log(canClaimedReward);
 //                                                     rew_cb();
 
 
@@ -3254,10 +3254,10 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                                         }
 //                                     }, function(err) {
 
-//                                         console.log('All files have been processed successfully');
+//                                         //console.log('All files have been processed successfully');
 //                                         if (userClaimedrewd) {
-//                                             console.log("i m in userreward loop");
-//                                             console.log(canClaimedReward);
+//                                             //console.log("i m in userreward loop");
+//                                             //console.log(canClaimedReward);
 
 //                                             if (!user) {
 
@@ -3287,7 +3287,7 @@ exports.checkIfSameOrderCart = (req, res) => {
 
 //                                             });
 //                                         } else {
-//                                             console.log("loop else>>>>>>>>>>>>");
+//                                             //console.log("loop else>>>>>>>>>>>>");
 
 //                                             if (!user) {
 
@@ -3325,12 +3325,12 @@ exports.checkIfSameOrderCart = (req, res) => {
 
 //                      })
 //                } else {
-//                   console.log(stripeCharge);
-//                   console.log('stripeCharge');
-//                   console.log(adminTax);
-//                   console.log('adminTax');
-//                   console.log("i m in ek");
-//                   console.log(user);
+//                   //console.log(stripeCharge);
+//                   //console.log('stripeCharge');
+//                   //console.log(adminTax);
+//                   //console.log('adminTax');
+//                   //console.log("i m in ek");
+//                   //console.log(user);
 //                   if (!user) {
 
 //                      return res.status(200).json({
@@ -3350,8 +3350,8 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                         "shopDetail": user.shopDetail
 //                      })
 //                      .exec(function(err, reward) {
-//                         console.log("reward>>>>>>>>>>>>>>>>>");
-//                         console.log(reward);
+//                         //console.log("reward>>>>>>>>>>>>>>>>>");
+//                         //console.log(reward);
 //                         if (err || reward.length<=0) {
 //                            canClaimedReward = "false";
 
@@ -3392,28 +3392,28 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                                  startdateData.setHours(0, 0, 0, 0);
 //                                  var dateDat = new Date();
 //                                  var timezone=moment.tz.guess();
-//                                 // console.log(moment.tz.guess());
+//                                 // //console.log(moment.tz.guess());
 //                                  var dec = moment.tz(dateDat,timezone);
-//                                  console.log(dec);
-//                                  console.log('dec');
+//                                  //console.log(dec);
+//                                  //console.log('dec');
 //                                  var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
 //                                  var dateData  =new Date(dateDatat) ;
-//                                  console.log(dateData);
-//                                  console.log('dateData');
+//                                  //console.log(dateData);
+//                                  //console.log('dateData');
 
-//                                  console.log(enddateData);
-//                                  console.log(startdateData);
-//                                  console.log(dateData);
+//                                  //console.log(enddateData);
+//                                  //console.log(startdateData);
+//                                  //console.log(dateData);
 
-//                                  console.log(enddateData);
-//                                  console.log(startdateData);
-//                                  console.log(dateData);
+//                                  //console.log(enddateData);
+//                                  //console.log(startdateData);
+//                                  //console.log(dateData);
 //                                  if ((enddateData >= dateData) && (startdateData <= dateData)) {
 //                                       rewardQuantity=reward[i].quantity;
-//                                         console.log('userreward before');
+//                                         //console.log('userreward before');
                                   
-//                                        console.log('userreward');
+//                                        //console.log('userreward');
 //                                     usersReward
 //                                        .findOne({
 //                                           "shopDetail": user.shopDetail,
@@ -3421,7 +3421,7 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                                           "rewardId": reward[i]._id
 //                                        })
 //                                        .exec(function(err, userreward) {
-//                                        console.log(userreward);
+//                                        //console.log(userreward);
 //                                           if (err || !userreward) {
 //                                              canClaimedReward = "false";
 //                                           }
@@ -3518,9 +3518,9 @@ exports.checkIfSameOrderCart = (req, res) => {
 //                            // var dateData = new Date();
 //                            // dateData.setHours(0, 0, 0, 0);
 
-//                            // console.log(enddateData);
-//                            // console.log(startdateData);
-//                            // console.log(dateData);
+//                            // //console.log(enddateData);
+//                            // //console.log(startdateData);
+//                            // //console.log(dateData);
 //                            // if ((enddateData >= dateData) && (startdateData <= dateData)) {
 
 //                            //    usersReward
@@ -3605,7 +3605,7 @@ exports.checkIfSameOrderCart = (req, res) => {
 // }
 
 exports.cartListing = (req, res) => {
-console.log(req.body);
+//console.log(req.body);
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
    var canClaimedReward = "false";
@@ -3621,16 +3621,16 @@ console.log(req.body);
        CurrentStoreDetail = cb;
       
        dataDetails.shopDetail=CurrentStoreDetail
-         // console.log(CurrentStoreDetail);
-       console.log('CurrentStoreDetail');
+         // //console.log(CurrentStoreDetail);
+       //console.log('CurrentStoreDetail');
 
         });
      }
    
-   // console.log(stripeCharge);
-   // console.log('stripeCharge');
-   // console.log(adminTax);
-   // console.log('adminTax');
+   // //console.log(stripeCharge);
+   // //console.log('stripeCharge');
+   // //console.log(adminTax);
+   // //console.log('adminTax');
    tempOrder
       .findOne({
          "userDetail": decoded.user._id
@@ -3647,21 +3647,21 @@ console.log(req.body);
          }
       
          if (shopDetail) {
-            console.log(stripeCharge);
-            console.log('stripeCharge');
-            console.log(adminTax);
-            console.log('adminTax');
+            //console.log(stripeCharge);
+            //console.log('stripeCharge');
+            //console.log(adminTax);
+            //console.log('adminTax');
             reward
                .find({
                   "shopDetail": shopDetail
                })
                .exec(function(err, reward) {
-                  // console.log("reward>>>>>>>>>>>>>>>>>");
-                  // console.log(reward);
+                  // //console.log("reward>>>>>>>>>>>>>>>>>");
+                  // //console.log(reward);
                   if (err || reward.length <= 0) {
                      canClaimedReward = "false";
                      if (!user) {
-                       console.log("i m in not user");
+                       //console.log("i m in not user");
                         return res.status(200).json({
                            title: 'No order in cart found for this user',
                            error: "true",
@@ -3698,23 +3698,23 @@ console.log(req.body);
 
                                   var dateDat = new Date();
                                   var timezone = moment.tz.guess();
-                                  // console.log(moment.tz.guess());
+                                  // //console.log(moment.tz.guess());
                                   var dec = moment.tz(dateDat, timezone);
-                                  console.log(dec);
-                                  console.log('dec');
+                                  //console.log(dec);
+                                  //console.log('dec');
                                   var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                                   var dateData = new Date(dateDatat);
-                                  console.log(dateData);
-                                  console.log('dateData');
+                                  //console.log(dateData);
+                                  //console.log('dateData');
 
-                                  console.log(enddateData);
-                                  console.log(startdateData);
-                                  console.log(dateData);
+                                  //console.log(enddateData);
+                                  //console.log(startdateData);
+                                  //console.log(dateData);
 
                                   if ((enddateData >= dateData) && (startdateData <= dateData)) {
-                                           console.log(rew);
-                                           console.log("i m here");
+                                           //console.log(rew);
+                                           //console.log("i m here");
                                       rewardQuantity = rew.quantity;
                                       usersReward
                                           .findOne({
@@ -3737,9 +3737,9 @@ console.log(req.body);
                                                   rewardCompleted = userreward.rewardCompleted;
 
                                               }
-                                              console.log("i m in userreward");
-                                              console.log(userClaimedrewd);
-                                              console.log(canClaimedReward);
+                                              //console.log("i m in userreward");
+                                              //console.log(userClaimedrewd);
+                                              //console.log(canClaimedReward);
                                               rew_cb();
 
 
@@ -3750,10 +3750,10 @@ console.log(req.body);
                                   }
                               }, function(err) {
 
-                                  console.log('All files have been processed successfully');
+                                  //console.log('All files have been processed successfully');
                                   if (userClaimedrewd) {
-                                      console.log("i m in userreward loop");
-                                      console.log(canClaimedReward);
+                                      //console.log("i m in userreward loop");
+                                      //console.log(canClaimedReward);
 
                                       if (!user) {
 
@@ -3783,7 +3783,7 @@ console.log(req.body);
 
                                       });
                                   } else {
-                                      console.log("loop else>>>>>>>>>>>>");
+                                      //console.log("loop else>>>>>>>>>>>>");
 
                                       if (!user) {
 
@@ -3821,12 +3821,12 @@ console.log(req.body);
 
                })
          } else {
-            console.log(stripeCharge);
-            console.log('stripeCharge');
-            console.log(adminTax);
-            console.log('adminTax');
-            console.log("i m in ek");
-            console.log(user);
+            //console.log(stripeCharge);
+            //console.log('stripeCharge');
+            //console.log(adminTax);
+            //console.log('adminTax');
+            //console.log("i m in ek");
+            //console.log(user);
             if (!user) {
 
                return res.status(200).json({
@@ -3846,8 +3846,8 @@ console.log(req.body);
                   "shopDetail": user.shopDetail
                })
                .exec(function(err, reward) {
-                  console.log("reward>>>>>>>>>>>>>>>>>");
-                  console.log(reward);
+                  //console.log("reward>>>>>>>>>>>>>>>>>");
+                  //console.log(reward);
                   if (err || reward.length<=0) {
                      canClaimedReward = "false";
 
@@ -3888,28 +3888,28 @@ console.log(req.body);
                            startdateData.setHours(0, 0, 0, 0);
                            var dateDat = new Date();
                            var timezone=moment.tz.guess();
-                          // console.log(moment.tz.guess());
+                          // //console.log(moment.tz.guess());
                            var dec = moment.tz(dateDat,timezone);
-                           console.log(dec);
-                           console.log('dec');
+                           //console.log(dec);
+                           //console.log('dec');
                            var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
 
                            var dateData  =new Date(dateDatat) ;
-                           console.log(dateData);
-                           console.log('dateData');
+                           //console.log(dateData);
+                           //console.log('dateData');
 
-                           console.log(enddateData);
-                           console.log(startdateData);
-                           console.log(dateData);
+                           //console.log(enddateData);
+                           //console.log(startdateData);
+                           //console.log(dateData);
 
-                           console.log(enddateData);
-                           console.log(startdateData);
-                           console.log(dateData);
+                           //console.log(enddateData);
+                           //console.log(startdateData);
+                           //console.log(dateData);
                            if ((enddateData >= dateData) && (startdateData <= dateData)) {
                                 rewardQuantity=reward[i].quantity;
-                                  console.log('userreward before');
+                                  //console.log('userreward before');
                             
-                                 console.log('userreward');
+                                 //console.log('userreward');
                               usersReward
                                  .findOne({
                                     "shopDetail": user.shopDetail,
@@ -3917,7 +3917,7 @@ console.log(req.body);
                                     "rewardId": reward[i]._id
                                  })
                                  .exec(function(err, userreward) {
-                                 console.log(userreward);
+                                 //console.log(userreward);
                                     if (err || !userreward) {
                                        canClaimedReward = "false";
                                     }
@@ -4020,16 +4020,16 @@ console.log(req.body);
 
 
 exports.deleteCartItem = (req, res) => {
-   //console.log("deleteCartItem=============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   ////console.log("deleteCartItem=============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
    var token = req.body.userToken;
 
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
+   //console.log(decoded);
    var shopDetail = req.body.shopDetail;
    var ItemTodelete = req.body.itemId;
    var itemSize = req.body.itemSize;
-   console.log(itemSize);
-   console.log('itemSize');
+   //console.log(itemSize);
+   //console.log('itemSize');
    tempOrder
       .findOneAndUpdate({
          "userDetail": decoded.user._id,
@@ -4059,13 +4059,13 @@ exports.deleteCartItem = (req, res) => {
 }
 
 exports.deleteItemFromCart = (req, res) => {
-   console.log("deleteCartItem=============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   //console.log("deleteCartItem=============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
    var ItemTodelete = req.body.itemId;
    var itemSize = req.body.itemSize;
-   console.log(itemSize);
-   console.log('itemSize');
+   //console.log(itemSize);
+   //console.log('itemSize');
 
    tempOrder
       .update({
@@ -4087,7 +4087,7 @@ exports.deleteItemFromCart = (req, res) => {
                detail: err
             });
          }
-         console.log(data);
+         //console.log(data);
          if (!data) {
             return res.status(200).json({
                title: 'No order in cart found for this user',
@@ -4165,7 +4165,7 @@ exports.orderHistory = (req, res) => {
 
    var token = req.body.userToken;
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
+   //console.log(decoded);
    var initialData = 10;
    var requestData = parseInt(req.body.requestData);
    var skip_D = parseInt(req.body.skipData);
@@ -4213,7 +4213,7 @@ exports.orderHistory = (req, res) => {
 
 //    var token = req.body.userToken;
 //    var decoded = jwt.decode(token, "pickup");
-//    console.log(decoded);
+//    //console.log(decoded);
 //    Orders
 //       .find({
 //          "userDetail": decoded.user._id

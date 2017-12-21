@@ -17,7 +17,7 @@ exports.addshopowner = (req, res) => {
 
 	var email=req.body.email;
 	var password=email.substring(0, email.indexOf("@"));
-	console.log(password);
+	// console.log(password);
 
 	var store= new Stores({
 		storeId:email,
@@ -43,7 +43,7 @@ exports.addshopowner = (req, res) => {
 
                 var mailOptions = {
                 to: email,
-                from: 'ruchika.s@infiny.in',
+                from:helper.adminMailFrom(),
                 subject: 'Pickcup-New Shop',
                 text: 'Your account is created successfully by admin and your username and password is as follows.\n\n' +
                     'username: ' +email+ '\n\n'+
@@ -113,9 +113,9 @@ exports.editshopowner = (req, res) => {
                 var postCode=state.split(" ");
                 postCode = postCode.filter(Boolean);
                 var stateLen=postCode.length;
-                console.log(postCode);
-                console.log(postCode.length);
-                console.log('postCode');
+                // console.log(postCode);
+                // console.log(postCode.length);
+                // console.log('postCode');
                 if(postCode.length > 2)
                 { 
                    var stat=postCode[0];
@@ -125,26 +125,26 @@ exports.editshopowner = (req, res) => {
                      temp= temp + '' +postCode[i];
                    }
                    temp.trim();
-                   console.log(temp);
-                   console.log('temp');
+                   // console.log(temp);
+                   // console.log('temp');
                    var postal_code=temp;
 
                 }
                 else
                 {
-                    console.log("i m in else");
+                    // console.log("i m in else");
                     var postal_code=postCode[stateLen-1];
                      var stat=postCode[stateLen-2];
                 }
               
                 var city=value[count-3];
 
-                console.log(country);
-                console.log(stat);
-                console.log(city);
-                console.log(postal_code);
-                console.log(value);
-                console.log("address");
+                // console.log(country);
+                // console.log(stat);
+                // console.log(city);
+                // console.log(postal_code);
+                // console.log(value);
+                // console.log("address");
                  country=country.trim();
                  coffeeShop.position.addressline = addressLine;
                 coffeeShop.position.postal_code = postal_code;

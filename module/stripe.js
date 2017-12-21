@@ -23,11 +23,11 @@ const fs = require('fs');
 // exports.payCreateUserCards = (req, res) => {
 //    var token = req.body.userToken;
 //    token.trim();
-//    console.log(token);
-//    console.log('req.body>>>>>>>>>>>>.');
+//    //console.log(token);
+//    //console.log('req.body>>>>>>>>>>>>.');
 //    var decoded = jwt.decode(token, "pickup");
-//    console.log(decoded);
-//    console.log('decoded');
+//    //console.log(decoded);
+//    //console.log('decoded');
 
 //    // jwt.verify(token,"pickup", function (err, decoded){
 
@@ -55,14 +55,14 @@ const fs = require('fs');
 //                description: "Customer id is " + user.stripeId
 //             })
 //             .then(function(customer) {
-//                console.log(customer.sources.data);
-//                console.log("customer");
+//                //console.log(customer.sources.data);
+//                //console.log("customer");
 //                return stripe.customers.createSource(customer.id, {
 //                   source: req.body.stripeToken
 //                });
 //             }).then(function(source) {
-//                console.log(source);
-//                console.log('source');
+//                //console.log(source);
+//                //console.log('source');
 //                var cardDetailsData = {};
 //                cardDetailsData.cardId = source.id;
 //                cardDetailsData.card_number = source.last4;
@@ -71,17 +71,17 @@ const fs = require('fs');
 //                cardDetailsData.brand = source.brand;
 //                cardDetailsData.card_name = source.name;
 
-//                console.log(user.cardDetails.length);
-//                console.log('user.cardDetails.length');
+//                //console.log(user.cardDetails.length);
+//                //console.log('user.cardDetails.length');
 //                if(user.cardDetails.length >=1)
 //                {
 //                   for(i in user.cardDetails)
 //                   {
 //                      var userCardData= user.cardDetails[i];
-//                      console.log(source.fingerprint);
-//                      console.log('source.fingerprint');
-//                      console.log(userCardData.fingerprint);
-//                      console.log('userCardData.fingerprint');
+//                      //console.log(source.fingerprint);
+//                      //console.log('source.fingerprint');
+//                      //console.log(userCardData.fingerprint);
+//                      //console.log('userCardData.fingerprint');
 //                      if(userCardData.fingerprint == source.fingerprint)
 //                      {
 //                           return stripe.customers.deleteCard(
@@ -145,8 +145,8 @@ const fs = require('fs');
 
 //             })
 //             .catch(function(err) {
-//                console.log(err);
-//                console.log('err');
+//                //console.log(err);
+//                //console.log('err');
 //                return res.status(500).json({
 //                   title: 'An error occurred',
 //                   error: "true",
@@ -154,7 +154,7 @@ const fs = require('fs');
 //                });
 //             });
 //       } else {
-//          console.log("else>>>>>>");
+//          //console.log("else>>>>>>");
 //          stripe.customers.create({
 //                "email":user.email,
 //                "metadata": {
@@ -162,14 +162,14 @@ const fs = require('fs');
 //                },
 
 //             }).then(function(customer) {
-//                console.log(customer);
+//                //console.log(customer);
 
 //                return stripe.customers.createSource(customer.id, {
 //                   source: req.body.stripeToken
 //                });
 //             }).then(function(source) {
-//                console.log(source);
-//                console.log('source');
+//                //console.log(source);
+//                //console.log('source');
 //                var cardDetailsData = {};
 //                cardDetailsData.cardId = source.id;
 //                cardDetailsData.card_number = source.last4;
@@ -178,8 +178,8 @@ const fs = require('fs');
 //                cardDetailsData.brand = source.brand;
 //                cardDetailsData.card_name = source.name;
 //                cardDetailsData.isPrimary = true;
-//                console.log(source.fingerprint);
-//                      console.log('source.fingerprint');
+//                //console.log(source.fingerprint);
+//                      //console.log('source.fingerprint');
 //                cardDetailsData.fingerprint=source.fingerprint;
 //                user.stripeId = source.customer;
 //                user.cardDetails.push(cardDetailsData);
@@ -203,8 +203,8 @@ const fs = require('fs');
 
 //             })
 //             .catch(function(err) {
-//                console.log(err);
-//                console.log('err');
+//                //console.log(err);
+//                //console.log('err');
 //                return res.status(500).json({
 //                   title: 'An error occurred',
 //                   error: "true",
@@ -220,11 +220,11 @@ const fs = require('fs');
 exports.payCreateUserCards = (req, res) => {
    var token = req.body.userToken;
    token.trim();
-   console.log(token);
-   console.log('req.body>>>>>>>>>>>>.');
+   //console.log(token);
+   //console.log('req.body>>>>>>>>>>>>.');
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
 
    // jwt.verify(token,"pickup", function (err, decoded){
 
@@ -261,31 +261,31 @@ exports.payCreateUserCards = (req, res) => {
                description: "Customer id is " + user.stripeId
             })
             .then(function(customer) {
-               // console.log(customer.sources.data);
-               // console.log("customer");
+               // //console.log(customer.sources.data);
+               // //console.log("customer");
                return stripe.customers.createSource(customer.id, {
                   source: req.body.stripeToken
                });
             }).then(function(source) {
-               console.log(source);
-               console.log('source');
-               console.log(user.cardDetails.length);
+               //console.log(source);
+               //console.log('source');
+               //console.log(user.cardDetails.length);
                 // var cardDetailsData = {};
-               console.log('user.cardDetails.length');
+               //console.log('user.cardDetails.length');
                if(user.cardDetails.length >=1)
                 {
                    var NofingerprintMatch=false;
                   for(i in user.cardDetails)
                   {
                      var userCardData= user.cardDetails[i];
-                     console.log(source.fingerprint);
-                     console.log('source.fingerprint');
-                     console.log(userCardData.fingerprint);
-                     console.log('userCardData.fingerprint');
+                     //console.log(source.fingerprint);
+                     //console.log('source.fingerprint');
+                     //console.log(userCardData.fingerprint);
+                     //console.log('userCardData.fingerprint');
                      if(userCardData.fingerprint == source.fingerprint)
                      {
-                        // console.log(userCardData.fingerprint);
-                     console.log('userCardData.fingerprint fingerprint match');
+                        // //console.log(userCardData.fingerprint);
+                     //console.log('userCardData.fingerprint fingerprint match');
                           NofingerprintMatch=true;
                           break;
                           // return stripe.customers.deleteCard(
@@ -297,7 +297,7 @@ exports.payCreateUserCards = (req, res) => {
 
                   if(!NofingerprintMatch)
                   {
-                       console.log('userCardData.fingerprint fingerprint not match');
+                       //console.log('userCardData.fingerprint fingerprint not match');
                      // cardDetailsData.fingerprint=source.fingerprint;
                      user.stripeId = source.customer;
                       var cardDetailsData = {};
@@ -335,7 +335,7 @@ exports.payCreateUserCards = (req, res) => {
                            user.stripeId,
                            source.id).then(function(confirmation) {
 
-                         console.log("i m in confirmation");
+                         //console.log("i m in confirmation");
                           // if (err) {
                           //        return res.status(500).json({
                           //           title: 'An error occurred',
@@ -358,8 +358,8 @@ exports.payCreateUserCards = (req, res) => {
                               });
 
                            }).catch(function(err) {
-                              console.log(err);
-                              console.log('err');
+                              //console.log(err);
+                              //console.log('err');
                               return res.status(500).json({
                                  title: 'An error occurred',
                                  error: "true",
@@ -370,7 +370,7 @@ exports.payCreateUserCards = (req, res) => {
                }
                else
                {     
-                     console.log('userCardData length less than one');
+                     //console.log('userCardData length less than one');
                     
                      user.stripeId = source.customer;
                       var cardDetailsData = {};
@@ -403,8 +403,8 @@ exports.payCreateUserCards = (req, res) => {
                      });
                }
             }).catch(function(err) {
-                              console.log(err);
-                              console.log('err');
+                              //console.log(err);
+                              //console.log('err');
                               return res.status(500).json({
                                  title: 'An error occurred',
                                  error: "true",
@@ -414,7 +414,7 @@ exports.payCreateUserCards = (req, res) => {
 
             
       } else {
-         console.log("else>>>>>>");
+         //console.log("else>>>>>>");
          stripe.customers.create({
                "email":user.email,
                "metadata": {
@@ -422,14 +422,14 @@ exports.payCreateUserCards = (req, res) => {
                },
 
             }).then(function(customer) {
-               console.log(customer);
+               //console.log(customer);
 
                return stripe.customers.createSource(customer.id, {
                   source: req.body.stripeToken
                });
             }).then(function(source) {
-               console.log(source);
-               console.log('source');
+               //console.log(source);
+               //console.log('source');
                var cardDetailsData = {};
                cardDetailsData.cardId = source.id;
                cardDetailsData.card_number = source.last4;
@@ -439,8 +439,8 @@ exports.payCreateUserCards = (req, res) => {
                cardDetailsData.card_name = source.name;
                cardDetailsData.isPrimary = true;
                cardDetailsData.isEuropean=helper.europeanCountry(source.country);
-               console.log(source.fingerprint);
-                     console.log('source.fingerprint');
+               //console.log(source.fingerprint);
+                     //console.log('source.fingerprint');
                cardDetailsData.fingerprint=source.fingerprint;
                user.stripeId = source.customer;
                user.cardDetails.push(cardDetailsData);
@@ -464,8 +464,8 @@ exports.payCreateUserCards = (req, res) => {
 
             })
             .catch(function(err) {
-               console.log(err);
-               console.log('err');
+               //console.log(err);
+               //console.log('err');
                return res.status(500).json({
                   title: 'An error occurred',
                   error: "true",
@@ -481,11 +481,11 @@ exports.payCreateUserCards = (req, res) => {
 
 exports.cardListing = (req, res) => {
    var token = req.body.userToken;
-   console.log(req.body);
-   console.log('req.body>>>>>>>>>>>>.');
+   //console.log(req.body);
+   //console.log('req.body>>>>>>>>>>>>.');
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
 
    // jwt.verify(token,"pickup", function (err, decoded){
 
@@ -516,8 +516,8 @@ exports.cardListing = (req, res) => {
             });
         }
 
-      console.log(user);
-      console.log('user');
+      //console.log(user);
+      //console.log('user');
 
       res.status(200).json({
          title: 'primarly card details changed successfully',
@@ -530,17 +530,17 @@ exports.cardListing = (req, res) => {
 }
 
 var checkIfduplicates = function(alldata, data) {
-   console.log("i  m in checkIfduplicates ");
-   // console.log(alldata);
-   // console.log(data);
+   //console.log("i  m in checkIfduplicates ");
+   // //console.log(alldata);
+   // //console.log(data);
    var datatemp = {};
    datatemp.present = false;
    for (i in alldata) {
-      // console.log("i");
-      // console.log(alldata[i].cardId);
-      // console.log(data);
+      // //console.log("i");
+      // //console.log(alldata[i].cardId);
+      // //console.log(data);
       if (alldata[i].cardId == data) {
-         console.log("found card");
+         //console.log("found card");
          datatemp.present = true;
          datatemp.obj = alldata[i];
          return datatemp;
@@ -553,11 +553,11 @@ var checkIfduplicates = function(alldata, data) {
 
 exports.deletecard = (req, res) => {
    var token = req.body.userToken;
-   console.log(req.body);
-   console.log('req.body>>>>>>>>>>>>.');
+   //console.log(req.body);
+   //console.log('req.body>>>>>>>>>>>>.');
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
 
    // jwt.verify(token,"pickup", function (err, decoded){
 
@@ -589,11 +589,11 @@ exports.deletecard = (req, res) => {
       }
 
       var cardPresent = checkIfduplicates(user.cardDetails, req.body.cardId);
-      console.log('cardPresent');
-      console.log(cardPresent);
+      //console.log('cardPresent');
+      //console.log(cardPresent);
       var IsPrimary = cardPresent.obj.isPrimary;
-      console.log('IsPrimary');
-      console.log(IsPrimary);
+      //console.log('IsPrimary');
+      //console.log(IsPrimary);
       if (cardPresent.present) {
          //  for(i in user.cardDetails)
          // {
@@ -618,13 +618,13 @@ exports.deletecard = (req, res) => {
                      });
                   }
 
-                  console.log(confirmation);
-                  console.log('confirmation');
+                  //console.log(confirmation);
+                  //console.log('confirmation');
 
                   var arrayofToken = user.cardDetails;
                   var index = arrayofToken.indexOf(cardPresent.obj);
-                  console.log(index);
-                  console.log('index');
+                  //console.log(index);
+                  //console.log('index');
                   if (index > -1) {
                      if (IsPrimary) {
                         stripe.customers.retrieve(
@@ -654,7 +654,7 @@ exports.deletecard = (req, res) => {
 
                               user.cardDetails.splice(index, 1);
                               user.save(function(err, userdata) {
-                                 console.log('user');
+                                 //console.log('user');
                                  if (err) {
                                     return res.status(500).json({
                                        title: 'An error occurred',
@@ -678,7 +678,7 @@ exports.deletecard = (req, res) => {
 
                         user.cardDetails.splice(index, 1);
                         user.save(function(err, userdata) {
-                           console.log('user');
+                           //console.log('user');
                            if (err) {
                               return res.status(500).json({
                                  title: 'An error occurred',
@@ -725,8 +725,8 @@ exports.deletecard = (req, res) => {
          });
       }
 
-      // console.log(user);
-      // console.log('user');
+      // //console.log(user);
+      // //console.log('user');
 
       //       res.status(200).json({
       //           title: 'primarly card details changed successfully',
@@ -740,11 +740,11 @@ exports.deletecard = (req, res) => {
 
 exports.payMakePrimary = (req, res) => {
    var token = req.body.userToken;
-   console.log(req.body);
-   console.log('req.body>>>>>>>>>>>>.');
+   //console.log(req.body);
+   //console.log('req.body>>>>>>>>>>>>.');
    var decoded = jwt.decode(token, "pickup");
-   console.log(decoded);
-   console.log('decoded');
+   //console.log(decoded);
+   //console.log('decoded');
 
    // jwt.verify(token,"pickup", function (err, decoded){
 
@@ -781,16 +781,16 @@ exports.payMakePrimary = (req, res) => {
                default_source: req.body.makePrimaryId
             })
             .then(function(customer) {
-               console.log(customer.default_source);
-               console.log(req.body.makePrimaryId);
-               console.log("customer");
+               //console.log(customer.default_source);
+               //console.log(req.body.makePrimaryId);
+               //console.log("customer");
                if (customer.default_source == req.body.makePrimaryId) {
                   for (i in user.cardDetails) {
 
                      var cardData = user.cardDetails[i];
-                     console.log(cardData.cardId);
-                     console.log(customer.default_source);
-                     console.log(cardData.cardId == customer.default_source);
+                     //console.log(cardData.cardId);
+                     //console.log(customer.default_source);
+                     //console.log(cardData.cardId == customer.default_source);
                      if (cardData.cardId == customer.default_source) {
                         user.cardDetails[i].isPrimary = true;
                      } else {
@@ -800,7 +800,7 @@ exports.payMakePrimary = (req, res) => {
                   }
 
                   user.save(function(err, userdata) {
-                     console.log('user');
+                     //console.log('user');
                      if (err) {
                         return res.status(500).json({
                            title: 'An error occurred',
@@ -827,8 +827,8 @@ exports.payMakePrimary = (req, res) => {
 
             })
             .catch(function(err) {
-                console.log("error");
-         console.log(err);
+                //console.log("error");
+         //console.log(err);
                return res.status(500).json({
                   title: 'An error occurred',
                   error: "true",
@@ -866,32 +866,32 @@ exports.payCharges = (token, amountpaid, callback) => {
          if (!user.cardDetails) {
             callback('stripe error no sources added');
          }
-         // console.log(user);
-         // console.log('user');
+         // //console.log(user);
+         // //console.log('user');
          stripe.customers.retrieve(
                user.stripeId
             ).then(function(customer) {
-               // console.log(customer);
+               // //console.log(customer);
                  
                     //fs.appendFileSync(store.id + '.txt', filePay);
-               console.log('customer');
+               //console.log('customer');
                var defaultSource = customer.default_source;
-               console.log(user.cardDetails.length);
-               console.log('user.cardDetails.length');
+               //console.log(user.cardDetails.length);
+               //console.log('user.cardDetails.length');
                var loopData=user.cardDetails;
                 var notAPrimaryCard=false;
                for(i in loopData) {
                   var cardData = loopData[i];
-                  // console.log(cardData.cardId);
-                  // console.log(defaultSource);
-                  // console.log('defaultSource');
+                  // //console.log(cardData.cardId);
+                  // //console.log(defaultSource);
+                  // //console.log('defaultSource');
                  
                   if (cardData.cardId == defaultSource) {
-                       console.log('defaultSource  if');
+                       //console.log('defaultSource  if');
 
                      if (cardData.isPrimary) {
                         notAPrimaryCard=true;
-                                console.log('defaultSource  if if');
+                                //console.log('defaultSource  if if');
                         var totalAmount = parseFloat(amountpaid) * 100;
 
                         return stripe.charges.create({
@@ -902,7 +902,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                         });
                         break;
                      } else {
-                          console.log('defaultSource  if else');
+                          //console.log('defaultSource  if else');
                         callback('stripe error not a primary card');
                       
                      }
@@ -950,8 +950,8 @@ exports.payCharges = (token, amountpaid, callback) => {
                        err:${err}
                         ${'///////////////////////'}`;
                     fs.appendFileSync(user.stripeId + '.txt', filePay);
-               console.log("err");
-               console.log(err);
+               //console.log("err");
+               //console.log(err);
                callback(err.message);
                // return res.status(500).json({
                //              title: 'An error occurred',
@@ -973,55 +973,55 @@ exports.payCharges = (token, amountpaid, callback) => {
 // exports.checkIfavailablebalance = (req, res) => {
 //    Stores.find({}, (err, stores) => {
 //       if (err) {
-//          console.log("err while retrieving" + err);
+//          //console.log("err while retrieving" + err);
 //       }
 //       if (!stores) {
-//          console.log("no stores retrieve err while retrieving");
+//          //console.log("no stores retrieve err while retrieving");
 //       }
 
 //       //var done = false;
 //       for (var i in stores) {
-//          console.log("count of i start and it is" + i);
+//          //console.log("count of i start and it is" + i);
 //          var storeData = stores[i];
 //          var transactions = storeData.incomesourceDetail;
 //          var totalAmounttoTransfer = 0;
 //          var isAllStoreDone = true;
 //          var dataOfTrans = [];
-//          console.log('transactions');
-//          console.log(transactions.length);
+//          //console.log('transactions');
+//          //console.log(transactions.length);
 //          transactions.forEach(function(tranData, j) {
 //             // for(j in  transactions)
 //             // {  
-//             console.log("count of j start and it is" + j);
+//             //console.log("count of j start and it is" + j);
 
 //             //var tranData=transactions[j];
-//             console.log(tranData.balancetransId);
+//             //console.log(tranData.balancetransId);
 //             var donetran = false;
 //             stripe.balance.retrieveTransaction(
 //                tranData.balancetransId,
 //                function(err, balanceTransaction) {
-//                   console.log('balanceTransaction');
-//                   // console.log(balanceTransaction);
+//                   //console.log('balanceTransaction');
+//                   // //console.log(balanceTransaction);
 //                   if (err) {
-//                      console.log("err while retrieving" + err);
+//                      //console.log("err while retrieving" + err);
 
 //                   } else if (!balanceTransaction) {
-//                      console.log("no transc retrieve err while retrieving");
+//                      //console.log("no transc retrieve err while retrieving");
 //                   }
 //                   else
 //                   {
-//                     console.log("do nothing");
+//                     //console.log("do nothing");
 //                   }
 
 //                   if (balanceTransaction.status == "available") {
-//                      //console.log(totalAmounttoTransfer);
-//                      console.log(tranData.afterDeducAmount);
-//                      console.log('tranData.afterDeducAmount');
+//                      ////console.log(totalAmounttoTransfer);
+//                      //console.log(tranData.afterDeducAmount);
+//                      //console.log('tranData.afterDeducAmount');
 //                      totalAmounttoTransfer = totalAmounttoTransfer + parseInt(tranData.afterDeducAmount);
-//                      console.log(totalAmounttoTransfer);
-//                      console.log("totalAmounttoTransfer>>>>>}}}}>>>>>>>>>");
-//                      console.log(j);
-//                      //console.log (stores[i].incomesourceDetail[j].balancetransId);
+//                      //console.log(totalAmounttoTransfer);
+//                      //console.log("totalAmounttoTransfer>>>>>}}}}>>>>>>>>>");
+//                      //console.log(j);
+//                      ////console.log (stores[i].incomesourceDetail[j].balancetransId);
 
 //                      stores[i].incomesourceDetail.splice(j, 1);
 //                      stores[i].markModified("incomesourceDetail");
@@ -1035,8 +1035,8 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                            tranData.notes = "Success";
 //                         }
 
-//                         console.log(tranData);
-//                         console.log("after  splicing");
+//                         //console.log(tranData);
+//                         //console.log("after  splicing");
 //                         dataOfTrans.push(tranData);
 //                         dataSave = true;
 //                         donetran = true;
@@ -1052,30 +1052,30 @@ exports.payCharges = (token, amountpaid, callback) => {
 //             require('deasync').loopWhile(function() {
 //                return !donetran;
 //             });
-//             console.log("count of j ends and it is" + j);
+//             //console.log("count of j ends and it is" + j);
 //          })
 
-//          console.log(totalAmounttoTransfer);
+//          //console.log(totalAmounttoTransfer);
 //          console.table(dataOfTrans);
 //          var actualtransData = [];
 //          for (var k in dataOfTrans) {
 //             var perTransactioStatus = dataOfTrans[k];
 //             if (perTransactioStatus.notes == "Success") {
-//                console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
+//                //console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
 //                actualtransData.push(perTransactioStatus);
-//                console.log(totalAmounttoTransfer);
-//                console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//                //console.log(totalAmounttoTransfer);
+//                //console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
 //             } else {
 //                totalAmounttoTransfer = totalAmounttoTransfer - parseInt(perTransactioStatus.afterDeducAmount);
 //                stores[i].incomesourceDetail.push(perTransactioStatus);
-//                console.log(totalAmounttoTransfer);
-//                console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//                //console.log(totalAmounttoTransfer);
+//                //console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
 //             }
 //          }
 
-//          console.log(totalAmounttoTransfer + "actual one");
-//          console.log(actualtransData.length);
-//          console.log('actualtransData.length');
+//          //console.log(totalAmounttoTransfer + "actual one");
+//          //console.log(actualtransData.length);
+//          //console.log('actualtransData.length');
 //          if (actualtransData.length > 0) {
 //             //console.table(actualtransData);
 //             // var temptransData=actualtransData[]
@@ -1111,10 +1111,10 @@ exports.payCharges = (token, amountpaid, callback) => {
 
 //                pay.save(function(err) {
 //                   if (err) {
-//                      console.log("no err created");
+//                      //console.log("no err created");
 //                   }
 
-//                   console.log("transfer success");
+//                   //console.log("transfer success");
 //                   done = true;
 
 //                })
@@ -1125,7 +1125,7 @@ exports.payCharges = (token, amountpaid, callback) => {
 //          require('deasync').loopWhile(function() {
 //             return !done;
 //          });
-//          console.log("count of i ends and it is");
+//          //console.log("count of i ends and it is");
 //       }
 
 //    });
@@ -1137,10 +1137,10 @@ exports.payCharges = (token, amountpaid, callback) => {
 // exports.checkIfavailablebalance = (req, res) => {
 //    Stores.find({}, (err, stores) => {
 //       if (err) {
-//          console.log("err while retrieving" + err);
+//          //console.log("err while retrieving" + err);
 //       }
 //       if (!stores) {
-//          console.log("no stores retrieve err while retrieving");
+//          //console.log("no stores retrieve err while retrieving");
 //       }
 //       async.forEachOf(stores, (store, i, store_callback) => {
 
@@ -1180,15 +1180,15 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                                   stripe.balance.retrieveTransaction(
 //                                        tranData.balancetransId,
 //                                        function(err, balanceTransaction) {
-//                                        console.log(tranData.balancetransId);
+//                                        //console.log(tranData.balancetransId);
 //                                           if (err) {
-//                                               console.log(j);
-//                                                    console.log(">>>>>>>>>j>>>>>>>>>>>");
+//                                               //console.log(j);
+//                                                    //console.log(">>>>>>>>>j>>>>>>>>>>>");
 //                                               var filePay=`TransaStatus:::This trans failed due to.
 //                                               reason:::::${err}`;
 //                                               fs.appendFileSync(store.id + '.txt', filePay);
                                           
-//                                              console.log("err while retrieving" + err);
+//                                              //console.log("err while retrieving" + err);
 //                                                tr_callback();
 
 //                                           } else if (!balanceTransaction) {
@@ -1196,7 +1196,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                                               
 //                                               fs.appendFileSync(store.id + '.txt', filePay);
 //                                            // tr_callback();
-//                                              console.log("no transc retrieve err while retrieving");
+//                                              //console.log("no transc retrieve err while retrieving");
 //                                                tr_callback();
 //                                           } else {
 
@@ -1204,18 +1204,18 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                                                      var filePay=`TransaStatus:::Success and available.`;
                                                     
 //                                                     fs.appendFileSync(store.id + '.txt', filePay);
-//                                                    console.log(tranData.afterDeducAmount);
-//                                                    console.log('tranData.afterDeducAmount');
+//                                                    //console.log(tranData.afterDeducAmount);
+//                                                    //console.log('tranData.afterDeducAmount');
 //                                                    totalAmounttoTransfer = totalAmounttoTransfer + parseFloat(tranData.afterDeducAmount);
-//                                                    // console.log(totalAmounttoTransfer);
-//                                                    // console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
-//                                                    console.log(j);
-//                                                    console.log(">>>>>>>>>j>>>>>>>>>>>");
+//                                                    // //console.log(totalAmounttoTransfer);
+//                                                    // //console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+//                                                    //console.log(j);
+//                                                    //console.log(">>>>>>>>>j>>>>>>>>>>>");
 
 //                                                    var dataofIncome=store.incomesourceDetail;
 //                                                       console.table(dataofIncome);
 //                                                    var indexofData=dataofIncome.indexOf(transaction);
-//                                                     console.log(indexofData);
+//                                                     //console.log(indexofData);
 //                                                    var actualArraydata=dataofIncome.splice(indexofData, 1);
 //                                                       console.table(dataofIncome);
 //                                                    store.incomesourceDetail=actualArraydata;
@@ -1223,31 +1223,31 @@ exports.payCharges = (token, amountpaid, callback) => {
 
 //                                                    store.save((err, storeSaved) => {
 //                                                       if (err) {
-//                                                         console.log('i m failed'+j);
+//                                                         //console.log('i m failed'+j);
 //                                                          tranData.notes = "failed";
 //                                                          tranData.errDetail = err.message;
 //                                                          dataOfTrans.push(tranData);
 //                                                          tr_callback();
 //                                                       }
 //                                                       else if(!storeSaved){
-//                                                         console.log('i m in not success'+ j);
+//                                                         //console.log('i m in not success'+ j);
 //                                                          tranData.notes = "failed";
 //                                                          dataOfTrans.push(tranData);
 //                                                          tr_callback();
 //                                                       }
 //                                                       else {
-//                                                         console.log(storeSaved.cafe_name);
-//                                                         console.log(storeSaved.incomesourceDetail.length);
-//                                                         console.log('storeSaved.cafe_name');
-//                                                         console.log('i m in success'+ j);
+//                                                         //console.log(storeSaved.cafe_name);
+//                                                         //console.log(storeSaved.incomesourceDetail.length);
+//                                                         //console.log('storeSaved.cafe_name');
+//                                                         //console.log('i m in success'+ j);
 //                                                          tranData.notes = "Success";
 //                                                          dataOfTrans.push(tranData);
                                                       
 //                                                          tr_callback();
 //                                                       }
 
-//                                                       // console.log(tranData);
-//                                                       // console.log("after  splicing");
+//                                                       // //console.log(tranData);
+//                                                       // //console.log("after  splicing");
                                                       
 //                                                    });
 
@@ -1264,23 +1264,23 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                                       }
 //                                   );
                                
-//                             console.log("count of j end and it is" + j);
+//                             //console.log("count of j end and it is" + j);
 
 //                            }, err => {
 //                                  var filePay=`
 //                                  All transaction end Proceeding towards transfer`;
                                                     
 //                                fs.appendFileSync(store.id + '.txt', filePay);
-//                                //console.log("i m in loop tansactif");
+//                                ////console.log("i m in loop tansactif");
 //                                 if (err) console.error(err.message);
-//                                 // console.log(totalAmounttoTransfer);
+//                                 // //console.log(totalAmounttoTransfer);
 //                                 // console.table(dataOfTrans);
 //                                 // tr_callback();
 //                                  var actualtransData = [];
 //                                 for (var k in dataOfTrans) {
 //                                    var perTransactioStatus = dataOfTrans[k];
 //                                    if (perTransactioStatus.notes == "Success") {
-//                                       console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
+//                                       //console.log(perTransactioStatus.balancetransId + "is eligible for transfer");
 //                                       actualtransData.push(perTransactioStatus);
                                       
 //                                    } else {
@@ -1289,9 +1289,9 @@ exports.payCharges = (token, amountpaid, callback) => {
                                    
 //                                    }
 //                                 }
-//                                 console.log(totalAmounttoTransfer + "actual one");
-//                                 console.log(actualtransData.length);
-//                                 console.log('actualtransData.length');
+//                                 //console.log(totalAmounttoTransfer + "actual one");
+//                                 //console.log(actualtransData.length);
+//                                 //console.log('actualtransData.length');
 //                                 if (actualtransData.length > 0) {
 //                                   var amountTotransfer = parseInt(totalAmounttoTransfer) * 100;
 //                                    stripe.transfers.create({
@@ -1303,8 +1303,8 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                                       var notes;
 //                                       if (err) {
 
-//                                            console.log(`i m in error of transfer for shop ${store.cafe_name}`);
-//                                            console.log(err);
+//                                            //console.log(`i m in error of transfer for shop ${store.cafe_name}`);
+//                                            //console.log(err);
                                         
 
 //                                             var filePaye=`
@@ -1352,7 +1352,7 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                                             `
 //                                            fs.appendFileSync(store.id + '.txt', filePaye);
                                        
-//                                            console.log(`i m in not of transfer for shop ${store.cafe_name}`);
+//                                            //console.log(`i m in not of transfer for shop ${store.cafe_name}`);
                                          
 //                                           store.incomesourceDetail=store.incomesourceDetail.concat(transactions);
 //                                           store.markModified("incomesourceDetail");
@@ -1371,7 +1371,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                                                 
 //                                             });
 //                                       } else {
-//                                         console.log(`i m in success of transfer for shop ${store.cafe_name}`);
+//                                         //console.log(`i m in success of transfer for shop ${store.cafe_name}`);
 //                                          notes = "transferSuccess";
 //                                           var err="no error";
 //                                            var todaysDate=helper.findCurrentDateinutc();
@@ -1403,10 +1403,10 @@ exports.payCharges = (token, amountpaid, callback) => {
 
 //                                         pay.save(function(err) {
 //                                            if (err) {
-//                                               console.log("no err created");
+//                                               //console.log("no err created");
 //                                            }
 
-//                                            console.log("transfer success");
+//                                            //console.log("transfer success");
 //                                            //done = true;
 //                                            store_callback();
 
@@ -1425,7 +1425,7 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                   {   
 //                        var filePay=`Status:::not verified and have accountID`;
 //                        fs.appendFileSync(store.id + '.txt', filePay);
-//                       console.log("do nothing account else");
+//                       //console.log("do nothing account else");
 //                       store_callback();
 //                   }
 //                 }
@@ -1433,13 +1433,13 @@ exports.payCharges = (token, amountpaid, callback) => {
 //                 {
 //                   var filePay=`Status:::no accountID`;
 //                   fs.appendFileSync(store.id + '.txt', filePay);
-//                   console.log("do nothing>>>>>>>>>>>>>>.no account");
+//                   //console.log("do nothing>>>>>>>>>>>>>>.no account");
 //                      store_callback();
 //                 }
 
        
 //       }, err => {
-//          console.log("i m in loop end");
+//          //console.log("i m in loop end");
 //           if (err) console.error(err.message);
 //          // var filePay=`${'///////////'}`
 //          // fs.appendFileSync(store.id + '.txt', filePay);
@@ -1452,10 +1452,10 @@ exports.payCharges = (token, amountpaid, callback) => {
 exports.checkIfavailablebalance = (req,res) => {
   Stores.find( {}, ( err, stores ) => {
     if ( err ) {
-      console.log( "err while retrieving" + err );
+      //console.log( "err while retrieving" + err );
     }
     if ( !stores ) {
-      console.log( "no stores retrieve err while retrieving" );
+      //console.log( "no stores retrieve err while retrieving" );
     }
     async.forEachOf( stores, ( store, i, store_callback ) => {
       var filePay =
@@ -1472,8 +1472,8 @@ exports.checkIfavailablebalance = (req,res) => {
           var storeData = store;
           var transactions = storeData.incomesourceDetail;
           var transaPaydata = store.incomesourceDetail;
-          console.log( transaPaydata.length );
-          console.log( 'transaPaydata.length' );
+          //console.log( transaPaydata.length );
+          //console.log( 'transaPaydata.length' );
           var totalAmounttoTransfer = 0;
           var isAllStoreDone = true;
           var dataOfTrans = [];
@@ -1494,16 +1494,16 @@ exports.checkIfavailablebalance = (req,res) => {
             {
                stripe.balance.retrieveTransaction( tranData.balancetransId
               , function( err, balanceTransaction ) {
-                console.log( tranData.balancetransId );
+                //console.log( tranData.balancetransId );
                 if ( err ) {
-                  console.log( j );
-                  console.log( ">>>>>>>>>j>>>>>>>>>>>" );
+                  //console.log( j );
+                  //console.log( ">>>>>>>>>j>>>>>>>>>>>" );
                   var filePay =
                     `
                   TransaStatus:::${j} trans failed due to.
                   reason:::::${err}`;
                   fs.appendFileSync( store.id + '.txt', filePay );
-                  console.log( "err while retrieving" + err );
+                  //console.log( "err while retrieving" + err );
                   actualArraydata = dataofIncome;
                   tr_callback();
                 } else if ( !balanceTransaction ) {
@@ -1512,7 +1512,7 @@ exports.checkIfavailablebalance = (req,res) => {
                   TransaStatus:::${j} trans failed due to no data`
                   fs.appendFileSync( store.id + '.txt', filePay );
                   // tr_callback();
-                  console.log( "no transc retrieve err while retrieving" );
+                  //console.log( "no transc retrieve err while retrieving" );
                   actualArraydata = dataofIncome;
                   tr_callback();
                 } else {
@@ -1521,19 +1521,19 @@ exports.checkIfavailablebalance = (req,res) => {
                       `
                     TransaStatus:::Success and available.`;
                     fs.appendFileSync( store.id + '.txt', filePay );
-                    // console.log(tranData.afterDeducAmount);
-                    // console.log('tranData.afterDeducAmount');
+                    // //console.log(tranData.afterDeducAmount);
+                    // //console.log('tranData.afterDeducAmount');
                     totalAmounttoTransfer = totalAmounttoTransfer + parseFloat(
                       tranData.afterDeducAmount );
-                    // console.log(totalAmounttoTransfer);
-                    // console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
-                    console.log( j );
-                    console.log( ">>>>>>>>>j>>>>>>>>>>>if" );
+                    // //console.log(totalAmounttoTransfer);
+                    // //console.log("totalAmounttoTransfer>>>>>>>>>>>>>>");
+                    //console.log( j );
+                    //console.log( ">>>>>>>>>j>>>>>>>>>>>if" );
                     //console.table(dataofIncome);
                     var indexofData = dataofIncome.indexOf( transaction );
-                    console.log( indexofData );
+                    //console.log( indexofData );
                     if ( indexofData == -1 ) {
-                      console.log( "fo" );
+                      //console.log( "fo" );
                       actualArraydata = dataofIncome;
                       tr_callback();
                     } else {
@@ -1546,9 +1546,9 @@ exports.checkIfavailablebalance = (req,res) => {
                       tr_callback();
                     }
                   } else {
-                    console.log( j );
+                    //console.log( j );
                     actualArraydata = dataofIncome;
-                    console.log( ">>>>>>>>>j>>>>>>>>>>>else" );
+                    //console.log( ">>>>>>>>>j>>>>>>>>>>>else" );
                     var filePay =
                       `
                      TransaStatus:::Success and not  available.`;
@@ -1563,7 +1563,7 @@ exports.checkIfavailablebalance = (req,res) => {
                 tr_callback();
             }
            
-            console.log( "count of j end and it is" + j );
+            //console.log( "count of j end and it is" + j );
           }, err => {
             var filePay =
               `
@@ -1582,11 +1582,11 @@ exports.checkIfavailablebalance = (req,res) => {
                 var stripeAvailableAmount = balance.available[0].amount;
                 var net_Amount = parseInt( totalAmounttoTransfer );
                 var amountTotransfer = parseInt( totalAmounttoTransfer ) * 100;
-                console.log(stripeAvailableAmount >= net_Amount && allavailabletran.length >
+                //console.log(stripeAvailableAmount >= net_Amount && allavailabletran.length >
                   0);
-                console.log(amountTotransfer);
-                 console.log(stripeAvailableAmount);
-                 console.log('amountTotransfer::::::::::::::::::::::::::::::::::::');
+                //console.log(amountTotransfer);
+                 //console.log(stripeAvailableAmount);
+                 //console.log('amountTotransfer::::::::::::::::::::::::::::::::::::');
                   var filePayDAta=`amountTotransfer::::${amountTotransfer}
                   netAmount::::${net_Amount}
                   stripeAvailableAmount::::${stripeAvailableAmount}`;
@@ -1601,9 +1601,9 @@ exports.checkIfavailablebalance = (req,res) => {
                   }, function( err, transfer ) {
                     var notes;
                     if ( err ) {
-                      console.log(
+                      //console.log(
                         `i m in error of transfer for shop ${store.cafe_name}` );
-                      console.log( err );
+                      //console.log( err );
                       var filePaye =
                         `
                                                 
@@ -1617,10 +1617,10 @@ exports.checkIfavailablebalance = (req,res) => {
                          
                           `
                       fs.appendFileSync( store.id + '.txt', filePaye );
-                      // console.log(transaPaydata);
-                      //  console.log('transactions');
-                      console.log( err.message );
-                      console.log( 'err indsidde' );
+                      // //console.log(transaPaydata);
+                      //  //console.log('transactions');
+                      //console.log( err.message );
+                      //console.log( 'err indsidde' );
                       var mailOptions = {
                         to: helper.adminurl()
                         , from:helper.adminMailFrom()
@@ -1646,7 +1646,7 @@ exports.checkIfavailablebalance = (req,res) => {
                         
                           `
                       fs.appendFileSync( store.id + '.txt', filePaye );
-                      console.log(
+                      //console.log(
                         `i m in not of transfer for shop ${store.cafe_name}` );
                       var mailOptions = {
                         to: helper.adminurl()
@@ -1660,7 +1660,7 @@ exports.checkIfavailablebalance = (req,res) => {
                         store_callback();
                       } )
                     } else {
-                      console.log(
+                      //console.log(
                         `i m in success of transfer for shop ${store.cafe_name}`
                       );
                       notes = "transferSuccess";
@@ -1692,17 +1692,17 @@ exports.checkIfavailablebalance = (req,res) => {
                       } )
                       pay.save( function( err ) {
                         if ( err ) {
-                          console.log( "no err created" );
+                          //console.log( "no err created" );
                         }
-                        console.log( allavailabletran.length );
-                        console.log( actualArraydata.length );
-                        console.log(
+                        //console.log( allavailabletran.length );
+                        //console.log( actualArraydata.length );
+                        //console.log(
                           'actualArraydata.length>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
                         );
                         store.incomesourceDetail = actualArraydata;
                         store.save( ( err, storeSaved ) => {
                           if ( err ) {
-                            console.log( 'i m failed' + j );
+                            //console.log( 'i m failed' + j );
                             store_callback();
                           } else {
                             var filePay =
@@ -1713,7 +1713,7 @@ exports.checkIfavailablebalance = (req,res) => {
                             store_callback();
                           }
                         } )
-                        //console.log("transfer success");
+                        ////console.log("transfer success");
                         //done = true;
                         //store_callback();
                       } )
@@ -1737,7 +1737,7 @@ exports.checkIfavailablebalance = (req,res) => {
                                 var msg="transfer failed.";
                                         store_callback();
                                // helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
-                               //    console.log("message send");
+                               //    //console.log("message send");
                                //    res.send(200);
                                //  },coffeeShopData.accountStatus);
                             })
@@ -1758,17 +1758,17 @@ exports.checkIfavailablebalance = (req,res) => {
         } else {
           var filePay = `Status:::not verified and have accountID`;
           fs.appendFileSync( store.id + '.txt', filePay );
-          console.log( "do nothing account else" );
+          //console.log( "do nothing account else" );
           store_callback();
         }
       } else {
         var filePay = `Status:::no accountID`;
         fs.appendFileSync( store.id + '.txt', filePay );
-        console.log( "do nothing>>>>>>>>>>>>>>.no account" );
+        //console.log( "do nothing>>>>>>>>>>>>>>.no account" );
         store_callback();
       }
     }, err => {
-      console.log( "i m in loop end" );
+      //console.log( "i m in loop end" );
       if ( err ) console.error( err.message );
       res.status(200).json({
           data: "sucess"
