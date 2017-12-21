@@ -1583,7 +1583,7 @@ exports.checkIfavailablebalance = (req,res) => {
                 var net_Amount = parseInt( totalAmounttoTransfer );
                 var amountTotransfer = parseInt( totalAmounttoTransfer ) * 100;
                 //console.log(stripeAvailableAmount >= net_Amount && allavailabletran.length >
-                  0);
+                  // 0);
                 //console.log(amountTotransfer);
                  //console.log(stripeAvailableAmount);
                  //console.log('amountTotransfer::::::::::::::::::::::::::::::::::::');
@@ -1602,7 +1602,7 @@ exports.checkIfavailablebalance = (req,res) => {
                     var notes;
                     if ( err ) {
                       //console.log(
-                        `i m in error of transfer for shop ${store.cafe_name}` );
+                        // `i m in error of transfer for shop ${store.cafe_name}` );
                       //console.log( err );
                       var filePaye =
                         `
@@ -1647,7 +1647,7 @@ exports.checkIfavailablebalance = (req,res) => {
                           `
                       fs.appendFileSync( store.id + '.txt', filePaye );
                       //console.log(
-                        `i m in not of transfer for shop ${store.cafe_name}` );
+                       // `i m in not of transfer for shop ${store.cafe_name}` );
                       var mailOptions = {
                         to: helper.adminurl()
                         , from: 'ruchika.s@infiny.in'
@@ -1661,8 +1661,8 @@ exports.checkIfavailablebalance = (req,res) => {
                       } )
                     } else {
                       //console.log(
-                        `i m in success of transfer for shop ${store.cafe_name}`
-                      );
+                       // `i m in success of transfer for shop ${store.cafe_name}`
+                      //);
                       notes = "transferSuccess";
                       var err = "no error";
                       var todaysDate = helper.findCurrentDateinutc();
@@ -1697,8 +1697,8 @@ exports.checkIfavailablebalance = (req,res) => {
                         //console.log( allavailabletran.length );
                         //console.log( actualArraydata.length );
                         //console.log(
-                          'actualArraydata.length>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-                        );
+                        //  'actualArraydata.length>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+                        //);
                         store.incomesourceDetail = actualArraydata;
                         store.save( ( err, storeSaved ) => {
                           if ( err ) {
