@@ -443,7 +443,7 @@ exports.resetPassword = (req, res) => {
 
             });
         }
-        user.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+        user.password = bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10));
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         user.save(function(err) {

@@ -20,52 +20,52 @@ var helper = require('../../services/helper.js');
 
 
 
-var job = new cronJob({
-  //cronTime: '05 * * * * *',
-cronTime: '0 0 23 * * *',
-  onTick: function() {
-    console.log("listing ");
-     Order.rewardcron();
-  // Runs everyday
-  // at exactly 12:00:00 AM.
+// var job = new cronJob({
+//   //cronTime: '05 * * * * *',
+// cronTime: '0 0 23 * * *',
+//   onTick: function() {
+//     console.log("listing ");
+//      Order.rewardcron();
+//   // Runs everyday
+//   // at exactly 12:00:00 AM.
 
-  },
-  start: false,
-  timeZone: timeZone
-});
-
-console.log('job1 status', job.running);
-
-job.start();
+//   },
+//   start: false,
+//   timeZone: timeZone
+// });
 
 // console.log('job1 status', job.running);
 
-var jobv = new cronJob({
-  //cronTime: '05 * * * * *',
-cronTime: '0 0 23 * * *',
-  onTick: function() {
-    console.log("ending reward ");
-     Order.userEndingRewardscron();
-  // Runs everyday
-  // at exactly 12:00:00 AM.
+// job.start();
 
-  },
-  start: false,
-  timeZone: timeZone
-});
+// // console.log('job1 status', job.running);
 
-console.log('job1 status', jobv.running);
+// var jobv = new cronJob({
+//   //cronTime: '05 * * * * *',
+// cronTime: '0 0 23 * * *',
+//   onTick: function() {
+//     console.log("ending reward ");
+//      Order.userEndingRewardscron();
+//   // Runs everyday
+//   // at exactly 12:00:00 AM.
 
-jobv.start();
+//   },
+//   start: false,
+//   timeZone: timeZone
+// });
 
-console.log('job1 status', job.running);
+// console.log('job1 status', jobv.running);
+
+// jobv.start();
+
+// console.log('job1 status', job.running);
 
 var transferOnSeven = new cronJob({
   //cronTime: '05 * * * * *',
 cronTime: '00 00 11 7 * *',
   onTick: function() {
     console.log("ending reward of stripe");
-      Stripe.checkIfavailablebalance(req,res);
+      Stripe.checkIfavailablebalance();
   // Runs everyday
   // at exactly 12:00:00 AM.
 
@@ -81,10 +81,10 @@ console.log('job3 status', transferOnSeven.running);
 
 var transferOnTwentySix = new cronJob({
   //cronTime: '05 * * * * *',
-cronTime: '00 30 10 26 * *',
+cronTime: '00 30 10 01 * *',
   onTick: function() {
     console.log("ending reward ");
-       Stripe.checkIfavailablebalance(req,res);
+       Stripe.checkIfavailablebalance();
   // Runs everyday
   // at exactly 12:00:00 AM.
 
@@ -176,7 +176,104 @@ router.post('/coffeeShopResetPassword', function (req, res, next) {
       Cafe.coffeeShopResetPassword(req,res);
 });
 
+router.post('/coffeeShopaddBankdetails', function (req, res, next) {
+      var token=req.headers.usertoken;
+      console.log(token);
+      var decoded = jwt.decode(token, "pickup");
+      var Imagename=decoded.data.id;
+    
+      var tempdir = './uploads';
+    //var thumb= './uploads/stores/storeThumb';
+     //var dattat=fs.existsSync(dir);
+       var dir = './uploads/stripedoc';
+       if (!fs.existsSync(tempdir)){
 
+        fs.mkdirSync(tempdir,function(err,datta){
+          if(err){
+            console.log("errrrr");
+          }
+          else
+          {
+               if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir,function(err,datta){
+               if(err){
+                console.log("errrrr");
+               }
+               else
+               {
+                console.log("created folder succesfully");
+               }
+             })
+              }
+        }
+        });
+    }
+    else{
+       if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir,function(err,datta){
+                   if(err){
+                    console.log("errrrr");
+                   }
+                   else
+                   {
+                    console.log("created folder succesfully");
+                   }
+                })
+              }
+    }
+    var storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+      callback(null,dir);
+    },
+    filename: function(req, file, callback) {
+      console.log(file);
+      callback(null, Imagename+ '.jpg');
+    }
+  });
+     console.log('if of img');
+    var upload = multer({
+    storage: storage
+    }).single('files')
+          upload(req, res, function(err) {
+            if(err)
+            {
+              console.log(err);
+              console.log('err');
+            }
+            else{
+              Cafe.coffeeShopaddBankdetails(req,res);
+             }
+            
+      });
+  });
+
+
+router.post('/stripeWebhookbankaccountupdate', function (req, res, next) {
+   console.log(req.body);
+   Cafe.coffeeShopupdateAccountdetailsWh(req,res);
+ //    console.log(req.body.data.object.verification);
+ //    console.log(req.body.data.object.legal_entity.verification);
+ // console.table(req.body.data.object.verification);
+ //  console.table(req.body.data.object.legal_entity.verification);
+ // Cafe.coffeeShopupdateAccountdetailsWh(req,res);
+   
+//  console.log(req.body.verification);
+//   console.log('req.body');
+//   var sig = req.headers["stripe-signature"];
+//    var stripe = require("stripe")(
+//   "sk_test_GaZgJAs0cki20ViJlstYlJOC"
+// );
+//    console.log(sig);
+//    var eventdata =stripe.webhooks.constructEvent(req.body, sig, 'whsec_6tGWg4Q7BHL6gS5X5HDjigOgjPmOUVPE');
+//  console.log(eventdata);
+// console.log('eventdata');
+//   if(sig == 'whsec_6tGWg4Q7BHL6gS5X5HDjigOgjPmOUVPE')
+//   {
+//     Cafe.coffeeShopupdateAccountdetailsWh(req,res);
+//   }
+//    Cafe.coffeeShopupdateAccountdetailsWh(req,res);
+      //Stripe.transferingTobankaccount(req,res);
+});
 
 router.post('/editProfile', function (req, res, next) {
  
@@ -660,6 +757,117 @@ router.post('/coffeeShopEditProfile', function(req, res, next) {
 });
 
 
+router.post('/coffeeShopremoveProfilePic', function(req, res, next) {
+
+    var token = req.body.usertoken;
+    var decoded = jwt.decode(token, "pickup");
+
+    // var imageexist = req.headers.imageexist;
+
+
+    // var tokenRan = randomstring.generate({
+    //     length: 7,
+    //     charset: 'numeric'
+    // });
+    // console.log(decoded);
+    // var Imagename = decoded.data.id + t '.jpg';
+    // var tempImagename = decoded.data.id + ;
+
+    var dir = './uploads/stores';
+    // const path = require('path');
+    // const sep = path.sep;
+    // const initDir = path.isAbsolute(dir) ? sep : '';
+    // dir.split(sep).reduce((parentDir, childDir) => {
+    //     const curDir = path.resolve(parentDir, childDir);
+    //     if (!fs.existsSync(curDir)) {
+    //         fs.mkdirSync(curDir);
+    //     }
+    //     return curDir;
+    // }, initDir);
+
+
+    Stores.findOne({
+        "_id": decoded.data.id
+    }, {
+        'bankDetails': 0,
+        'incomesourceDetail': 0,
+        'totalamounttotransfer': 0,
+        'bankAccountId': 0
+    }, (err, user) => {
+
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+            });
+        }
+        if (!user) {
+            return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+        }
+
+
+        // if (imageexist == 'true' || imageexist == true) {
+
+            console.log(process.cwd());
+            var urlOfimage = user.imageurl;
+            console.log(urlOfimage);
+            if (!(urlOfimage == "noImage")) {
+                var resUrl = urlOfimage.replace(helper.url()+"/stores/", "");
+
+                fs.exists(process.cwd() + '/uploads/stores/' + resUrl + '.jpg', function(exists) {
+                    console.log("file exists ? " + exists);
+                    if(exists)
+                    {
+                      console.log("i m here ");
+                       fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_large.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_small.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '_medium.jpg');
+                      fs.unlinkSync(process.cwd() + '/uploads/stores/' + resUrl + '.jpg');
+                    }
+               
+                });
+              
+                // console.log(Imagename);
+                // console.log(tempImagename);
+            }
+
+            user.imageurl = 'noImage';
+             user.save((err, userdata) => {
+
+             if (err) {
+                return res.status(500).json({
+                   title: 'An error occurred',
+                   error: "true",
+                   detail: err
+                });
+             }
+
+             //console.log(userdata);
+             res.status(200).json({
+                title: 'user image deleetd succesfully ',
+                error: "false",
+
+                data: userdata
+             });
+
+          });
+
+
+         
+
+    });
+
+
+
+
+});
+
+
 // router.post('/coffeeShopEditProfile', function (req, res, next) {
  
 //    var token=req.headers.usertoken;
@@ -922,6 +1130,14 @@ router.use(function (req, res, next) {
 
 
 
+router.post('/coffeshopgetuserdata', function (req, res, next) {
+
+   
+       CoffeeShop.coffeshopgetuserdata(req,res);
+
+});
+
+
 
 
 router.post('/editAddCardDetails', function (req, res, next) {
@@ -983,76 +1199,6 @@ router.post('/notificationListing', function (req, res, next) {
      
 // });
 
-router.post('/coffeeShopaddBankdetails', function (req, res, next) {
-     var token=req.headers.usertoken;
-     console.log(token);
-    var decoded = jwt.decode(token, "pickup");
-    var Imagename=decoded.data.id;
-    
-    var tempdir = './uploads';
-    //var thumb= './uploads/stores/storeThumb';
-     //var dattat=fs.existsSync(dir);
-       var dir = './uploads/stripedoc';
-    if (!fs.existsSync(tempdir)){
-
-        fs.mkdirSync(tempdir,function(err,datta){
-          if(err){
-            console.log("errrrr");
-          }
-          else
-          {
-               if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir,function(err,datta){
-               if(err){
-                console.log("errrrr");
-               }
-               else
-               {
-                console.log("created folder succesfully");
-               }
-             })
-              }
-        }
-        });
-    }
-    else{
-       if (!fs.existsSync(dir)){
-                fs.mkdirSync(dir,function(err,datta){
-                   if(err){
-                    console.log("errrrr");
-                   }
-                   else
-                   {
-                    console.log("created folder succesfully");
-                   }
-                })
-              }
-    }
-    var storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-      callback(null,dir);
-    },
-    filename: function(req, file, callback) {
-      console.log(file);
-      callback(null, Imagename+ '.jpg');
-    }
-  });
-     console.log('if of img');
-    var upload = multer({
-    storage: storage
-    }).single('files')
-          upload(req, res, function(err) {
-            if(err)
-            {
-              console.log(err);
-              console.log('err');
-            }
-            else{
-              Cafe.coffeeShopaddBankdetails(req,res);
-             }
-            
-      });
-  });
 
 router.post('/deleteBankaccount', function (req, res, next) {
 
@@ -1253,32 +1399,7 @@ router.post('/transferingTobankaccount', function (req, res, next) {
       Stripe.transferingTobankaccount(req,res);
 });
 
-router.post('/stripeWebhookbankaccountupdate', function (req, res, next) {
-   console.log(req.body);
-   Cafe.coffeeShopupdateAccountdetailsWh(req,res);
- //    console.log(req.body.data.object.verification);
- //    console.log(req.body.data.object.legal_entity.verification);
- // console.table(req.body.data.object.verification);
- //  console.table(req.body.data.object.legal_entity.verification);
- // Cafe.coffeeShopupdateAccountdetailsWh(req,res);
-   
-//  console.log(req.body.verification);
-//   console.log('req.body');
-//   var sig = req.headers["stripe-signature"];
-//    var stripe = require("stripe")(
-//   "sk_test_GaZgJAs0cki20ViJlstYlJOC"
-// );
-//    console.log(sig);
-//    var eventdata =stripe.webhooks.constructEvent(req.body, sig, 'whsec_6tGWg4Q7BHL6gS5X5HDjigOgjPmOUVPE');
-//  console.log(eventdata);
-// console.log('eventdata');
-//   if(sig == 'whsec_6tGWg4Q7BHL6gS5X5HDjigOgjPmOUVPE')
-//   {
-//     Cafe.coffeeShopupdateAccountdetailsWh(req,res);
-//   }
-//    Cafe.coffeeShopupdateAccountdetailsWh(req,res);
-      //Stripe.transferingTobankaccount(req,res);
-});
+
 
 
 

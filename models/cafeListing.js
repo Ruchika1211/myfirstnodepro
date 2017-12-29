@@ -64,6 +64,7 @@ var schema = new Schema({
       isPrimary:Boolean,
       routingNumber:String,
       fingerprint:String,
+      dob:Object,
 
     }],
     accountStatus:String,
@@ -74,6 +75,7 @@ var schema = new Schema({
    accountdisabledReason:String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  lastseen: Date,
   isblocked:{
        type: Number,
        required: true,

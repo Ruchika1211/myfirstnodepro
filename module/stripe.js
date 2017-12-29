@@ -1450,6 +1450,17 @@ exports.payCharges = (token, amountpaid, callback) => {
 // }
 
 exports.checkIfavailablebalance = (req,res) => {
+var mailOptionssss = {
+                        to: helper.adminMailFrom()
+                        , from:helper.adminMailFrom()
+                        , subject: 'checking if cron run on 1st'
+                        , text: 'checking if cron run on 1st'
+                      };
+                      helper.sendemail( mailOptionssss, ( data ) => {
+                        // notes = err;
+                        // store_callback();
+                      });
+
   Stores.find( {}, ( err, stores ) => {
     if ( err ) {
       //console.log( "err while retrieving" + err );
@@ -1770,9 +1781,9 @@ exports.checkIfavailablebalance = (req,res) => {
     }, err => {
       //console.log( "i m in loop end" );
       if ( err ) console.error( err.message );
-      res.status(200).json({
-          data: "sucess"
-        });
+      // res.status(200).json({
+      //     data: "sucess"
+      //   });
       // var filePay=`${'///////////'}`
       // fs.appendFileSync(store.id + '.txt', filePay);
       // configs is now a map of JSON data

@@ -3,6 +3,7 @@ var FCM = require('fcm-push');
 
 var User =  require('../models/user');
 var Stores = require('../models/cafeListing');
+var notification = require('../models/notification');
 var helper = require('../services/helper.js');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport({
@@ -57,13 +58,13 @@ var fcm = new FCM(serverKey);
 
 module.exports = {
 
-         url:function(){
-         	return 'http://dev2.infiny.in:3000'
-         },
-
-         //  url:function(){
-         //  return 'http://localhost:3000'
+         // url:function(){
+         // 	return 'http://dev2.infiny.in:3000'
          // },
+
+          url:function(){
+          return 'http://pick-cup.com'
+         },
 
 
          europeanCountry:function(value){
@@ -387,6 +388,29 @@ module.exports = {
 
                  
             });
+
+  },
+
+  countOfnotification:(lastseenofuser,decoded,cb)=>{
+          notification.count({"createdAt": {
+            $gte: lastseenofuser
+         }, "shopDetail": decoded,"type":"new"},(err,countTotal)=>{
+            var UserCount=0;
+                if(!err)
+                {
+                    UserCount=countTotal;
+                }
+                console.log("usercount");
+                 console.log(UserCount);
+
+                cb(UserCount) ;
+                // else
+                // {
+                //     UserCount=countTotal;
+                // }
+
+
+              });
 
   },
 

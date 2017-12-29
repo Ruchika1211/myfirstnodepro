@@ -494,15 +494,25 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                   if (err) {
                      //console.log("error finding rewrad");
                   }
+
+                  var checkclaimedReward;
                   // if (!usersRewarddata && ((enddateData >= dateData) && (startdateData <= dateData)))
                   if (!usersRewarddata) {
                 
-
+                        if(parseInt(reward_data.quantity) == 1)
+                        {
+                           checkclaimedReward=true;
+                        }
+                        else
+                        {
+                           checkclaimedReward=false;
+                        }
                      var usersRe = new usersReward({
                         shopDetail: shopDetail,
                         userDetail: token,
                         rewardId: reward_data._id,
-                        rewardCompleted: 1
+                        rewardCompleted: 1,
+                        claimedReward:checkclaimedReward,
                      });
                      usersRe.save((err, usewrre) => {
 
@@ -990,93 +1000,103 @@ exports.createOrder = (req, res) => {
                                         //console.log(CurrentUserDetail);
                                         //console.log(CurrentStoreDetail.deviceToken);
                                         //console.log('CurrentUserDetail?????????????');
-                                        var message = {
-                                           registration_ids: CurrentStoreDetail.deviceToken,
-                                           priority: "high",
-                                           forceshow: true, // required fill with device token or topics
-                                           collapse_key: 'Pickcup',
-                                           data: {
-                                              flag: "rewardOrder",
-                                              order: orderd,
-                                              currentUserDetail: CurrentUserDetail
-                                           },
-                                           notification: {
-                                              title: 'Pickcup',
-                                              body: "You have received a new order for claiming a reward",
-                                              sound : "default"
+                                         helper.countOfnotification(CurrentStoreDetail.lastseen,CurrentStoreDetail._id,(data)=>{
+                                                        var message = {
+                                                             registration_ids: CurrentStoreDetail.deviceToken,
+                                                             priority: "high",
+                                                             forceshow: true, // required fill with device token or topics
+                                                             collapse_key: 'Pickcup',
+                                                             data: {
+                                                                flag: "rewardOrder",
+                                                                order: orderd,
+                                                                 count:data,
+                                                                currentUserDetail: CurrentUserDetail,
+                                                                  title: 'Pickcup',
+                                                                body: "You have received a new order for claiming a reward",
+                                                                sound : "default"
+                                                             }
+                                                             // notification: {
+                                                              
 
-                                           }
-                                        };
+                                                             // }
+                                                          };
 
-                                        //promise style
-                                        fcm.send(message)
-                                           .then(function(response) {
-                                              //var msg =msgForNoti
-                                      
-                                              var msg = "Your reward order at " + CurrentStoreDetail.cafe_name + " is successfully claimed.";
-                                              // helper.sendNotification(CurrentUserDetail.deviceToken,"orderReady",msg,function(cb)
-                                              // {
+                                                           fcm.send(message)
+                                                    .then(function(response) {
+                                                       //var msg =msgForNoti
+                                               
+                                                       var msg = "Your reward order at " + CurrentStoreDetail.cafe_name + " is successfully claimed.";
+                                                       // helper.sendNotification(CurrentUserDetail.deviceToken,"orderReady",msg,function(cb)
+                                                       // {
 
-                                              var notifi = new notification({
-                                                 shopDetail: CurrentStoreDetail._id,
-                                                 userDetail: CurrentUserDetail._id,
-                                                 message: msg,
-                                                cafe_name:CurrentStoreDetail.cafe_name,
-                                                  orderId:orderd._id
+                                                       var notifi = new notification({
+                                                          shopDetail: CurrentStoreDetail._id,
+                                                          userDetail: CurrentUserDetail._id,
+                                                          message: msg,
+                                                          type:'new',
+                                                         cafe_name:CurrentStoreDetail.cafe_name,
+                                                           orderId:orderd._id
 
-                                              });
-                                              notifi.save((err, savedNoti) => {
+                                                       });
+                                                       notifi.save((err, savedNoti) => {
 
-                                                 if (err) {
-                                                    res.status(200).json({
-                                                       message: 'Order saved Your otp is',
-                                                       otp: otpOfOrder,
-                                                       error: "false",
+                                                          if (err) {
+                                                             res.status(200).json({
+                                                                message: 'Order saved Your otp is',
+                                                                otp: otpOfOrder,
+                                                                error: "false",
 
-                                                    });
+                                                             });
 
-                                                 }
+                                                          }
 
-                                                 helper.sendNotification(CurrentUserDetail.deviceToken, "rewardCompleted", msg, (cb) => {
-                                                    usersRewarddata.rewardCompleted = 0;
-                                                    usersRewarddata.claimedReward = false;
-                                                    usersRewarddata.save((err, savedNoti) => {
+                                                          helper.sendNotification(CurrentUserDetail.deviceToken, "rewardCompleted", msg, (cb) => {
+                                                             usersRewarddata.rewardCompleted = 0;
+                                                             usersRewarddata.claimedReward = false;
+                                                             usersRewarddata.save((err, savedNoti) => {
 
-                                                       if (err) {
-                                                          res.status(200).json({
-                                                             message: 'Order saved Your otp is',
-                                                             otp: otpOfOrder,
-                                                             error: "false",
+                                                                if (err) {
+                                                                   res.status(200).json({
+                                                                      message: 'Order saved Your otp is',
+                                                                      otp: otpOfOrder,
+                                                                      error: "false",
 
-                                                          });
+                                                                   });
 
-                                                       }
+                                                                }
 
+                                                                res.status(200).json({
+                                                                   message: 'Order saved Your otp is',
+                                                                   otp: otpOfOrder,
+                                                                   error: "false",
+
+                                                                });
+                                                             })
+
+                                                          }, orderd._id)
+
+                                                       })
+
+                                                    })
+                                                    .catch(function(err) {
+                                                       //console.log("Something has gone wrong1!");
+                                                       console.error(err);
                                                        res.status(200).json({
                                                           message: 'Order saved Your otp is',
                                                           otp: otpOfOrder,
                                                           error: "false",
 
+                                                        
+
                                                        });
-                                                    })
+                                                    });
+                                                                   
 
-                                                 }, orderd._id)
+                                                  });
+                                        
 
-                                              })
-
-                                           })
-                                           .catch(function(err) {
-                                              //console.log("Something has gone wrong1!");
-                                              console.error(err);
-                                              res.status(200).json({
-                                                 message: 'Order saved Your otp is',
-                                                 otp: otpOfOrder,
-                                                 error: "false",
-
-                                               
-
-                                              });
-                                           });
+                                        //promise style
+                                       
                                      }
 
                                   })
@@ -2514,26 +2534,29 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
          // //console.log(CurrentUserDetail);
          // //console.log(CurrentStoreDetail.deviceToken);
         // //console.log('CurrentUserDetail?????????????');
-         var message = {
-            registration_ids: CurrentStoreDetail.deviceToken,
-            priority: "high",
-            forceshow: true, // required fill with device token or topics
-            collapse_key: 'Pickcup',
-            data: {
-               flag: "newOrder",
-               order: orderd,
-               currentUserDetail: CurrentUserDetail
-            },
-            notification: {
-               title: 'Pickcup',
-               body: "You have received a new order",
-               sound : "default"
+   helper.countOfnotification(CurrentStoreDetail.lastseen,CurrentStoreDetail._id,(data)=>{
+             console.log(data);
+               console.log('data????????????????????????????');
+             var message = {
+                  registration_ids: CurrentStoreDetail.deviceToken,
+                  priority: "high",
+                  forceshow: true, // required fill with device token or topics
+                  collapse_key: 'Pickcup',
+                  data: {
+                     flag: "newOrder",
+                     order: orderd,
+                     count:data,
+                     currentUserDetail: CurrentUserDetail,
+                       title: 'Pickcup',
+                     body: "You have received a new order",
+                     sound : "default"
+                  }
+                  // notification: {
+                   
 
-            }
-         };
-
-         //promise style
-         fcm.send(message)
+                  // }
+               };
+                 fcm.send(message)
             .then(function(response) {
                var msg = msgForNoti
 
@@ -2542,6 +2565,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                   shopDetail: CurrentStoreDetail._id,
                   userDetail: CurrentUserDetail._id,
                   message: msg,
+                  type:'new',
                   cafe_name:CurrentStoreDetail.cafe_name,
                   orderId:orderd._id
                });
@@ -2626,6 +2650,11 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                })
             });
 
+        });
+        
+
+         //promise style
+       
       }
 
    });

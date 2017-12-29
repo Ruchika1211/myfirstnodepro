@@ -16,6 +16,7 @@ var schema = new Schema({
       type: String,
        required: true
      },
+     type:String,
      cafe_name:String,
      orderId:String
   },

@@ -27,6 +27,7 @@ exports.addshopowner = (req, res) => {
 		status:'closed',
 		cafe_name:req.body.cafe_name,
 		imageurl:"noImage",
+        lastseen : new Date (),
         
 	})
 

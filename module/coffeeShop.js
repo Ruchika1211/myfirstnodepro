@@ -1062,7 +1062,7 @@ exports.getRewards = (req, res) => {
                      //console.log(notExpire);
                      //console.log('notExpire');
                      if (notExpire) {
-                        tempRewardData.startdate = tempReward.startdate;
+                        tempRewardData.startdate = tempReward .startdate;
                         tempRewardData.enddate = tempReward.enddate;
                         tempRewardData.quantity = tempReward.quantity;
                         tempRewardData.rewardName = tempReward.rewardName;
@@ -1193,11 +1193,11 @@ exports.coffeeShopsetrewardLogic = (req, res) => {
                 }
             }
 
-
+               var quant=parseInt(req.body.quantity);
             var rew = new reward({
                 startdate: start,
                 enddate: end,
-                quantity: req.body.quantity,
+                quantity:quant.toString(),
                 shopDetail: decoded.data.id,
                 rewardName: rewardName,
 
@@ -1509,13 +1509,17 @@ exports.coffeeShopShowOrderListing = (req, res) => {
 
             }
 
-            return res.status(200).json({
+           
+
+            Stores.update({ '_id': decoded.data.id }, { $set: { "lastseen":  new Date () }},()=>{
+                 return res.status(200).json({
                 title: 'orders found ',
                 error: "false",
                 active: active,
                 ready: ready,
 
 
+                });
             });
 
             // return res.status(200).json({
@@ -1767,4 +1771,63 @@ exports.coffeeShopVerifyOtp = (req, res) => {
 
 
         })
+}
+
+exports.coffeshopgetuserdata = (req, res) => {
+    var token=req.body.userToken;
+    var decoded = jwt.decode(token, "pickup");
+    console.log(decoded);
+      console.log(token);
+
+    Stores.findOne({
+      "_id": decoded.data.id
+   },{ 'incomesourceDetail':0 ,'totalamounttotransfer':0 }, (err, user) => {
+
+      if (err) {
+         return res.status(500).json({
+            title: 'An error occurred',
+            error: "true",
+            detail: err
+         });
+      }
+      if (!user) {
+        return res.status(200).json({
+                title: 'You are blocked.Please contact admin',
+                error: "true",
+                detail: "invalid Login"
+            });
+      }
+
+      var lastseenofuser =user.lastseen;
+      notification.count({"createdAt": {
+            $gte: lastseenofuser
+         }, "shopDetail": decoded.data.id,"type":"new"},(err,countTotal)=>{
+            var UserCount;
+                if(err)
+                {
+                    UserCountUserCount=0;
+                }
+                else
+                {
+                    UserCount=countTotal;
+                }
+
+               console.log(UserCount);
+              console.log('UserCount');
+
+                     res.status(200).json({
+                        title: 'userData',
+                        error: "false",
+                        user: user,
+                        count:UserCount
+                    });
+
+      });
+
+ 
+    
+      
+     
+
+    })
 }

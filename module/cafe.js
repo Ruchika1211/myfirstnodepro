@@ -760,8 +760,19 @@ exports.coffeeShopEditProfile = (req, res) => {
       // user.position.longitude = req.body.longitude;
       //user.imageurl = helper.url() + '/stores/' + decoded.data.id;
       user.save((err, user) => {
+         console.log(err);
+         console.log("err in cafe");
+          
 
          if (err) {
+            if(err.name == 'MongoError')
+             {
+                  return res.status(200).json({
+                    title: 'Email already exist',
+                    error: "true",
+                    detail: err
+                });
+             }
             return res.status(500).json({
                title: 'An error occurred',
                error: "true",
@@ -1285,7 +1296,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                      }
                      else
                      {
-                       coffeeShop.accountdisabledReason='';
+                       coffeeShop.accountdisabledReason='null';
                      }
 
                      if(req.body.data.object.verification.due_by){
@@ -1343,7 +1354,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                if(dataMessg == 'new')
                          { 
                             var mailOptions = {
-                                      to: coffeeShop.storeId,
+                                      to: coffeeShopData.storeId,
                                       from:helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Thank you for submitting your form your Verfication is under processed.' 
@@ -1361,7 +1372,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                          else if(dataMessg == 'verification_failed'){
 
                            var mailOptions = {
-                                      to: coffeeShop.storeId,
+                                      to: coffeeShopData.storeId,
                                       from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
@@ -1380,7 +1391,7 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                           else if(dataMessg == 'errored'){
 
                               var mailOptions = {
-                                      to: coffeeShop.storeId,
+                                      to: coffeeShopData.storeId,
                                       from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
@@ -1403,15 +1414,15 @@ exports.coffeeShopupdateAccountdetailsWh=(req,res)=>{
                          {
 
                               var mailOptions = {
-                                      to:helper.adminMailFrom(),
-                                      from: 'ruchika.s@infiny.in',
+                                      to:coffeeShopData.storeId,
+                                      from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
-                                      text: 'Verification Succesful \n\n'+
+                                      text: 'Verification Successful \n\n'+
                                             'Your account has been succesfully verified' 
                                           
                                   };
                             helper.sendemail(mailOptions,(data)=>{
-                                var msg="Your account has been succesfully verified";
+                                var msg="Your account has been successfully verified";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
                                   // //console.log("message send");
                                   res.send(200);
@@ -1450,9 +1461,9 @@ exports.coffeeShopaddBankdetails = (req, res) => {
     var postCode=state.split(" ");
     postCode = postCode.filter(Boolean);
     var stateLen=postCode.length;
-    // //console.log(postCode);
-    // //console.log(postCode.length);
-    // //console.log('postCode');
+    //console.log(postCode);
+    //console.log(postCode.length);
+    //console.log('postCode');
     if(postCode.length > 2)
     { 
        var stat=postCode[0];
@@ -1476,12 +1487,12 @@ exports.coffeeShopaddBankdetails = (req, res) => {
   
     var city=value[count-3];
 
-    // //console.log(country);
-    // //console.log(stat);
-    // //console.log(city);
-    // //console.log(postal_code);
-    // //console.log(value);
-    // //console.log("address");
+    console.log(country);
+    console.log(stat);
+    console.log(city);
+    console.log(postal_code);
+    console.log(value);
+    console.log("address");
   country=country.trim();
                 
    Stores.findOne({
@@ -1575,6 +1586,8 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                      detail: err
                   });
                }
+             console.log(req.body.bankToken);
+               console.log('stripe creating account error');
 
                if (!account) {
                   return res.status(200).json({
@@ -1590,6 +1603,15 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                      external_account: req.body.bankToken
                   },
                   function(err, bank_account) {
+
+
+
+                        
+
+
+               //          console.log(err);
+               // console.log('stripe creating external_account error');
+                     if (!bank_account) {
                      if (err) {
                         return res.status(200).json({
                            title: 'stripe creating external_account error',
@@ -1598,7 +1620,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                         });
                      }
 
-                     if (!bank_account) {
+           
                         return res.status(200).json({
                            title: 'stripe creating external_account error',
                            error: "true"
@@ -1672,11 +1694,19 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                      coffeeShop.bankDetails = {
                         bankId: bank_account.id,
                         bankNumber: bank_account.last4,
-                        typeOfaccount: bank_account.account_holder_type,
-                        accountholderName: bank_account.account_holder_name,
+                        typeOfaccount:req.body.acctType,
+                        accountholderName:req.body.first_name +' '+ req.body.last_name,
                         isPrimary: bank_account.default_for_currency,
                          fingerprint: bank_account.fingerprint,
-                        routingNumber: bank_account.routing_number
+                        routingNumber: bank_account.routing_number,
+                        dob:{
+                             day: req.body.day,
+
+                             month: req.body.month,
+
+                             year: req.body.year
+
+                          }
                      }
 
                      coffeeShop.save(function(err,coffeeShopData) {
@@ -1708,7 +1738,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
 
                            var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from: helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
                                             'Your account verification has been failed due to some security features.Please contact admin@pickcup.in for further details' 
@@ -1726,7 +1756,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
 
                               var mailOptions = {
                                       to: coffeeShop.storeId,
-                                      from: 'ruchika.s@infiny.in',
+                                      from:helper.adminMailFrom(),
                                       subject: 'Pickcup Account details',
                                       text: 'Verification failed \n\n'+
                                             'Your account verification has been failed due to some security features.Please contact admin@pickcup.in for further details' 
@@ -1755,7 +1785,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                                           
                                   };
                             helper.sendemail(mailOptions,(data)=>{
-                                var msg="Your account has been succesfully verified.";
+                                var msg="Your account has been successfully verified.";
                                 helper.sendNotification(coffeeShopData.deviceToken,'bankStatus', msg, (cb) => {
                                   // //console.log("message send");
                                 },bank_account.status);
@@ -1769,7 +1799,7 @@ exports.coffeeShopaddBankdetails = (req, res) => {
                          // }
 
                         res.status(200).json({
-                           title: 'bank detail updated succesfully',
+                           title: 'bank detail updated successfully',
                            error: "false",
                            data:coffeeShopData
 
