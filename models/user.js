@@ -138,7 +138,9 @@ var schema = new Schema({
 },
   {
     timestamps: true
-  });
+  },{ 
+    usePushEach: true 
+});
 
 schema.plugin(mongooseUniqueValidator);
 

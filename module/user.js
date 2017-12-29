@@ -237,7 +237,7 @@ exports.signin = (req, res) => {
             });
         } else {
 
-            user.deviceToken.push(device_id);
+            user.deviceToken= user.deviceToken.push(device_id);
             user.save(function(err) {
                 console.log(err);
                 if (err) {
