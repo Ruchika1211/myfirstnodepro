@@ -239,6 +239,7 @@ exports.signin = (req, res) => {
 
             user.deviceToken.push(device_id);
             user.save(function(err) {
+                console.log(err);
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',
