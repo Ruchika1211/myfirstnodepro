@@ -523,6 +523,7 @@ exports.coffeeShopLogin = (req, res) => {
    },{'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0}, (err, coffeeShop) => {
      console.log(coffeeShop);
       if (err) {
+        console.log("error3");
          return res.status(500).json({
             title: 'An error occurred',
             error: "true",
@@ -589,7 +590,7 @@ exports.coffeeShopLogin = (req, res) => {
          // coffeeShop.deviceToken.push(device_id);
          coffeeShop.save(function(err) {
               console.log(err);
-          console.log("error");
+          console.log("error3");
             if (err) {
                return res.status(500).json({
                   title: 'An error occurred',
