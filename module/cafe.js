@@ -521,7 +521,7 @@ exports.coffeeShopLogin = (req, res) => {
    Stores.findOne({
       'storeId': req.body.storeId
    },{'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0}, (err, coffeeShop) => {
-      //console.log(coffeeShop);
+     console.log(coffeeShop);
       if (err) {
          return res.status(500).json({
             title: 'An error occurred',
@@ -584,9 +584,12 @@ exports.coffeeShopLogin = (req, res) => {
 
          });
       } else {
+         coffeeShopcoffeeShop.deviceToken= coffeeShop.deviceToken.push(device_id);
 
-         coffeeShop.deviceToken.push(device_id);
+         // coffeeShop.deviceToken.push(device_id);
          coffeeShop.save(function(err) {
+              console.log(err);
+          console.log("error");
             if (err) {
                return res.status(500).json({
                   title: 'An error occurred',
