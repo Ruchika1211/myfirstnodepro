@@ -1009,7 +1009,7 @@ exports.createOrder = (req, res) => {
                                                              data: {
                                                                 flag: "rewardOrder",
                                                                 order: orderd,
-                                                                 count:data,
+                                                                 count:data+1,
                                                                 currentUserDetail: CurrentUserDetail,
                                                                   title: 'Pickcup',
                                                                 body: "You have received a new order for claiming a reward",
@@ -2545,7 +2545,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                   data: {
                      flag: "newOrder",
                      order: orderd,
-                     count:data,
+                     count:data+1,
                      currentUserDetail: CurrentUserDetail,
                        title: 'Pickcup',
                      body: "You have received a new order",
