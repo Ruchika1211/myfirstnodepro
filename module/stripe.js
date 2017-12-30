@@ -311,7 +311,7 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.isPrimary = false;
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
-                     user.cardDetails.push(cardDetailsData);
+                     user.cardDetails=user.cardDetails.push(cardDetailsData);
                      user.save(function(err) {
                         if (err) {
                            return res.status(500).json({
