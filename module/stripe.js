@@ -386,6 +386,10 @@ exports.payCreateUserCards = (req, res) => {
 
                      user.cardDetails.push(cardDetailsData);
                      user.save(function(err) {
+
+                       console.log("if err");
+                         console.log(err);
+
                         if (err) {
                            return res.status(500).json({
                               title: 'An error occurred',
@@ -403,8 +407,8 @@ exports.payCreateUserCards = (req, res) => {
                      });
                }
             }).catch(function(err) {
-                              //console.log(err);
-                              //console.log('err');
+                              console.log(err);
+                              console.log('err');
                               return res.status(500).json({
                                  title: 'An error occurred',
                                  error: "true",
@@ -445,6 +449,11 @@ exports.payCreateUserCards = (req, res) => {
                user.stripeId = source.customer;
                user.cardDetails.push(cardDetailsData);
                user.save(function(err, userData) {
+
+
+                console.log("else err");
+                          console.log(err);
+
                   if (err) {
                      return res.status(500).json({
                         title: 'An error occurred',
