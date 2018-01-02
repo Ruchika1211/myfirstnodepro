@@ -1092,9 +1092,10 @@ router.use(function (req, res, next) {
             });
         }
         if (!user) {
-            return res.status(500).json({
-                title: 'User not found',
+            return res.status(200).json({
+                title: 'User deleted',
                 error: "true",
+                detail: "invalid Login"
               
             });
         }
