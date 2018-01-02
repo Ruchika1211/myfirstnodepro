@@ -19,6 +19,8 @@ var moment = require('moment-timezone');
 var serverKey = process.env.serverKey;
 var fcm = new FCM(serverKey);
 
+console.log(serverKey);
+console.log('serverKey');
 
   // var amountTotransferShopowner=function(totalPrice){
 
