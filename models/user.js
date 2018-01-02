@@ -86,10 +86,7 @@ var schema = new Schema({
         type: String,
         required: false,
     },
-    cardDetails:[
-    type: Schema.Types.Mixed,
-        default: {}
-        ],
+    cardDetails:[Schema.Types.Mixed],
     // cardDetails:[{
     //   cardId:{
     //     type: String,
