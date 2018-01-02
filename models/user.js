@@ -86,47 +86,47 @@ var schema = new Schema({
         type: String,
         required: false,
     },
-    cardDetails:[Schema.Types.Mixed],
-    // cardDetails:[{
-    //   cardId:{
-    //     type: String,
-    //     required: false,
-    //   },
-    //    card_name:{
-    //     type: String,
-    //     required: false,
-    //   },
-    //   card_number:{
-    //     type: String,
-    //     required: false,
-    //   },
-    //   expiryMonth:{
-    //     type:String,
-    //     required: false,
-    //   },
-    //   isEuropean:{
-    //     type: Boolean,
-    //     required: false,
-    //   },
-    //   expiryYear:{
-    //     type:String,
-    //     required: false,
-    //   },
-    //    brand:{
-    //     type:String,
-    //     required: false,
-    //   },
-    //   fingerprint:{
-    //    type:String,
-    //     required: false,
-    //   },
+    // cardDetails:[Schema.Types.Mixed],
+    cardDetails:[{
+      cardId:{
+        type: String,
+        required: false,
+      },
+       card_name:{
+        type: String,
+        required: false,
+      },
+      card_number:{
+        type: String,
+        required: false,
+      },
+      expiryMonth:{
+        type:String,
+        required: false,
+      },
+      isEuropean:{
+        type: Boolean,
+        required: false,
+      },
+      expiryYear:{
+        type:String,
+        required: false,
+      },
+       brand:{
+        type:String,
+        required: false,
+      },
+      fingerprint:{
+       type:String,
+        required: false,
+      },
      
-    //   isPrimary:{
-    //     type:Boolean,
-    //     default:false,
-    //     required: false,
-    //   }
-    // }, { usePushEach: true }],
+      isPrimary:{
+        type:Boolean,
+        default:false,
+        required: false,
+      }
+    }, { usePushEach: true }],
     resetPasswordToken: String,
      lastseen: Date,
     resetPasswordExpires: Date,
