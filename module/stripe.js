@@ -434,7 +434,7 @@ exports.payCreateUserCards = (req, res) => {
             }).then(function(source) {
                //console.log(source);
                //console.log('source');
-               var cardDetailsData = {};
+               var cardDetailsData = new Object();
                cardDetailsData.cardId = source.id;
                cardDetailsData.card_number = source.last4;
                cardDetailsData.expiryMonth = source.exp_month;
