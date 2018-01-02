@@ -300,7 +300,7 @@ exports.payCreateUserCards = (req, res) => {
                        //console.log('userCardData.fingerprint fingerprint not match');
                      // cardDetailsData.fingerprint=source.fingerprint;
                      user.stripeId = source.customer;
-                      var cardDetailsData = {};
+                      var cardDetailsData = new Object();
                        cardDetailsData.fingerprint=source.fingerprint;
                      cardDetailsData.cardId = source.id;
                      cardDetailsData.card_number = source.last4;
@@ -373,7 +373,7 @@ exports.payCreateUserCards = (req, res) => {
                      //console.log('userCardData length less than one');
                     
                      user.stripeId = source.customer;
-                      var cardDetailsData = {};
+                      var cardDetailsData = new Object();
                        cardDetailsData.fingerprint=source.fingerprint;
                      cardDetailsData.cardId = source.id;
                      cardDetailsData.card_number = source.last4;
@@ -385,6 +385,9 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
                        user.cardDetails=user.cardDetails.push(cardDetailsData);
+                       console.log(cardDetailsData);
+                 console.log('cardDetailsData');
+                   console.log(user);
                      user.save(function(err) {
 
                        console.log("if err");
