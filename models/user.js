@@ -126,7 +126,7 @@ var schema = new Schema({
         default:false,
         required: false,
       }
-    }, { usePushEach: true }],
+    }],
     resetPasswordToken: String,
      lastseen: Date,
     resetPasswordExpires: Date,
