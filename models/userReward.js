@@ -28,7 +28,8 @@ var schema = new Schema({
      },
 },
 {
-    timestamps: true
+    timestamps: true,
+    usePushEach: true 
   });
 
 schema.plugin(mongooseUniqueValidator);

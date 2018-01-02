@@ -26,6 +26,8 @@ var schema = new Schema({
            }
 
 
+},{
+  usePushEach: true 
 });
 
 

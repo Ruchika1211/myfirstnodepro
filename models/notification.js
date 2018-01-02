@@ -21,7 +21,8 @@ var schema = new Schema({
      orderId:String
   },
   {
-    timestamps: true
+    timestamps: true,
+    usePushEach: true 
   });
 
 
