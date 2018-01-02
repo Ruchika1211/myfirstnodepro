@@ -2872,6 +2872,8 @@ exports.addItemToCart = (req, res) => {
                   user.Ordered[i].itemQuantity = parseInt(user.Ordered[i].itemQuantity) + parseInt(req.body.itemQuantity);
                   user.save((err, user) => {
 
+                     console.log(err);
+                     console.log("err of cart");
                      if (err) {
                         return res.status(500).json({
                            title: 'An error occurred',
@@ -2894,14 +2896,15 @@ exports.addItemToCart = (req, res) => {
 
          } else {
 
-            //console.log('AlreadyIncart >>>>>>>>>>>.else');
+         console.log('AlreadyIncart >>>>>>>>>>>.else');
 
             for (i = 0; i < CorrectOrder.length; i++) {
                user.Ordered.push(CorrectOrder[i]);
             }
 
             user.save((err, user) => {
-
+          console.log("user cart error ");
+          console.log(err);
                if (err) {
                   return res.status(500).json({
                      title: 'An error occurred',
