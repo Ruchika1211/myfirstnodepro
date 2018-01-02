@@ -338,7 +338,8 @@ module.exports = {
       // },
 
 		sendNotification:function(deviceId,flag,msg,callback,extras){
-
+       console.log(deviceId);
+              console.log('deviceId');
 			var message = {
                           registration_ids:deviceId,
                           priority : "high",

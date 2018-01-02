@@ -585,7 +585,7 @@ exports.coffeeShopLogin = (req, res) => {
 
          });
       } else {
-         coffeeShop.deviceToken= coffeeShop.deviceToken.push(device_id);
+         coffeeShop.deviceToken= coffeeShop.deviceToken.concat([device_id]);
 
          // coffeeShop.deviceToken.push(device_id);
          coffeeShop.save(function(err) {
