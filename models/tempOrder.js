@@ -47,7 +47,9 @@ var schema = new Schema({
       }]
 
 
-});
+},{
+    usePushEach: true 
+  });
 
 
 module.exports = mongoose.model('tempOrder', schema);
