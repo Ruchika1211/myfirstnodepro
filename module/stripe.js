@@ -384,7 +384,7 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.isPrimary = true;
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
-                     user.cardDetails.push(cardDetailsData);
+                       user.cardDetails=user.cardDetails.push(cardDetailsData);
                      user.save(function(err) {
 
                        console.log("if err");
@@ -447,7 +447,7 @@ exports.payCreateUserCards = (req, res) => {
                      //console.log('source.fingerprint');
                cardDetailsData.fingerprint=source.fingerprint;
                user.stripeId = source.customer;
-               user.cardDetails.push(cardDetailsData);
+                 user.cardDetails=user.cardDetails.push(cardDetailsData);
                user.save(function(err, userData) {
 
 
