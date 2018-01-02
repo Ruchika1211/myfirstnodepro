@@ -311,7 +311,8 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.isPrimary = false;
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
 
-                     user.cardDetails=user.cardDetails.push(cardDetailsData);
+                       user.cardDetails=user.cardDetails.concat([cardDetailsData]);
+                  user.markModified('cardDetails');
                      user.save(function(err) {
                         if (err) {
                            return res.status(500).json({
@@ -384,7 +385,8 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.isPrimary = true;
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
             
-                       user.cardDetails=user.cardDetails.push(cardDetailsData);
+                      user.cardDetails=user.cardDetails.concat([cardDetailsData]);
+                  user.markModified('cardDetails');
                        console.log(cardDetailsData);
                  console.log('cardDetailsData');
                    console.log(user);
@@ -450,9 +452,9 @@ exports.payCreateUserCards = (req, res) => {
                      //console.log('source.fingerprint');
                cardDetailsData.fingerprint=source.fingerprint;
                user.stripeId = source.customer;
-               console.log(cardDetailsData);
-                 console.log('cardDetailsData');
-                   console.log(user);
+               // console.log(cardDetailsData);
+               //   console.log('cardDetailsData');
+               //     console.log(user);
                user.cardDetails=user.cardDetails.concat([cardDetailsData]);
                   user.markModified('cardDetails');
                user.save(function(err, userData) {
