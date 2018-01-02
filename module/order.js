@@ -1054,7 +1054,8 @@ exports.createOrder = (req, res) => {
                                                              usersRewarddata.rewardCompleted = 0;
                                                              usersRewarddata.claimedReward = false;
                                                              usersRewarddata.save((err, savedNoti) => {
-
+                                                                 console.log("error of reward");
+                                                                 console.log(err);
                                                                 if (err) {
                                                                    res.status(200).json({
                                                                       message: 'Order saved Your otp is',
