@@ -447,6 +447,9 @@ exports.payCreateUserCards = (req, res) => {
                      //console.log('source.fingerprint');
                cardDetailsData.fingerprint=source.fingerprint;
                user.stripeId = source.customer;
+               console.log(cardDetailsData);
+                 console.log('cardDetailsData');
+                   console.log(user);
                  user.cardDetails=user.cardDetails.push(cardDetailsData);
                user.save(function(err, userData) {
 
