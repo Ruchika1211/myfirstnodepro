@@ -343,7 +343,7 @@ module.exports = {
        console.log(deviceId);
               console.log('deviceId');
 			var message = {
-                          to:deviceId,
+                          registration_ids:deviceId,
                           priority : "high",
                           forceshow : true, // required fill with device token or topics
                           collapse_key: 'Pickcup', 
