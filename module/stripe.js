@@ -437,8 +437,8 @@ exports.payCreateUserCards = (req, res) => {
                var cardDetailsData = new Object();
                cardDetailsData.cardId = source.id;
                cardDetailsData.card_number = source.last4;
-               cardDetailsData.expiryMonth = source.exp_month;
-               cardDetailsData.expiryYear = source.exp_year;
+               cardDetailsData.expiryMonth = source.exp_month.toString();
+               cardDetailsData.expiryYear = source.exp_year.toString();
                cardDetailsData.brand = source.brand;
                cardDetailsData.card_name = source.name;
                cardDetailsData.isPrimary = true;
