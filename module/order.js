@@ -998,8 +998,8 @@ exports.createOrder = (req, res) => {
 
                                         //console.log(orderd);
                                         //console.log(CurrentUserDetail);
-                                        //console.log(CurrentStoreDetail.deviceToken);
-                                        //console.log('CurrentUserDetail?????????????');
+                                        console.log(CurrentStoreDetail.deviceToken);
+                                        console.log('CurrentUserDetail?????????????');
                                          helper.countOfnotification(CurrentStoreDetail.lastseen,CurrentStoreDetail._id,(data)=>{
                                                         var message = {
                                                              registration_ids: CurrentStoreDetail.deviceToken,
@@ -1082,14 +1082,60 @@ exports.createOrder = (req, res) => {
                                                     .catch(function(err) {
                                                        //console.log("Something has gone wrong1!");
                                                        console.error(err);
-                                                       res.status(200).json({
-                                                          message: 'Order saved Your otp is',
-                                                          otp: otpOfOrder,
-                                                          error: "false",
+                                                            //var msg =msgForNoti
+                                               
+                                                       var msg = "Your reward order at " + CurrentStoreDetail.cafe_name + " is successfully claimed.";
+                                                       // helper.sendNotification(CurrentUserDetail.deviceToken,"orderReady",msg,function(cb)
+                                                       // {
 
-                                                        
+                                                       var notifi = new notification({
+                                                          shopDetail: CurrentStoreDetail._id,
+                                                          userDetail: CurrentUserDetail._id,
+                                                          message: msg,
+                                                          type:'new',
+                                                         cafe_name:CurrentStoreDetail.cafe_name,
+                                                           orderId:orderd._id
 
                                                        });
+                                                       notifi.save((err, savedNoti) => {
+
+                                                          if (err) {
+                                                             res.status(200).json({
+                                                                message: 'Order saved Your otp is',
+                                                                otp: otpOfOrder,
+                                                                error: "false",
+
+                                                             });
+
+                                                          }
+
+                                                          helper.sendNotification(CurrentUserDetail.deviceToken, "rewardCompleted", msg, (cb) => {
+                                                             usersRewarddata.rewardCompleted = 0;
+                                                             usersRewarddata.claimedReward = false;
+                                                             usersRewarddata.save((err, savedNoti) => {
+                                                                 console.log("error of reward");
+                                                                 console.log(err);
+                                                                if (err) {
+                                                                   res.status(200).json({
+                                                                      message: 'Order saved Your otp is',
+                                                                      otp: otpOfOrder,
+                                                                      error: "false",
+
+                                                                   });
+
+                                                                }
+
+                                                                res.status(200).json({
+                                                                   message: 'Order saved Your otp is',
+                                                                   otp: otpOfOrder,
+                                                                   error: "false",
+
+                                                                });
+                                                             })
+
+                                                          }, orderd._id)
+
+                                                       })
                                                     });
                                                                    
 
