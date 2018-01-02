@@ -383,7 +383,7 @@ exports.payCreateUserCards = (req, res) => {
                      cardDetailsData.card_name = source.name;
                      cardDetailsData.isPrimary = true;
                      cardDetailsData.isEuropean=helper.europeanCountry(source.country);
-
+            
                        user.cardDetails=user.cardDetails.push(cardDetailsData);
                        console.log(cardDetailsData);
                  console.log('cardDetailsData');
@@ -453,7 +453,8 @@ exports.payCreateUserCards = (req, res) => {
                console.log(cardDetailsData);
                  console.log('cardDetailsData');
                    console.log(user);
-                 user.cardDetails=user.cardDetails.push(cardDetailsData);
+               user.cardDetails.push(cardDetailsData);
+                  user.markModified('cardDetails');
                user.save(function(err, userData) {
 
 
