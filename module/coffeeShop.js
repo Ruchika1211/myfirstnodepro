@@ -880,7 +880,7 @@ var checkIfPresent = function(value, list) {
                                     console.log(startdateData.getTime());
                                     console.log(dateData.getTime());
                                     console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
-                          if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
+                          if (((enddateData >= dateData) && (startdateData <= dateData)))
                            {
 
                             return true;
@@ -925,7 +925,7 @@ var checkIfnotExpire = function(value) {
                             console.log(startdateData.getTime());
                             console.log(dateData.getTime());
                         console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
-                        if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
+                        if (((enddateData >= dateData) && (startdateData <= dateData)))
                            {
 
                             return true;
