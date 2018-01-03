@@ -7,7 +7,8 @@ var notification = require('../models/notification');
 var helper = require('../services/helper.js');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport({
-  debug: true,
+ 
+    secure: true,
     service: "gmail",
     host: "smtp.gmail.com",
     auth: {
@@ -20,7 +21,8 @@ var moment = require('moment-timezone');
 var serverKey = process.env.serverKey;
 var fcm = new FCM(serverKey);
 
-console.log(serverKey);
+console.log(process.env.mail_username);
+console.log(process.env.mail_password);
 console.log('serverKey');
 
   // var amountTotransferShopowner=function(totalPrice){

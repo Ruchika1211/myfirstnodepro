@@ -1,0 +1,7 @@
+{ Error: Connection timeout
+0|pickup-a |     at SMTPConnection._formatError (/var/www/html/pickcupApi/node_modules/nodemailer/lib/smtp-connection/index.js:591:19)
+0|pickup-a |     at SMTPConnection._onError (/var/www/html/pickcupApi/node_modules/nodemailer/lib/smtp-connection/index.js:564:20)
+0|pickup-a |     at Timeout._connectionTimeout.setTimeout (/var/www/html/pickcupApi/node_modules/nodemailer/lib/smtp-connection/index.js:256:18)
+0|pickup-a |     at ontimeout (timers.js:466:11)
+0|pickup-a |     at tryOnTimeout (timers.js:304:5)
+0|pickup-a |     at Timer.listOnTimeout (timers.js:264:5) code: 'ETIMEDOUT', command: 'CONN' }
