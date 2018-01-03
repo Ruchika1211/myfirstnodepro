@@ -6,11 +6,13 @@ var Stores = require('../models/cafeListing');
 var notification = require('../models/notification');
 var helper = require('../services/helper.js');
 var nodemailer = require('nodemailer');
+
 var smtpTransport = nodemailer.createTransport({
- 
-    secure: true,
+    secureConnection: false,
     service: "gmail",
     host: "smtp.gmail.com",
+    port: 587,
+    requiresAuth: true,
     auth: {
         user: process.env.mail_username,
         pass: process.env.mail_password
