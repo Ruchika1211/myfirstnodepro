@@ -879,8 +879,8 @@ var checkIfPresent = function(value, list) {
                                     console.log(enddateData.getTime());
                                     console.log(startdateData.getTime());
                                     console.log(dateData.getTime());
-                                    console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
-                          if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
+                                    console.log((enddateData.getTime() > dateData.getTime()) && (startdateData.getTime() < dateData.getTime()));
+                          if (((enddateData.getTime() > dateData.getTime()) && (startdateData.getTime() < dateData.getTime())))
                            {
 
                             return true;

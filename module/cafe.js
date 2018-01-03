@@ -171,7 +171,7 @@ var checkIfPresent = function(value, list) {
                                 //console.log(startdateData.getTime());
                                 //console.log(dateData.getTime());
                                 //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
-                      if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
+                      if (((enddateData.getTime() > dateData.getTime()) && (startdateData.getTime() < dateData.getTime())))
                        {
                          data.index=i;
                               data.present=true;
