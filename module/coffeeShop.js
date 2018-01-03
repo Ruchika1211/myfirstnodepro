@@ -875,7 +875,7 @@ var checkIfPresent = function(value, list) {
                                     //console.log(dateData);
                                     //console.log('dateData');
                                     dateData.setHours(0, 0, 0, 0);
-
+                                  console.log(enddateData+ 'jhrgu');
                                     console.log(enddateData.getTime());
                                     console.log(startdateData.getTime());
                                     console.log(dateData.getTime());
@@ -921,6 +921,7 @@ var checkIfnotExpire = function(value) {
                             dateData.setHours(0, 0, 0, 0);
 
                             console.log(enddateData.getTime());
+                             console.log(startdateData+'hfuhghrfgh');
                             console.log(startdateData.getTime());
                             console.log(dateData.getTime());
                         console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
