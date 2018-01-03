@@ -876,10 +876,10 @@ var checkIfPresent = function(value, list) {
                                     //console.log('dateData');
                                     dateData.setHours(0, 0, 0, 0);
 
-                                    //console.log(enddateData.getTime());
-                                    //console.log(startdateData.getTime());
-                                    //console.log(dateData.getTime());
-                                    //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
+                                    console.log(enddateData.getTime());
+                                    console.log(startdateData.getTime());
+                                    console.log(dateData.getTime());
+                                    console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
                           if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
                            {
 
@@ -920,10 +920,10 @@ var checkIfnotExpire = function(value) {
                                  //console.log('dateData');
                             dateData.setHours(0, 0, 0, 0);
 
-                            //console.log(enddateData.getTime());
-                            //console.log(startdateData.getTime());
-                            //console.log(dateData.getTime());
-                        //console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
+                            console.log(enddateData.getTime());
+                            console.log(startdateData.getTime());
+                            console.log(dateData.getTime());
+                        console.log((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime()));
                         if (((enddateData.getTime() >= dateData.getTime()) && (startdateData.getTime() <= dateData.getTime())))
                            {
 
