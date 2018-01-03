@@ -95,8 +95,8 @@ module.exports = {
 
          adminChargesforUser:function(){
            var data={};
-            data.below_5_pound=0.4;
-             data.below_10_pound=0.5;
+            data.below_5_pound=0.25;
+             data.below_10_pound=0.25;
               return data
          },
          
