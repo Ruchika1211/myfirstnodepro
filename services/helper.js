@@ -7,6 +7,7 @@ var notification = require('../models/notification');
 var helper = require('../services/helper.js');
 var nodemailer = require('nodemailer');
 var smtpTransport = nodemailer.createTransport({
+  debug: true,
     service: "gmail",
     host: "smtp.gmail.com",
     auth: {
