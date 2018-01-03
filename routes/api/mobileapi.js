@@ -119,7 +119,35 @@ transferOnTwentySix.start();
 
 router.get('/test', function (req, res) {
 
-  Stripe.checkIfavailablebalance(req,res);
+      var mailOptions = {
+                to: email,
+                from:helper.adminMailFrom(),
+                subject: 'Pickcup-New Shop',
+                text: 'Your account is created successfully by admin and your username and password is as follows.\n\n' +
+                    'username: ' +email+ '\n\n'+
+                    'password: ' +password+ '\n\n'+
+                    'Please download the Pickcup app which is available in android as well as ios to edit your details further \n\n'+
+                    'If you did not request this, please contact on 888888888.\n'
+            };
+
+            helper.sendemail(mailOptions,(data)=>{
+                 if (data =="error") {
+                    return res.status(200).json({
+                        title: 'User saved but mail sending failed',
+                        error: "false",
+                       
+                    });
+                }
+
+                res.status(200).json({
+                title: 'Saved owner',
+                error: "false",
+                data:ownerdata
+                
+                 });
+            })
+
+  // Stripe.checkIfavailablebalance(req,res);
 //  fs.stat('uploads/stores/59afb7f2f2c2c60f5f30ba9b.png', function(err, stat) {
 //     if(err == null) {
 //         console.log('File exists');
