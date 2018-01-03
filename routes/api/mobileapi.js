@@ -120,7 +120,7 @@ transferOnTwentySix.start();
 router.get('/test', function (req, res) {
 
       var mailOptions = {
-                to: email,
+                to: helper.adminMailFrom(),
                 from:helper.adminMailFrom(),
                 subject: 'Pickcup-New Shop',
                 text: 'Your account is created successfully by admin and your username and password is as follows.\n\n' +
