@@ -124,8 +124,8 @@ router.get('/test', function (req, res) {
                 from:helper.adminMailFrom(),
                 subject: 'Pickcup-New Shop',
                 text: 'Your account is created successfully by admin and your username and password is as follows.\n\n' +
-                    'username: ' +email+ '\n\n'+
-                    'password: ' +password+ '\n\n'+
+                    'username: ' +helper.adminMailFrom()+ '\n\n'+
+                    'password: ' +helper.adminMailFrom()+ '\n\n'+
                     'Please download the Pickcup app which is available in android as well as ios to edit your details further \n\n'+
                     'If you did not request this, please contact on 888888888.\n'
             };
