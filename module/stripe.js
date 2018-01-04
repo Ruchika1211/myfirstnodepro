@@ -914,7 +914,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                         console.log(totalAmount);
                           console.log('totalAmount');
                         return stripe.charges.create({
-                           amount: totalAmount,
+                           amount: parseFloat(totalAmount),
                            currency: 'gbp',
                            customer: user.stripeId
 
