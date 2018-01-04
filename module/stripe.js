@@ -910,7 +910,8 @@ exports.payCharges = (token, amountpaid, callback) => {
                      if (cardData.isPrimary) {
                         notAPrimaryCard=true;
                                 //console.log('defaultSource  if if');
-                        var totalAmount = parseFloat(amountpaid) * 100;
+
+                        var totalAmount =parseFloat(amountpaid* 100).toFixed(2);
                          console.log(amountpaid);
                         console.log(totalAmount);
                           console.log('totalAmount');
@@ -966,7 +967,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                 var filePay = `
                        ${'///////////////////////'}
                        userPayingcharge:${user.email}
-                       totalAmount:::::${totalAmount}
+                       totalAmount:::::${amountpaid}
                        err:${err}
                         ${'///////////////////////'}`;
                     fs.appendFileSync(user.stripeId + '.txt', filePay);
