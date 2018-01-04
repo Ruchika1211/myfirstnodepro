@@ -1914,8 +1914,17 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
    console.log(totalPrice);
    console.log('totalPrice');
    var costPrice = costP;
-   var adminPrice =helper.amountTotransfertoAdmin(totalPrice);
+    var AdminCharges=helper.adminChargesforUser();
+   if(costPrice < 5)
+   {
+     var adminPrice=AdminCharges.below_5_pound;
+   }
+   else
+   {
+      var adminPrice=AdminCharges.below_10_pound;
+   }
    console.log(costPrice);
+   console.log(adminPrice);
    console.log('costPrice');
    var payadmincharge = false;
    Stores
