@@ -911,6 +911,7 @@ exports.payCharges = (token, amountpaid, callback) => {
                         notAPrimaryCard=true;
                                 //console.log('defaultSource  if if');
                         var totalAmount = parseFloat(amountpaid) * 100;
+                         console.log(amountpaid);
                         console.log(totalAmount);
                           console.log('totalAmount');
                         return stripe.charges.create({
