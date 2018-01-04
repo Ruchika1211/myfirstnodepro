@@ -53,9 +53,10 @@ console.log('serverKey');
          };
 
         var  stripeCharges=function(){
-          var totalCharges={};
-          totalCharges.percentCharge=2.9
-          totalCharges.additional=0.2
+            var totalCharges={};
+          totalCharges.percentCharge=2.9;
+            totalCharges.percentChargeIfEuropean=1.4;
+          totalCharges.additional=0.2;
           return totalCharges
          };
 

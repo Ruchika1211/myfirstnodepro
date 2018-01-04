@@ -1910,13 +1910,13 @@ exports.deleteBankaccount = (req, res) => {
 }
 
 exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, balancetransId,costP) => {
-  // //console.log("ypdate>>>>>>>>>>>>>>>>")
-  //  //console.log(totalPrice);
-  //  //console.log('totalPrice');
+  console.log("ypdate>>>>>>>>>>>>>>>>")
+   console.log(totalPrice);
+   console.log('totalPrice');
    var costPrice = costP;
    var adminPrice =helper.amountTotransfertoAdmin(totalPrice);
-   // //console.log(costPrice);
-   // //console.log('costPrice');
+   console.log(costPrice);
+   console.log('costPrice');
    var payadmincharge = false;
    Stores
       .findOne({
