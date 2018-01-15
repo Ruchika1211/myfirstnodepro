@@ -827,15 +827,15 @@ exports.createOrder = (req, res) => {
     var orderType = req.body.orderType;
     helper.findShopowner(shopDetail, function(cb) {
        CurrentStoreDetail = cb;
-         console.log(CurrentStoreDetail);
-       console.log('CurrentStoreDetail');
+       //   console.log(CurrentStoreDetail);
+       // console.log('CurrentStoreDetail');
 
     });
 
     helper.findUser(decoded.user._id, function(cb) {
        CurrentUserDetail = cb;
-       console.log(CurrentUserDetail);
-       console.log('CurrentUserDetail');
+       // console.log(CurrentUserDetail);
+       // console.log('CurrentUserDetail');
     });
 
     if (orderType == 0) 
@@ -1247,8 +1247,8 @@ exports.createOrder = (req, res) => {
 
           if (err) {
         
-             //console.log("orser saveissue");
-             //console.log(err);
+             console.log("orser saveissue");
+             console.log(err);
              return res.status(500).json({
                 title: 'An error occurred',
                 error: "true",
