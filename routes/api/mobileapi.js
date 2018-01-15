@@ -1113,6 +1113,9 @@ router.use(function (req, res, next) {
     }, (err, user) => {
 
         if (err) {
+          console.log("err user");
+           console.log(err);
+
             return res.status(500).json({
                 title: 'An error occurred',
                 error: "true",
