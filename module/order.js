@@ -818,12 +818,12 @@ exports.claimedReward = (req, res) => {
 
 exports.createOrder = (req, res) => {
 
-    //console.log('new Date(timePickup) createOrder');
+    console.log('new Date(timePickup) createOrder');
     var token = req.body.userToken;
     var decoded = jwt.decode(token, "pickup");
     var CurrentUserDetail;
     var CurrentStoreDetail;
-       var shopDetail = req.body.shopDetail;
+   var shopDetail = req.body.shopDetail;
     var orderType = req.body.orderType;
     helper.findShopowner(shopDetail, function(cb) {
        CurrentStoreDetail = cb;
@@ -1202,7 +1202,7 @@ exports.createOrder = (req, res) => {
        }
 
        if (CorrectOrder.length <= 0) {
-          //console.log("length issue");
+          console.log("length issue");
           return res.status(500).json({
              title: 'Incorrect data',
              error: "true"
@@ -1224,8 +1224,8 @@ exports.createOrder = (req, res) => {
        var dec = moment.tz(req.body.timeForPickcup, req.body.timezone);
        //console.log(dec);
        var timePickup = dec.utc().format('YYYY-MM-DD HH:mm:ss');
-       //console.log(timePickup);
-       //console.log('timePickup');
+       console.log(timePickup);
+       console.log('timePickup');
 
        var totalPrice = req.body.totalPrice;
        var ordered = new Orders({
