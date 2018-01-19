@@ -535,18 +535,21 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                      var totalUserRewards = usersRewarddata.rewardCompleted;
 
                      if (totalUserRewards < parseInt(reward_data.quantity)) {
+                        console.log("hlo");
                         usersRewarddata.rewardCompleted = usersRewarddata.rewardCompleted + totalReward;
                         if (usersRewarddata.rewardCompleted == parseInt(reward_data.quantity)) {
                            usersRewarddata.claimedReward = true;
                         }
                      } else if (totalUserRewards == parseInt(reward_data.quantity)) {
+                         console.log("hlo1>>>>>>>>>>>>>");
                         if (totalUserRewards.claimedReward) {
                            //console.log("do nothing")
                         } else {
                            usersRewarddata.claimedReward = true;
                         }
                      } else {
-                        usersRewarddata.rewardCompleted = reward_data.quantity;
+                         console.log("hlo1>>>>>>>>>>>>>22222222222222");
+                        usersRewarddata.rewardCompleted = parseInt(reward_data.quantity);
                      }
 
                      usersRewarddata.save((err, dataSave) => {
