@@ -432,6 +432,7 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
          } else {
             var reward_data;
             var tempuserdataFinding = false;
+             var totalReward = 0;
 
             for (k in reward) {
 
@@ -459,17 +460,19 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                //console.log((enddateData >= dateData) && (startdateData <= dateData));
                //console.log('(enddateData >= dateData) && (startdateData <= dateData)');
                if ((enddateData >= dateData) && (startdateData <= dateData)) {
-                  var totalReward = 0;
+                 
                   for (j in CorrectOrder) {
                      var isEligible = CorrectOrder[j].eligibleForRewards.trim();
                      //console.log(isEligible);
                      if (isEligible == "true") {
                         //console.log("im here")
-                        totalReward = 1;
+                        totalReward = totalReward+1;
                         tempuserdataFinding = true;
 
                      }
                   }
+
+                  console.log("completed reward >>>>>>>>>>"+totalReward)
                   reward_data = temp_Data;
                   
                
@@ -511,7 +514,7 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                         shopDetail: shopDetail,
                         userDetail: token,
                         rewardId: reward_data._id,
-                        rewardCompleted: 1,
+                        rewardCompleted:totalReward,
                         claimedReward:checkclaimedReward,
                      });
                      usersRe.save((err, usewrre) => {
