@@ -536,7 +536,15 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
 
                      if (totalUserRewards < parseInt(reward_data.quantity)) {
                         console.log("hlo");
-                        usersRewarddata.rewardCompleted = usersRewarddata.rewardCompleted + totalReward;
+                        if(totalReward > parseInt(reward_data.quantity))
+                        {
+                           usersRewarddata.rewardCompleted = parseInt(reward_data.quantity);
+                        }
+                        else
+                        {
+                           usersRewarddata.rewardCompleted = usersRewarddata.rewardCompleted + totalReward;
+                        }
+                        
                         if (usersRewarddata.rewardCompleted == parseInt(reward_data.quantity)) {
                            usersRewarddata.claimedReward = true;
                         }
