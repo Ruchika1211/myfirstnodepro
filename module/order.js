@@ -1004,7 +1004,7 @@ exports.createOrder = (req, res) => {
 
                                      if (CurrentStoreDetail == 'err' || CurrentStoreDetail == 'no store Found') {
 
-                                        //console.log("as no store found cannot send the notification to the user");
+                                        //console.log("as no store datafound cannot send the notification to the user");
                                         //console.log("as no store found cannot send the notification to the user");
                                         res.status(200).json({
                                            message: 'Order saved Your otp is',
@@ -2604,6 +2604,15 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
         // //console.log('CurrentUserDetail?????????????');
    helper.countOfnotification(CurrentStoreDetail.lastseen,CurrentStoreDetail._id,(data)=>{
              console.log(data);
+                 console.log(CurrentUserDetail);
+                 var userdataDetail={};
+                 userdataDetail.email=CurrentUserDetail.email;
+                 userdataDetail._id=CurrentUserDetail._id;
+                   userdataDetail.firstname=CurrentUserDetail.firstname;
+                     userdataDetail.lastname=CurrentUserDetail.lastname;
+                       userdataDetail.contact=CurrentUserDetail.contact;
+                         userdataDetail.imageUrl=CurrentUserDetail.imageUrl;
+
                console.log('data????????????????????????????');
              var message = {
                   registration_ids: CurrentStoreDetail.deviceToken,
@@ -2614,7 +2623,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                      flag: "newOrder",
                      order: orderd,
                      count:data+1,
-                     currentUserDetail: CurrentUserDetail,
+                     currentUserDetail: userdataDetail,
                        title: 'Pickcup',
                      body: "You have received a new order",
                      sound : "default"
