@@ -463,10 +463,13 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                  
                   for (j in CorrectOrder) {
                      var isEligible = CorrectOrder[j].eligibleForRewards.trim();
+                     var qua=CorrectOrder[j].itemQuantity.trim();
                      //console.log(isEligible);
                      if (isEligible == "true") {
                         //console.log("im here")
-                        totalReward = totalReward+1;
+                        var quantity=parseInt(qua)
+                        totalReward = totalReward+quantity;
+
                         tempuserdataFinding = true;
 
                      }
