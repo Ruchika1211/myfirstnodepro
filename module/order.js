@@ -505,9 +505,13 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                   // if (!usersRewarddata && ((enddateData >= dateData) && (startdateData <= dateData)))
                   if (!usersRewarddata) {
                 
-                        if(parseInt(reward_data.quantity) == totalReward)
+                        if(parseInt(reward_data.quantity) <= totalReward)
                         {
                            checkclaimedReward=true;
+                           if(totalReward > parseInt(reward_data.quantity))
+                           {
+                              totalReward=parseInt(reward_data.quantity);
+                           }
                         }
                         else
                         {
