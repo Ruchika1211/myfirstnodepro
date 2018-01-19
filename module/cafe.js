@@ -655,12 +655,12 @@ exports.coffeeShopLogout = (req, res) => {
       }
 
       var arrayofToken = coffeeShop.deviceToken;
-      //console.log(arrayofToken);
-      //console.log('arrayofToken');
-      //console.log(req.body)
+      console.log(arrayofToken);
+      console.log('arrayofToken');
+      console.log(req.body)
       var index = arrayofToken.indexOf(req.body.deviceToken);
       if (index > -1) {
-        //console.log('found');
+        console.log('found');
          coffeeShop.deviceToken.splice(index, 1);
       }
       coffeeShop.isLoggedIn = false;
