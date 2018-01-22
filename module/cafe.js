@@ -323,11 +323,15 @@ exports.cafelisting = (req, res) => {
                      //console.log(Long);
                       //console.log(req.body.lat);
                        //console.log(req.body.lng);
+                       //hiding this temporary for no location
                      var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
                      //console.log(TotalDistance);
-                     if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
+                      if (cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
                         nearbyCafe.push(cafes[i]);
                      }
+                     // if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
+                     //    nearbyCafe.push(cafes[i]);
+                     // }
 
                   }
 
