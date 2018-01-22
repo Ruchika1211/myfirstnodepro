@@ -987,7 +987,11 @@ exports.getRewards = (req, res) => {
          var TotalDistance = distance(Lat, Long, req.body.lat,req.body.lng);
                  // var TotalDistance = distance(Lat, Long,"134.05839","73.00754");
                  ////console.log(TotalDistance);
-                 if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0 &&  rewards[i].shopDetail.isblocked == 0) {
+                 // if (TotalDistance && rewards[i].shopDetail.bankDetails.length > 0 &&  rewards[i].shopDetail.isblocked == 0) {
+                 //    nearbyCafe.push(rewards[i]);
+                 // }
+
+                    if (rewards[i].shopDetail.bankDetails.length > 0 &&  rewards[i].shopDetail.isblocked == 0) {
                     nearbyCafe.push(rewards[i]);
                  }
          }
