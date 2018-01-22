@@ -542,7 +542,16 @@ var makeuserReward = function(shopDetail, CorrectOrder, token) {
                         }
                         else
                         {
-                           usersRewarddata.rewardCompleted = usersRewarddata.rewardCompleted + totalReward;
+                           var tempRewardData=usersRewarddata.rewardCompleted + totalReward;
+                            if(tempRewardData > parseInt(reward_data.quantity))
+                           {
+                             usersRewarddata.rewardCompleted =  parseInt(reward_data.quantity);
+                           }
+                           else
+                           {
+                              usersRewarddata.rewardCompleted = usersRewarddata.rewardCompleted + totalReward;
+                           }
+                           
                         }
                         
                         if (usersRewarddata.rewardCompleted == parseInt(reward_data.quantity)) {
