@@ -736,6 +736,7 @@ exports.claimedReward = (req, res) => {
                                  priority: "high",
                                  forceshow: true, // required fill with device token or topics
                                  collapse_key: 'Pickcup',
+                                  content_available: true,
                                  data: {
                                     flag: "rewardOrder",
                                     order: orderd,
@@ -1036,6 +1037,7 @@ exports.createOrder = (req, res) => {
                                                              priority: "high",
                                                              forceshow: true, // required fill with device token or topics
                                                              collapse_key: 'Pickcup',
+                                                              content_available: true,
                                                              data: {
                                                                 flag: "rewardOrder",
                                                                 order: orderd,
