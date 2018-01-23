@@ -2628,6 +2628,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                   priority: "high",
                   forceshow: true, // required fill with device token or topics
                   collapse_key: 'Pickcup',
+                  content_available: true,
                   data: {
                      flag: "newOrder",
                      order: orderd,
