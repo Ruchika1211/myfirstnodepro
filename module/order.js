@@ -2637,10 +2637,12 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                      body: "You have received a new order",
                      sound : "default"
                   }
-                  // notification: {
-                   
+                  notification: {
+                    title: 'Pickcup',
+                     body: "You have received a new order",
+                     sound : "default"
 
-                  // }
+                  }
                };
                  fcm.send(message)
             .then(function(response) {
