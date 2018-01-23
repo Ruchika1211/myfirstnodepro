@@ -2636,7 +2636,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                        title: 'Pickcup',
                      body: "You have received a new order",
                      sound : "default"
-                  }
+                  },
                   notification: {
                     title: 'Pickcup',
                      body: "You have received a new order",
