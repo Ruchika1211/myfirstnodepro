@@ -1046,7 +1046,7 @@ exports.createOrder = (req, res) => {
                                                                   title: 'Pickcup',
                                                                 body: "You have received a new order for claiming a reward",
                                                                 sound : "default"
-                                                             }
+                                                             },
                                                              notification: {
                                                                        title: 'Pickcup',
                                                                 body: "You have received a new order for claiming a reward",
