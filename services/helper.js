@@ -6,7 +6,7 @@ var Stores = require('../models/cafeListing');
 var notification = require('../models/notification');
 var helper = require('../services/helper.js');
 var nodemailer = require('nodemailer');
-
+var usersReward = require('../models/userReward');
 var smtpTransport = nodemailer.createTransport({
     secureConnection: false,
     service: "gmail",
@@ -59,6 +59,99 @@ console.log('serverKey');
           totalCharges.additional=0.2;
           return totalCharges
          };
+
+  var calculateUserCountbadge = function(id, cb) {
+          var unreadNotification = 0;
+          var claimedReward = 0;
+          User
+              .findOne({
+                  "_id": id
+              })
+              .exec(function(err, userFound) {
+
+
+                      var lastseenofuser = userFound.lastseen;
+                      notification.count({
+                                  "createdAt": {
+                                      $gte: lastseenofuser
+                                  },
+                                  "userDetail": id
+                              }, function(err, count) {
+                                  if (!count || err) {
+                                      unreadNotification = 0;
+                                  } else {
+                                      unreadNotification = count;
+                                  }
+
+                                  usersReward
+                                      .find({
+                                          "userDetail": id,
+                                          "claimedReward": true
+                                      })
+                                      .populate('rewardId')
+                                      .exec(function(err, rerwarddata) {
+                                          //console.log(rerwarddata);
+                                          //console.log('countreward');
+                                          var dataReward = rerwarddata;
+                                          //console.log(dataReward.length);
+                                          //console.log('dataReward.length');
+                                          if (err) {
+                                              claimedReward = 0;
+                                              cb(claimedReward, unreadNotification);
+                                          } else if (dataReward.length > 0) {
+                                              //console.log(dataReward.length);
+                                              //console.log('else if');
+                                              var countreward = 0;
+                                              for (i in dataReward) {
+                                                  if (dataReward[i].rewardId) {
+                                                      var dateDat = new Date();
+                                                      var timezone = moment.tz.guess();
+                                                      // //console.log(moment.tz.guess());
+                                                      var dec = moment.tz(dateDat, timezone);
+                                                      //console.log(dec);
+                                                      //console.log('dec');
+                                                      var dateDatat = dec.utc().format('YYYY-MM-DD HH:mm:ss');
+
+                                                      var compareWithDate = new Date(dateDatat);
+                                                      //console.log(compareWithDate);
+                                                      //console.log('compareWithDate');
+                                                      compareWithDate.setHours(0, 0, 0, 0);
+                                                      // var end = new Date();
+
+                                                      // var compareWithDate = new Date(end);
+                                                      // compareWithDate.setHours(0, 0, 0, 0);
+
+                                                      var comparetoDate = new Date(rerwarddata[i].rewardId.enddate);
+                                                      comparetoDate.setHours(0, 0, 0, 0);
+                                                      //console.log(comparetoDate);
+                                                      //console.log(compareWithDate);
+                                                      if (compareWithDate <= comparetoDate) {
+                                                          countreward = countreward + 1;
+                                                      }
+                                                  }
+
+
+                                              }
+
+
+                                              claimedReward = countreward;
+                                              cb(claimedReward, unreadNotification);
+
+                                          } else {
+                                              //console.log('else ');
+                                              claimedReward = 0;
+                                              cb(claimedReward, unreadNotification);
+                                          }
+
+                                      });
+
+
+
+
+                              })
+
+        })
+}
 
         // var   adminMailFrom=function(){
         //   return 'ruchika.s@infiny.in'
@@ -345,43 +438,92 @@ module.exports = {
 
       // },
 
-		sendNotification:function(deviceId,flag,msg,callback,extras){
-       console.log(deviceId);
-              console.log('deviceId');
-			var message = {
-                          registration_ids:deviceId,
-                          priority : "high",
-                          forceshow : true, // required fill with device token or topics
-                          collapse_key: 'Pickcup', 
-                            content_available: true,
 
-                          data: {
-                               flag:flag,
-                               data:extras
-                         
-                          },
-                          notification: {
-                              title: 'Pickcup',
-                              body: msg,
-                              sound : "default"
-          
-                          }
-                      };
+		sendNotification:function(deviceId,flag,msg,callback,extras,id){
+         console.log("sendNotificatio"+id);
+           if(id)
+           {console.log("sendNotificati>>>>>>>>>>>>>o"+id);
+                 calculateUserCountbadge(id,(a,b)=>{
+                   badgeData=a+b;
+                   console.log("baghe count>>>>>>>>>>>>>>>>>>>"+badgeData);
+                   var message = {
+                                    registration_ids:deviceId,
+                                    priority : "high",
+                                    forceshow : true, // required fill with device token or topics
+                                    collapse_key: 'Pickcup', 
+                                      content_available: true,
+
+                                    data: {
+                                         flag:flag,
+                                         data:extras
+                                   
+                                    },
+                                    notification: {
+                                        title: 'Pickcup',
+                                        body: msg,
+                                        sound : "default",
+                                        badge:badgeData
+                    
+                                    }
+                                };
 
 
 
-                  //promise style
-                      fcm.send(message)
-                      .then(function(response){
-                        
-                          console.log("Successfully sent with response1 for user: ", response);
-                           callback("success");
-                      })
-                      .catch(function(err){
-                          console.log("Something has gone wrong1! for user");
-                          console.error(err);
-                          callback("err");
-                      });
+                            //promise style
+                                fcm.send(message)
+                                .then(function(response){
+                                  
+                                    console.log("Successfully sent with response1 for user: ", response);
+                                     callback("success");
+                                })
+                                .catch(function(err){
+                                    console.log("Something has gone wrong1! for user");
+                                    console.error(err);
+                                    callback("err");
+                                });
+                });
+              
+           }
+           else
+           {console.log("sendN>>>>>>>>>>>>>>>>otificati>>>>>>>>>>>>>o"+id);
+                           var message = {
+                                    registration_ids:deviceId,
+                                    priority : "high",
+                                    forceshow : true, // required fill with device token or topics
+                                    collapse_key: 'Pickcup', 
+                                      content_available: true,
+
+                                    data: {
+                                         flag:flag,
+                                         data:extras
+                                   
+                                    },
+                                    notification: {
+                                        title: 'Pickcup',
+                                        body: msg,
+                                        sound : "default"
+                                        
+                                    }
+                                };
+
+
+
+                            //promise style
+                                fcm.send(message)
+                                .then(function(response){
+                                  
+                                    console.log("Successfully sent with response1 for user: ", response);
+                                     callback("success");
+                                })
+                                .catch(function(err){
+                                    console.log("Something has gone wrong1! for user");
+                                    console.error(err);
+                                    callback("err");
+                                });
+           }
+   
+
+			
 
 		},
 

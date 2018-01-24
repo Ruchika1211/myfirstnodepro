@@ -1632,7 +1632,7 @@ exports.coffeeShopMoveOrderToReadyState = (req, res) => {
                                     error: "false"
                                 });
 
-                            },order._id);
+                            },order._id,CurrentUserDetail._id);
 
 
                         })
@@ -1761,7 +1761,7 @@ exports.coffeeShopVerifyOtp = (req, res) => {
                                         error: "false"
                                     });
 
-                                },order._id);
+                                },order._id,CurrentUserDetail._id);
                             // })
 
 

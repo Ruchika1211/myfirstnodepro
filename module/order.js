@@ -1108,7 +1108,7 @@ exports.createOrder = (req, res) => {
                                                                 });
                                                              })
 
-                                                          }, orderd._id)
+                                                          }, orderd._id,CurrentUserDetail._id)
 
                                                        })
 
@@ -1167,7 +1167,7 @@ exports.createOrder = (req, res) => {
                                                                 });
                                                              })
 
-                                                          }, orderd._id)
+                                                          }, orderd._id,CurrentUserDetail._id)
 
                                                        })
                                                     });
@@ -2692,7 +2692,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                   
                     
 
-                  },orderd._id)
+                  },orderd._id,CurrentUserDetail._id)
 
                })
 
@@ -2741,7 +2741,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                   
                     
 
-                  },orderd._id)
+                  },orderd._id,CurrentUserDetail._id)
 
                })
             });
