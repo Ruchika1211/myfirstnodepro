@@ -1047,10 +1047,12 @@ exports.createOrder = (req, res) => {
                                                                 body: "You have received a new order for claiming a reward",
                                                                 sound : "default"
                                                              }
-                                                             // notification: {
-                                                              
-
-                                                             // }
+                                                             notification: {
+                                                                       title: 'Pickcup',
+                                                                body: "You have received a new order for claiming a reward",
+                                                                sound : "default",
+                                                                     badge:data+1
+                                                             }
                                                           };
 
                                                            fcm.send(message)
@@ -2645,7 +2647,7 @@ var removeTempOrder = (token, shopDetail, otpOfOrder, CurrentStoreDetail, Curren
                     title: 'Pickcup',
                      body: "You have received a new order",
                      sound : "default",
-                     badge:"45"
+                     badge:data+1
                           
 
                   }

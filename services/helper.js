@@ -353,7 +353,8 @@ module.exports = {
                           priority : "high",
                           forceshow : true, // required fill with device token or topics
                           collapse_key: 'Pickcup', 
-                            content_available: true,
+                            content_available: true,3
+
                           data: {
                                flag:flag,
                                data:extras
@@ -363,7 +364,7 @@ module.exports = {
                               title: 'Pickcup',
                               body: msg,
                               sound : "default"
-                              
+          
                           }
                       };
 
