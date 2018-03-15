@@ -7,39 +7,46 @@ var schema = new Schema({
       type: String,
      required: true
        },
-     storeId: {
-       type: String,
-      required: true,
-       unique: true
-        },
-      storePass: {
-        type: String,
-       required: true
-         },
-      status:{
-        type: String,
-         enum: ['ready', 'closed', 'busy']
-       },
-      imageurl: {
+    storeId: {
       type: String,
-      required: false,
-      default:"noImage"
-     },
-      isLoggedIn: {
-      type: Boolean,
-      required: true,
-      default:true
+    required: true,
+      unique: true
       },
-      deviceToken:{
-        type: Array,
-        "default": [],
-         required: false,
-     },
-     totalamounttotransfer:{
-      type: Number,
-       default:0
+    shoptime: [
+      {
+        start_time: String,
+        end_time: String,
+        _id: false
+      }
+    ],
+    storePass: {
+      type: String,
+      required: true
+        },
+    status:{
+      type: String,
+        enum: ['ready', 'closed', 'busy']
       },
-     incomesourceDetail:[],
+    imageurl: {
+    type: String,
+    required: false,
+    default:"noImage"
+    },
+    isLoggedIn: {
+    type: Boolean,
+    required: true,
+    default:true
+    },
+    deviceToken:{
+      type: Array,
+      "default": [],
+        required: false,
+    },
+    totalamounttotransfer:{
+    type: Number,
+      default:0
+    },
+    incomesourceDetail:[],
     position: {
                 latitude:{
                   type: String,
@@ -68,15 +75,15 @@ var schema = new Schema({
 
     }],
     accountStatus:String,
-   accountdocument:String,
-   accountdetails:String,
-   accountdetails_code:String,
-   accountdueby:String,
-   accountdisabledReason:String,
-  resetPasswordToken: String,
-  resetPasswordExpires: Date,
-  lastseen: Date,
-  isblocked:{
+    accountdocument:String,
+    accountdetails:String,
+    accountdetails_code:String,
+    accountdueby:String,
+    accountdisabledReason:String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    lastseen: Date,
+    isblocked:{
        type: Number,
        required: true,
          default:0

@@ -1199,6 +1199,12 @@ router.post('/cafelisting', function (req, res, next) {
 
      Cafe.cafelisting(req,res);
 });
+
+router.post('/cafeSearching', function (req, res, next) {
+
+    Cafe.cafeSearching(req,res);
+});
+
 router.post('/menulisting', function (req, res, next) {
 
      Cafe.menulisting(req,res);
@@ -1303,6 +1309,17 @@ router.post('/coffeeShopshowRewardListing', function (req, res, next) {
 
       CoffeeShop.coffeeShopshowRewardListing(req,res);
 });
+
+router.post('/coffeeShopAddShoptime', function (req, res, next) {
+
+    CoffeeShop.coffeeShopAddShoptime(req,res);
+});
+
+router.post('/coffeeShopAddRating', function (req, res, next) {
+    console.log('hiiiii');
+    CoffeeShop.coffeeShopAddRating(req,res);
+});
+
 
 router.post('/coffeeShopShowOrderListing', function (req, res, next) {
 

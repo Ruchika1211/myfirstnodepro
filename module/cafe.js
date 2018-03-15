@@ -1,3 +1,4 @@
+var async = require('async');
 var Stores = require('../models/cafeListing');
 var StoreDetail = require('../models/menuListing');
 var Admin = require('../models/admin');
@@ -521,7 +522,7 @@ exports.menulisting = (req, res) => {
 }
 
 exports.coffeeShopLogin = (req, res) => {
-   //console.log(req.body);
+   console.log(req.body, 'hiiii');
    Stores.findOne({
       'storeId': req.body.storeId
    },{'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0}, (err, coffeeShop) => {
@@ -540,7 +541,8 @@ exports.coffeeShopLogin = (req, res) => {
             error: "true"
          });
       }
-
+      console.log('*****' + coffeeShop.isDelete)
+      console.log('----' + parseInt(coffeeShop.isDelete))
        if (parseInt(coffeeShop.isDelete) == 1) {
          return res.status(200).json({
             title: 'You are blocked.Please contact admin',
@@ -580,7 +582,7 @@ exports.coffeeShopLogin = (req, res) => {
          }, 'secret', {
             expiresIn: 7200
          });
-         res.status(200).json({
+         return res.status(200).json({
             title: 'Login Succesful',
             message: "Shop found",
             error: "false",
@@ -608,7 +610,7 @@ exports.coffeeShopLogin = (req, res) => {
             }, 'secret', {
                expiresIn: 7200
             });
-            res.status(200).json({
+            return res.status(200).json({
                title: 'Login Succesful',
                message: "Shop found",
                error: "false",
@@ -1994,4 +1996,102 @@ exports.updateOwnerBalance = (ownerDetail, userdetail, totalPrice, transId, bala
 
       });
 
+}
+
+exports.cafeSearching = (req, res) => {
+
+  var token = req.body.userToken;
+  var nearbyCafe = [];
+  var decoded = jwt.decode(token, "pickup");
+  var unreadNotification = 0;
+  var claimedReward = 0;
+  var initialData = 10;
+  var requestData = parseInt(req.body.requestData);
+  var skip_D = parseInt(req.body.skipData);
+  var limitData = initialData * requestData;
+  var skipingData = 0;
+  if (requestData > 1) {
+     var skipingData = skip_D * initialData;
+  }
+
+  console.log(req.body);
+  console.log("req.body")
+  helper.findUser(decoded.user._id, (data) => {
+     if (data == "err" || data == "no user Found") {
+        return res.status(500).json({
+           title: 'no user found logout',
+           error: "true",
+
+        });
+
+     }
+                    
+          StoreDetail
+          .find({})
+          .limit(limitData)
+          .skip(skipingData)
+          .populate({
+            path: 'shopName',
+            match: { cafe_name:{ "$regex": req.body.search, "$options": "i" }},
+            //cafe_name: { "$regex": req.body.search, "$options": "i" },
+            select:'status imageurl cafe_name bankDetails position isblocked',
+            })
+          .exec(function(err, cafes) {
+
+            if (err) {
+                return res.status(500).json({
+                  title: 'An error occurred',
+                  error: "true",
+                  detail: err
+                });
+            }
+            if (cafes.length <= 0) {
+                return res.status(200).json({
+                  title: 'No cafe found',
+                  error: "true"
+                });
+            }
+
+            async.eachOfSeries(cafes, (cafe, key, next) => {
+              console.log(cafe);
+            
+                console.log(cafe.shopName == null)
+                
+               if( cafe.shopName !== null && cafe.shopName !== 'null') {
+                var Lat = cafe.shopName.position.latitude;
+                var Long = cafe.shopName.position.longitude;
+                // console.log(Lat);
+                // console.log(Long);
+                // console.log(req.body.lat);
+                // console.log(req.body.lng);
+                  //hiding this temporary for no location
+                var TotalDistance = distance(Lat, Long, req.body.lat, req.body.lng);
+                //console.log(TotalDistance);
+                if (cafe.shopName.bankDetails.length > 0 && cafe.shopName.isblocked == 0) {
+                  nearbyCafe.push(cafe);
+                  console.log('nearbyCafe', nearbyCafe)
+                }
+                // if (TotalDistance && cafes[i].shopName.bankDetails.length > 0 && cafes[i].shopName.isblocked == 0) {
+                //    nearbyCafe.push(cafes[i]);
+                // }
+                next();
+               } else {
+                next();
+               }
+            // }
+          }, function(err) {
+                if (err) return next({
+                  title: 'An error occurred',
+                  error: "true",
+                  detail: err
+                });
+                res.json({
+                  title: "cafe details",
+                  error: "false",
+                  cafes: nearbyCafe
+                });
+            })
+          })
+
+});
 }

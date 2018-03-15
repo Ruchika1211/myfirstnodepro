@@ -153,6 +153,94 @@ console.log('serverKey');
         })
 }
 
+ var sendNotification = function(deviceId,flag,msg,callback,extras,id){
+    console.log("sendNotificatio"+id);
+      if(id)
+      {console.log("sendNotificati>>>>>>>>>>>>>o"+id);
+            calculateUserCountbadge(id,(a,b)=>{
+              badgeData=a+b;
+              console.log("baghe count>>>>>>>>>>>>>>>>>>>"+badgeData);
+              var message = {
+                               registration_ids:deviceId,
+                               priority : "high",
+                               forceshow : true, // required fill with device token or topics
+                               collapse_key: 'Pickcup', 
+                                 content_available: true,
+
+                               data: {
+                                    flag:flag,
+                                    data:extras
+                              
+                               },
+                               notification: {
+                                   title: 'Pickcup',
+                                   body: msg,
+                                   sound : "default",
+                                   badge:badgeData
+               
+                               }
+                           };
+
+
+
+                       //promise style
+                           fcm.send(message)
+                           .then(function(response){
+                             
+                               console.log("Successfully sent with response1 for user: ", response);
+                                callback("success");
+                           })
+                           .catch(function(err){
+                               console.log("Something has gone wrong1! for user");
+                               console.error(err);
+                               callback("err");
+                           });
+           });
+         
+      }
+      else
+      {console.log("sendN>>>>>>>>>>>>>>>>otificati>>>>>>>>>>>>>o"+id);
+                      var message = {
+                               registration_ids:deviceId,
+                               priority : "high",
+                               forceshow : true, // required fill with device token or topics
+                               collapse_key: 'Pickcup', 
+                                 content_available: true,
+
+                               data: {
+                                    flag:flag,
+                                    data:extras
+                              
+                               },
+                               notification: {
+                                   title: 'Pickcup',
+                                   body: msg,
+                                   sound : "default"
+                                   
+                               }
+                           };
+
+
+
+                       //promise style
+                           fcm.send(message)
+                           .then(function(response){
+                             
+                               console.log("Successfully sent with response1 for user: ", response);
+                                callback("success");
+                           })
+                           .catch(function(err){
+                               console.log("Something has gone wrong1! for user");
+                               console.error(err);
+                               callback("err");
+                           });
+      }
+
+
+       
+
+   }
+
         // var   adminMailFrom=function(){
         //   return 'ruchika.s@infiny.in'
         //  }
@@ -160,7 +248,7 @@ console.log('serverKey');
 module.exports = {
 
          // url:function(){
-         // 	return 'http://dev2.infiny.in:3000'
+         //   return 'http://dev2.infiny.in:3000'
          // },
 
           url:function(){
@@ -195,55 +283,55 @@ module.exports = {
          },
          
          adminChargesforshop:function(){
-         	return '0'
+          return '0'
          },
 
          stripeCharges:function(){
-         	var totalCharges={};
-         	totalCharges.percentCharge=2.9;
+          var totalCharges={};
+          totalCharges.percentCharge=2.9;
             totalCharges.percentChargeIfEuropean=1.4;
-         	totalCharges.additional=0.2;
-         	return totalCharges
+          totalCharges.additional=0.2;
+          return totalCharges
          },
          
          
 
-		 checkIfduplicates:function(alldata,data){
+     checkIfduplicates:function(alldata,data){
            console.log("i  m in checkIfduplicates ");
            console.log(alldata);
            console.log(data);
-		    for(var i = 0; i < alldata.length; i++)
-		    {
-		        if(alldata[i] == data)
-		            return true;
-		    }
+        for(var i = 0; i < alldata.length; i++)
+        {
+            if(alldata[i] == data)
+                return true;
+        }
 
-		    return false;
-		},
-
-
+        return false;
+    },
 
 
-		findUser:function(id,callback){
+
+
+    findUser:function(id,callback){
 
           User
           .findOne({ "_id": id})
           .exec(function (err,userFound){
-						        if (err)
-						        {
-						             callback("err");
-						        }
-						        if(!userFound)
-						        {
-						        	callback("no user Found");
-						            
-						        }
-						        callback(userFound);
-						         
-						        });
+                    if (err)
+                    {
+                         callback("err");
+                    }
+                    if(!userFound)
+                    {
+                      callback("no user Found");
+                        
+                    }
+                    callback(userFound);
+                     
+                    });
 
 
-		},
+    },
 
 
     findCurrentDateinutc:function(){
@@ -262,23 +350,23 @@ module.exports = {
 
     },
 
-		findShopowner:function(id,callback){
+    findShopowner:function(id,callback){
           Stores
           .findOne({ "_id": id})
           .select({'bankDetails':0, 'incomesourceDetail':0 ,'totalamounttotransfer':0 ,'bankAccountId':0})
           .exec(function (err,store){
-						        if (err)
-						        {
-						            callback("err");
-						        }
-						        if(!store)
-						        {
-						           callback("no user Found");
-						        }
-						           callback(store);
-						        });
+                    if (err)
+                    {
+                        callback("err");
+                    }
+                    if(!store)
+                    {
+                       callback("no user Found");
+                    }
+                       callback(store);
+                    });
 
-		},
+    },
 
     findShopownerwith:function(id,callback){
           Stores
@@ -439,7 +527,7 @@ module.exports = {
       // },
 
 
-		sendNotification:function(deviceId,flag,msg,callback,extras,id){
+    sendNotification:function(deviceId,flag,msg,callback,extras,id){
          console.log("sendNotificatio"+id);
            if(id)
            {console.log("sendNotificati>>>>>>>>>>>>>o"+id);
@@ -523,9 +611,9 @@ module.exports = {
            }
    
 
-			
+      
 
-		},
+    },
 
   sendemail:function(mailOptions,cb){
       console.log(mailOptions);
@@ -571,7 +659,36 @@ module.exports = {
        
        return "ruchika.s@infiny.in"
 
-  }
+  },
+
+  orderscheduler:function(timeForPickcup, Schedule_name, orderId, deviceId, cb){
+    var schedule = require('node-schedule');
+    var DateTime = new Date(timeForPickcup)
+    console.log('timeForPickcup', timeForPickcup);
+    console.log("Schedule_name", Schedule_name)
+    var newDateTime = DateTime.setMinutes(DateTime.getMinutes() - 10);
+    var DateTime1 = new Date(newDateTime)
+    console.log('DateTime', DateTime1);
+    var date = DateTime1.getDate();
+    var month = DateTime1.getMonth();
+    var year = DateTime1.getFullYear();
+    var hours = DateTime1.getHours();
+    var mins = DateTime1.getMinutes();
+    // console.log('date', date);
+    // console.log('month', month);
+    // console.log('year', year);
+    // console.log('hours', hours);
+    // console.log('mins', mins);
+    // console.log('orderId',orderId);
+    // console.log('deviceToken',deviceId);
+    var date = new Date(year, month, date, hours, mins, 0);
+    var msg = "Order with " + orderId + " is just 10 min away.";
+    var j = schedule.scheduleJob(Schedule_name,date, function(){
+    console.log('The world is going to end today.');
+    sendNotification(deviceId,'Order remainder',msg,callback,orderId, (cb));
+    });
+    cb(j);
+}
 
   
 

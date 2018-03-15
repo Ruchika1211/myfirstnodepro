@@ -2,6 +2,8 @@ var Stores = require('../models/cafeListing');
 var StoreDetail = require('../models/menuListing');
 var reward = require('../models/reward');
 var order = require('../models/order');
+var Users = require('../models/user');
+var Ratings = require('../models/rating');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
@@ -1836,3 +1838,107 @@ exports.coffeshopgetuserdata = (req, res) => {
 
     })
 }
+
+exports.coffeeShopAddShoptime = (req, res) => {
+    //console.log(req.body.shoptime, 'req body');
+    var token=req.body.userToken;
+    var decoded = jwt.decode(token, "pickup");
+    //console.log(decoded);
+    //console.log(token);
+
+    Stores.findOne({
+        "_id": decoded.data.id
+     },{ 'incomesourceDetail':0 ,'totalamounttotransfer':0 }, (err, store) => {
+  
+        if (err) {
+           return res.status(500).json({
+              title: 'An error occurred',
+              error: "true",
+              detail: err
+           });
+        }
+        if (!store) {
+          return res.status(200).json({
+                  title: 'You are blocked.Please contact admin',
+                  error: "true",
+                  detail: "invalid Login"
+              });
+        }
+        
+            store.shoptime = req.body.shoptime;
+            store.save((err, storedata ) => {
+                if(err) {
+                    return res.status(200).json({
+                        title: 'error occured while saving',
+                        error: "true",
+                        detail: err
+                    });
+                }
+
+                return res.status(200).json({
+                    title: 'data saved',
+                    error: "false",
+                    storedata: storedata
+                });
+            });
+      })
+}
+
+exports.coffeeShopAddRating = (req, res) => {
+    // console.log(req.body, 'req body');
+    var userid = req.body.userId
+    console.log(userid,'user id')
+    Users.findById({"_id": userid},(err, user) => {
+        console.log('user',user );
+        console.log('err',err )
+        if(err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: "true",
+                detail: err
+             });
+        } 
+
+        if (!user) {
+            return res.status(200).json({
+                    title: 'No such user found',
+                    error: "true"
+                });
+          }
+
+        if (user) {
+            if(user.isLoggedIn === true && user.isBlocked === 0) {
+                const rating = new Ratings({
+                    userId : req.body.userId ,
+                    storeId : req.body.storeId ,
+                    star_rating : req.body.star_rating,
+                    complement : req.body.complement,
+                    notes : req.body.notes 
+                  })
+                  .save((err, ratingdata) => {
+                //    console.log(ratingdata,'rating........')
+                    if(ratingdata) {
+                        return res.status(200).json({
+                                    title: 'ratings is created',
+                                    error: "false",
+                                    details: ratingdata
+                                });
+                    }
+
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: "true",
+                        data: ratingdata
+                    });
+                   
+                    })
+            } else {
+                return res.status(500).json({
+                    title: 'user is Either Blocked or not Logged in',
+                    error: "true"
+                });
+            }
+        }
+    });
+    
+  }

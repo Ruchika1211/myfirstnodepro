@@ -18,6 +18,10 @@ var schema = new Schema({
         ref: 'Stores'
          },
      orderCategory:String,
+     Schedule_name : String,
+     ten_minutes_away : {
+      default: false
+     },
      costPrice:Number,
      totalPrice: {
            type: String,
